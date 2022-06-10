@@ -1,3 +1,5 @@
 = AsciiDoc comments
 
 This package allows you to add unique IDs to each AsciiDoc block.
+
+See xref:test.adoc[Test document] for an example
