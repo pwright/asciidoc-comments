@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.17">
+<title>Test document</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Test document</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="comment_0">Lists</h2>
+<div class="sectionbody">
+<div id="comment_1" class="olist arabic">
+<ol class="arabic">
+<li id="comment_2">
+<p>Do this</p>
+</li>
+<li id="comment_3">
+<p>Do that</p>
+</li>
+<li id="comment_4">
+<p>Do the other thing</p>
+<div id="comment_5" class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li id="comment_6">
+<p>Do sub task</p>
+</li>
+<li id="comment_7">
+<p>Do tasklet</p>
+</li>
+<li id="comment_8">
+<p>Do another thing</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div id="comment_9" class="sidebarblock">
+<div class="content">
+<div class="title">Purpose</div>
+<div id="comment_10" class="paragraph">
+<p>This document exercises many of the features of AsciiDoc to test the {library} implementation.</p>
+</div>
+</div>
+</div>
+<div id="comment_11" class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+If you want the output to look familiar, copy (or link) the AsciiDoc stylesheet, asciidoc.css, to the output directory.
+</td>
+</tr>
+</table>
+</div>
+<div id="comment_12" class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Items marked with TODO are either not yet supported or a work in progress.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="comment_13">First Steps with <a href="http://asciidoc.org">AsciiDoc</a></h2>
+<div class="sectionbody">
+<div id="comment_14" class="ulist">
+<div class="title">Inline markup</div>
+<ul>
+<li id="comment_15">
+<p>single quotes around a phrase place 'emphasis'</p>
+</li>
+<li id="comment_16">
+<p>astericks around a phrase make the text <strong>bold</strong></p>
+</li>
+<li id="comment_17">
+<p>double astericks around one or more <strong>l</strong>etters in a word make those letters bold</p>
+</li>
+<li id="comment_18">
+<p>double underscore around a <em>sub</em>string in a word emphasize that substring</p>
+</li>
+<li id="comment_19">
+<p>use carrots around characters to make them <sup>super</sup>script</p>
+</li>
+<li id="comment_20">
+<p>use tildes around characters to make them <sub>sub</sub>script</p>
+</li>
+<li id="comment_21">
+<p>to pass through <u>HTML</u> directly, surround the text with triple plus</p>
+</li>
+</ul>
+</div>
+<div id="comment_22" class="ulist">
+<ul>
+<li id="comment_23">
+<p>characters can be escaped using a \</p>
+<div id="comment_24" class="ulist">
+<ul>
+<li id="comment_25">
+<p>for instance, you can escape a quote inside emphasized text like 'Here's Johnny!'</p>
+</li>
+</ul>
+</div>
+</li>
+<li id="comment_26">
+<p>you can safely use reserved XML characters like &lt;, &gt; and &amp;, which are escaped when rendering</p>
+</li>
+<li id="comment_27">
+<p>force a space between inline elements using the {sp} attribute</p>
+</li>
+<li id="comment_28">
+<p>hold text together with an intrinsic non-breaking&#160;space attribute, {nbsp}</p>
+</li>
+<li id="comment_29">
+<p>handle words with unicode characters like in the name Gregory Romé</p>
+</li>
+<li id="comment_30">
+<p>claim your copyright &#169;, registered trademark &#174; or trademark &#8482;</p>
+</li>
+</ul>
+</div>
+<div id="comment_31" class="paragraph">
+<p>You can write text <a href="http://example.com">with inline links</a>, optionally using an explicit <a href="http://example.com">link prefix</a>. In either case, the link can have a <a href="http://example.com?foo=bar&amp;lang=en">query string</a>.</p>
+</div>
+<div id="comment_32" class="paragraph">
+<p>If you want to break a line<br>
+just end it in a &#43; sign<br>
+and continue typing on the next line.</p>
+</div>
+<div class="sect2">
+<h3 id="comment_33">Lists Upon Lists</h3>
+<div id="comment_34" class="ulist">
+<div class="title">Adjacent lists</div>
+<ul>
+<li id="comment_35">
+<p>this list</p>
+</li>
+<li id="comment_36">
+<p>should join</p>
+</li>
+<li id="comment_37">
+<p>to have</p>
+</li>
+<li id="comment_38">
+<p>four items</p>
+</li>
+</ul>
+</div>
+<div id="comment_39" class="olist arabic">
+<div class="title">Numbered lists</div>
+<ol class="arabic">
+<li id="comment_40">
+<p>These items</p>
+</li>
+<li id="comment_41">
+<p>will be auto-numbered</p>
+<div id="comment_42" class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li id="comment_43">
+<p>and can be nested</p>
+</li>
+</ol>
+</div>
+</li>
+<li id="comment_44">
+<p>A numbered list can nest</p>
+<div id="comment_45" class="ulist">
+<ul>
+<li id="comment_46">
+<p>unordered</p>
+</li>
+<li id="comment_47">
+<p>list</p>
+</li>
+<li id="comment_48">
+<p>items</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div id="comment_49" class="paragraph">
+<div class="title">Statement</div>
+<p>I swear I left it in 'Guy's' car. Let's go look for it.</p>
+</div>
+<div id="comment_50" class="dlist">
+<dl>
+<dt class="hdlist1">term</dt>
+<dd>
+<p>  definition
+line two</p>
+</dd>
+<dt class="hdlist1"><a id="another_term"></a>another term</dt>
+<dd>
+<p>another definition, which can be literal (indented) or regular paragraph</p>
+</dd>
+</dl>
+</div>
+<div id="comment_51" class="paragraph">
+<p>This should be a standalone paragraph, not grabbed by the definition list.</p>
+</div>
+<div id="comment_52" class="ulist">
+<ul>
+<li id="comment_53">
+<p>first level
+written on two lines</p>
+</li>
+<li id="comment_54">
+<p>first level</p>
+<div id="comment_55" class="literalblock">
+<div class="content">
+<pre>with this literal text</pre>
+</div>
+</div>
+<div id="comment_56" class="ulist">
+<ul>
+<li id="comment_57">
+<p>second level</p>
+<div id="comment_58" class="ulist">
+<ul>
+<li id="comment_59">
+<p>third level</p>
+<div id="comment_60" class="ulist">
+<ul>
+<li id="comment_61">
+<p>fourth level</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li id="comment_62">
+<p>back to<br>
+first level</p>
+</li>
+</ul>
+</div>
+<div id="comment_63" class="paragraph">
+<p>Let&#8217;s make a horizontal rule&#8230;&#8203;</p>
+</div>
+<hr>
+<div id="comment_65" class="paragraph">
+<p>then take a break.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="comment_66">We&#8217;re back!</h2>
+<div class="sectionbody">
+<div id="comment_67" class="paragraph">
+<p>Want to see a <span class="image"><img src="tiger.png" alt="Tiger"></span>?</p>
+</div>
+<div id="comment_68" class="paragraph">
+<p>Do you feel safer with the tiger in a box?</p>
+</div>
+<div id="comment_69" class="imageblock">
+<div class="content">
+<img src="tiger.png" alt="tiger">
+</div>
+<div class="title">Figure 1. Tiger in a box</div>
+</div>
+<div id="comment_70" class="paragraph">
+<p><a href="include.asciidoc.txt" class="bare">include.asciidoc.txt</a></p>
+</div>
+<div id="comment_71" class="listingblock">
+<div class="title">Asciidoctor usage example, should contain 3 lines</div>
+<div class="content">
+<pre class="highlight"><code class="language-ruby" data-lang="ruby">doc = Asciidoctor::Document.new("*This* is it!", :header_footer =&gt; false)
+
+puts doc.render</code></pre>
+</div>
+</div>
+<div id="comment_72" class="paragraph">
+<p>Here&#8217;s what it outputs (using the built-in templates):</p>
+</div>
+<div id="comment_73" class="literalblock">
+<div class="content">
+<pre>&lt;div class="paragraph"&gt;
+  &lt;p&gt;&lt;strong&gt;This&lt;/strong&gt; is it!&lt;/p&gt;
+&lt;/div&gt;</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="comment_74">``Quotes''</h3>
+<div id="comment_75" class="quoteblock">
+<blockquote>
+<div id="comment_76" class="paragraph">
+<p>AsciiDoc is 'so' <strong>powerful</strong>!</p>
+</div>
+</blockquote>
+</div>
+<div id="comment_77" class="paragraph">
+<p>This verse comes to mind.</p>
+</div>
+<div id="comment_78" class="verseblock">
+<pre class="content">La la la</pre>
+</div>
+<div id="comment_79" class="paragraph">
+<p>Here&#8217;s another quote:</p>
+</div>
+<div id="comment_80" class="quoteblock">
+<blockquote>
+<div id="comment_81" class="paragraph">
+<p>When you have eliminated all which is impossible, then whatever remains, however improbable, must be the truth.</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Sir Arthur Conan Doyle<br>
+<cite>The Adventures of Sherlock Holmes</cite>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="comment_82">Getting Literal</h2>
+<div class="sectionbody">
+<div id="comment_83" class="literalblock">
+<div class="content">
+<pre>Want to get literal? Just prefix a line with a space (just one will do).</pre>
+</div>
+</div>
+<div id="comment_84" class="literalblock">
+<div class="content">
+<pre>I'll join that party, too.</pre>
+</div>
+</div>
+<div id="comment_85" class="paragraph">
+<p>We forgot to mention in <a href="#numbered">Numbered lists</a> that you can change the numbering style.</p>
+</div>
+<div id="comment_86" class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li id="comment_87">
+<p>first item (yeah!)</p>
+</li>
+<li id="comment_88">
+<p>second item, looking <code>so mono</code></p>
+</li>
+<li id="comment_89">
+<p>third item, mono it is!</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="comment_90">Wrap-up</h2>
+<div class="sectionbody">
+<div id="comment_91" class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+AsciiDoc is quite cool, you should try it!
+</td>
+</tr>
+</table>
+</div>
+<div id="comment_92" class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Info</div>
+<div id="comment_93" class="paragraph">
+<p>Go to this URL to learn more about it:</p>
+</div>
+<div id="comment_94" class="ulist">
+<ul>
+<li id="comment_95">
+<p><a href="http://asciidoc.org" class="bare">http://asciidoc.org</a></p>
+</li>
+</ul>
+</div>
+<div id="comment_96" class="paragraph">
+<p>Or you could return to the <a href="#first">First Steps</a> or <a href="#purpose">Purpose</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="comment_97" class="paragraph">
+<p>Here&#8217;s a reference to the definition of <a href="#another_term">another term</a>, in case you forgot it.</p>
+</div>
+<div id="comment_98" class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+One more thing. Happy documenting!
+</td>
+</tr>
+</table>
+</div>
+<div id="comment_99" class="paragraph">
+<p><a id="google"></a>When all else fails, head over to <a href="http://google.com" class="bare">http://google.com</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2022-06-10 14:09:22 +0100
+</div>
+</div>
+</body>
+</html>
