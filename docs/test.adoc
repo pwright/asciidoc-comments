@@ -61,6 +61,43 @@ If you want to break a line +
 just end it in a {plus} sign +
 and continue typing on the next line.
 
+=== Tables
+
+|===
+|Normal Style |AsciiDoc Style
+
+|This cell isn't prefixed with an `a`, so the processor doesn't interpret the following lines as an AsciiDoc list.
+
+* List item 1
+* List item 2
+* List item 3
+
+a|This cell is prefixed with an `a`, so the processor interprets the following lines as an AsciiDoc list.
+
+* List item 1
+* List item 2
+* List item 3
+
+|This cell isn't prefixed with an `a`, so the processor doesn't interpret the listing block delimiters or the `source` style.
+
+[source,python]
+----
+import os
+print ("%s" %(os.uname()))
+----
+
+a|This cell is prefixed with an `a`, so the listing block is processed and rendered according to the `source` style rules.
+
+[source,python]
+----
+import os
+print "%s" %(os.uname())
+----
+
+|===
+
+
+
 === Lists Upon Lists
 
 .Adjacent lists

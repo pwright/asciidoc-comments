@@ -144,51 +144,107 @@ just end it in a &#43; sign<br>
 and continue typing on the next line.</p>
 </div>
 <div class="sect2">
-<h3 id="comment_33">Lists Upon Lists</h3>
-<div id="comment_34" class="ulist">
+<h3 id="comment_33">Tables</h3>
+<table id="comment_34" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Normal Style</th>
+<th class="tableblock halign-left valign-top">AsciiDoc Style</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This cell isn&#8217;t prefixed with an <code>a</code>, so the processor doesn&#8217;t interpret the following lines as an AsciiDoc list.</p>
+<p class="tableblock">* List item 1
+* List item 2
+* List item 3</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>This cell is prefixed with an <code>a</code>, so the processor interprets the following lines as an AsciiDoc list.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>List item 1</p>
+</li>
+<li>
+<p>List item 2</p>
+</li>
+<li>
+<p>List item 3</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This cell isn&#8217;t prefixed with an <code>a</code>, so the processor doesn&#8217;t interpret the listing block delimiters or the <code>source</code> style.</p>
+<p class="tableblock">[source,python]
+----
+import os
+print ("%s" %(os.uname()))
+----</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>This cell is prefixed with an <code>a</code>, so the listing block is processed and rendered according to the <code>source</code> style rules.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">import os
+print "%s" %(os.uname())</code></pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="comment_35">Lists Upon Lists</h3>
+<div id="comment_36" class="ulist">
 <div class="title">Adjacent lists</div>
 <ul>
-<li id="comment_35">
+<li id="comment_37">
 <p>this list</p>
 </li>
-<li id="comment_36">
+<li id="comment_38">
 <p>should join</p>
 </li>
-<li id="comment_37">
+<li id="comment_39">
 <p>to have</p>
 </li>
-<li id="comment_38">
+<li id="comment_40">
 <p>four items</p>
 </li>
 </ul>
 </div>
-<div id="comment_39" class="olist arabic">
+<div id="comment_41" class="olist arabic">
 <div class="title">Numbered lists</div>
 <ol class="arabic">
-<li id="comment_40">
+<li id="comment_42">
 <p>These items</p>
 </li>
-<li id="comment_41">
-<p>will be auto-numbered</p>
-<div id="comment_42" class="olist loweralpha">
-<ol class="loweralpha" type="a">
 <li id="comment_43">
+<p>will be auto-numbered</p>
+<div id="comment_44" class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li id="comment_45">
 <p>and can be nested</p>
 </li>
 </ol>
 </div>
 </li>
-<li id="comment_44">
-<p>A numbered list can nest</p>
-<div id="comment_45" class="ulist">
-<ul>
 <li id="comment_46">
+<p>A numbered list can nest</p>
+<div id="comment_47" class="ulist">
+<ul>
+<li id="comment_48">
 <p>unordered</p>
 </li>
-<li id="comment_47">
+<li id="comment_49">
 <p>list</p>
 </li>
-<li id="comment_48">
+<li id="comment_50">
 <p>items</p>
 </li>
 </ul>
@@ -196,11 +252,11 @@ and continue typing on the next line.</p>
 </li>
 </ol>
 </div>
-<div id="comment_49" class="paragraph">
+<div id="comment_51" class="paragraph">
 <div class="title">Statement</div>
 <p>I swear I left it in 'Guy's' car. Let's go look for it.</p>
 </div>
-<div id="comment_50" class="dlist">
+<div id="comment_52" class="dlist">
 <dl>
 <dt class="hdlist1">term</dt>
 <dd>
@@ -213,33 +269,33 @@ line two</p>
 </dd>
 </dl>
 </div>
-<div id="comment_51" class="paragraph">
+<div id="comment_53" class="paragraph">
 <p>This should be a standalone paragraph, not grabbed by the definition list.</p>
 </div>
-<div id="comment_52" class="ulist">
+<div id="comment_54" class="ulist">
 <ul>
-<li id="comment_53">
+<li id="comment_55">
 <p>first level
 written on two lines</p>
 </li>
-<li id="comment_54">
+<li id="comment_56">
 <p>first level</p>
-<div id="comment_55" class="literalblock">
+<div id="comment_57" class="literalblock">
 <div class="content">
 <pre>with this literal text</pre>
 </div>
 </div>
-<div id="comment_56" class="ulist">
-<ul>
-<li id="comment_57">
-<p>second level</p>
 <div id="comment_58" class="ulist">
 <ul>
 <li id="comment_59">
-<p>third level</p>
+<p>second level</p>
 <div id="comment_60" class="ulist">
 <ul>
 <li id="comment_61">
+<p>third level</p>
+<div id="comment_62" class="ulist">
+<ul>
+<li id="comment_63">
 <p>fourth level</p>
 </li>
 </ul>
@@ -251,41 +307,41 @@ written on two lines</p>
 </ul>
 </div>
 </li>
-<li id="comment_62">
+<li id="comment_64">
 <p>back to<br>
 first level</p>
 </li>
 </ul>
 </div>
-<div id="comment_63" class="paragraph">
+<div id="comment_65" class="paragraph">
 <p>Let&#8217;s make a horizontal rule&#8230;&#8203;</p>
 </div>
 <hr>
-<div id="comment_65" class="paragraph">
+<div id="comment_67" class="paragraph">
 <p>then take a break.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="comment_66">We&#8217;re back!</h2>
+<h2 id="comment_68">We&#8217;re back!</h2>
 <div class="sectionbody">
-<div id="comment_67" class="paragraph">
+<div id="comment_69" class="paragraph">
 <p>Want to see a <span class="image"><img src="tiger.png" alt="Tiger"></span>?</p>
 </div>
-<div id="comment_68" class="paragraph">
+<div id="comment_70" class="paragraph">
 <p>Do you feel safer with the tiger in a box?</p>
 </div>
-<div id="comment_69" class="imageblock">
+<div id="comment_71" class="imageblock">
 <div class="content">
 <img src="tiger.png" alt="tiger">
 </div>
 <div class="title">Figure 1. Tiger in a box</div>
 </div>
-<div id="comment_70" class="paragraph">
+<div id="comment_72" class="paragraph">
 <p><a href="include.asciidoc.txt" class="bare">include.asciidoc.txt</a></p>
 </div>
-<div id="comment_71" class="listingblock">
+<div id="comment_73" class="listingblock">
 <div class="title">Asciidoctor usage example, should contain 3 lines</div>
 <div class="content">
 <pre class="highlight"><code class="language-ruby" data-lang="ruby">doc = Asciidoctor::Document.new("*This* is it!", :header_footer =&gt; false)
@@ -293,10 +349,10 @@ first level</p>
 puts doc.render</code></pre>
 </div>
 </div>
-<div id="comment_72" class="paragraph">
+<div id="comment_74" class="paragraph">
 <p>Here&#8217;s what it outputs (using the built-in templates):</p>
 </div>
-<div id="comment_73" class="literalblock">
+<div id="comment_75" class="literalblock">
 <div class="content">
 <pre>&lt;div class="paragraph"&gt;
   &lt;p&gt;&lt;strong&gt;This&lt;/strong&gt; is it!&lt;/p&gt;
@@ -304,26 +360,26 @@ puts doc.render</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="comment_74">``Quotes''</h3>
-<div id="comment_75" class="quoteblock">
+<h3 id="comment_76">``Quotes''</h3>
+<div id="comment_77" class="quoteblock">
 <blockquote>
-<div id="comment_76" class="paragraph">
+<div id="comment_78" class="paragraph">
 <p>AsciiDoc is 'so' <strong>powerful</strong>!</p>
 </div>
 </blockquote>
 </div>
-<div id="comment_77" class="paragraph">
+<div id="comment_79" class="paragraph">
 <p>This verse comes to mind.</p>
 </div>
-<div id="comment_78" class="verseblock">
+<div id="comment_80" class="verseblock">
 <pre class="content">La la la</pre>
 </div>
-<div id="comment_79" class="paragraph">
+<div id="comment_81" class="paragraph">
 <p>Here&#8217;s another quote:</p>
 </div>
-<div id="comment_80" class="quoteblock">
+<div id="comment_82" class="quoteblock">
 <blockquote>
-<div id="comment_81" class="paragraph">
+<div id="comment_83" class="paragraph">
 <p>When you have eliminated all which is impossible, then whatever remains, however improbable, must be the truth.</p>
 </div>
 </blockquote>
@@ -336,30 +392,30 @@ puts doc.render</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="comment_82">Getting Literal</h2>
+<h2 id="comment_84">Getting Literal</h2>
 <div class="sectionbody">
-<div id="comment_83" class="literalblock">
+<div id="comment_85" class="literalblock">
 <div class="content">
 <pre>Want to get literal? Just prefix a line with a space (just one will do).</pre>
 </div>
 </div>
-<div id="comment_84" class="literalblock">
+<div id="comment_86" class="literalblock">
 <div class="content">
 <pre>I'll join that party, too.</pre>
 </div>
 </div>
-<div id="comment_85" class="paragraph">
+<div id="comment_87" class="paragraph">
 <p>We forgot to mention in <a href="#numbered">Numbered lists</a> that you can change the numbering style.</p>
 </div>
-<div id="comment_86" class="olist loweralpha">
+<div id="comment_88" class="olist loweralpha">
 <ol class="loweralpha" type="a">
-<li id="comment_87">
+<li id="comment_89">
 <p>first item (yeah!)</p>
 </li>
-<li id="comment_88">
+<li id="comment_90">
 <p>second item, looking <code>so mono</code></p>
 </li>
-<li id="comment_89">
+<li id="comment_91">
 <p>third item, mono it is!</p>
 </li>
 </ol>
@@ -367,9 +423,9 @@ puts doc.render</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="comment_90">Wrap-up</h2>
+<h2 id="comment_92">Wrap-up</h2>
 <div class="sectionbody">
-<div id="comment_91" class="admonitionblock note">
+<div id="comment_93" class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
@@ -381,7 +437,7 @@ AsciiDoc is quite cool, you should try it!
 </tr>
 </table>
 </div>
-<div id="comment_92" class="admonitionblock tip">
+<div id="comment_94" class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
@@ -389,27 +445,27 @@ AsciiDoc is quite cool, you should try it!
 </td>
 <td class="content">
 <div class="title">Info</div>
-<div id="comment_93" class="paragraph">
+<div id="comment_95" class="paragraph">
 <p>Go to this URL to learn more about it:</p>
 </div>
-<div id="comment_94" class="ulist">
+<div id="comment_96" class="ulist">
 <ul>
-<li id="comment_95">
+<li id="comment_97">
 <p><a href="http://asciidoc.org" class="bare">http://asciidoc.org</a></p>
 </li>
 </ul>
 </div>
-<div id="comment_96" class="paragraph">
+<div id="comment_98" class="paragraph">
 <p>Or you could return to the <a href="#first">First Steps</a> or <a href="#purpose">Purpose</a>.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
-<div id="comment_97" class="paragraph">
+<div id="comment_99" class="paragraph">
 <p>Here&#8217;s a reference to the definition of <a href="#another_term">another term</a>, in case you forgot it.</p>
 </div>
-<div id="comment_98" class="admonitionblock note">
+<div id="comment_100" class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
@@ -421,7 +477,7 @@ One more thing. Happy documenting!
 </tr>
 </table>
 </div>
-<div id="comment_99" class="paragraph">
+<div id="comment_101" class="paragraph">
 <p><a id="google"></a>When all else fails, head over to <a href="http://google.com" class="bare">http://google.com</a>.</p>
 </div>
 </div>
@@ -429,7 +485,7 @@ One more thing. Happy documenting!
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-06-10 14:41:56 +0100
+Last updated 2022-06-10 15:44:38 +0100
 </div>
 </div>
 </body>
