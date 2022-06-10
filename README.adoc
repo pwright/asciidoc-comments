@@ -1,0 +1,9 @@
+= asciidoc-comments
+
+
+Render asciidoc to html with each block addressable  for comments.
+
+
+----
+./node_modules/.bin/asciidoctor -r ./index.js README.adoc 
+----

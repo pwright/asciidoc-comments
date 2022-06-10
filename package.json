@@ -1,0 +1,22 @@
+{
+  "name": "asciidoc-comments",
+  "version": "1.0.0",
+  "description": "Render asciidoc to html with each block addressable  for comments",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pwright/asciidoc-comments.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pwright/asciidoc-comments/issues"
+  },
+  "homepage": "https://github.com/pwright/asciidoc-comments#readme",
+  "dependencies": {
+    "asciidoctor": "^2.2.6"
+  }
+}
