@@ -2,4 +2,20 @@
 
 This package allows you to add unique IDs to each AsciiDoc block.
 
-See xref:test.adoc[Test document] for an example
+See xref:test.adoc[Test document] for an example.
+
+Each block is unique addressable as a url, eg xref:test.adoc#comment_90[a block lower in the document].
+
+To use this package to convert your AsciiDoc to HTML, install it using
+
+[source,bash]
+----
+npm i -g @techwriter/asciidoc-comments
+----
+
+To convert your AsciiDoc files:
+
+[source,bash]
+----
+asciidoc-comments <filename>
+----

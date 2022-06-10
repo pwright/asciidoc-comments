@@ -1,6 +1,6 @@
 {
   "name": "@techwriter/asciidoc-comments",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Render asciidoc to html with each block addressable  for comments",
   "main": "index.js",
   "scripts": {
