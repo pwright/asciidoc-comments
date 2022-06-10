@@ -1,5 +1,5 @@
 {
-  "name": "asciidoc-comments",
+  "name": "@techwriter/asciidoc-comments",
   "version": "1.0.0",
   "description": "Render asciidoc to html with each block addressable  for comments",
   "main": "index.js",
