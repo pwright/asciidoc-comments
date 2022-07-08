@@ -10,4 +10,4 @@ To process your AsciiDoc files into html with an id for each block:
 npm i -g @techwriter/asciidoc-comments
 asciidoc-comments <filename>.adoc
 ```
-See link:https://pwright.github.io/asciidoc-comments/[website] for more details
+See [website](https://pwright.github.io/asciidoc-comments/) for more details
