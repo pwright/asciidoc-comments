@@ -1,3 +1,10 @@
+build/
+dist/
+
+# Test outputs
+test-output*.html
+titles.txt
+
 # Logs
 logs
 *.log

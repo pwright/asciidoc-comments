@@ -1,10 +1,14 @@
 {
   "name": "@techwriter/asciidoc-comments",
-  "version": "1.0.2",
-  "description": "Render asciidoc to html with each block addressable  for comments",
+  "version": "2.0.0",
+  "description": "Render AsciiDoc to HTML with semantic block IDs, include boundaries, and interactive attribute buttons",
   "main": "index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/**/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +24,10 @@
   },
   "homepage": "https://github.com/pwright/asciidoc-comments#readme",
   "dependencies": {
-    "asciidoctor": "^2.2.6"
+    "@asciidoctor/core": "^4.0.8"
+  },
+  "devDependencies": {
+    "mocha": "^10.0.0",
+    "chai": "^4.3.0"
   }
 }

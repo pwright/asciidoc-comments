@@ -1,0 +1,10 @@
+= Document with Includes
+:doctype: article
+
+== Main Section
+
+This is before the include.
+
+include::test-fragment.adoc[]
+
+This is after the include.
