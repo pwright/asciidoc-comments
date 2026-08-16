@@ -3,11 +3,19 @@
   "fields": {
     "product-short": {
       "default": "Developer Hub",
-      "options": ["Developer Hub", "Podman", "Docker", "Kubernetes"]
+      "options": [
+        "podman",
+        "docker",
+        "kubernetes"
+      ]
     },
     "product-long": {
       "default": "Red Hat Developer Hub",
-      "options": ["Red Hat Developer Hub", "Podman Desktop", "Docker Desktop"]
+      "options": [
+        "podman",
+        "docker",
+        "kubernetes"
+      ]
     }
   }
 }

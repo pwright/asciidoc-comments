@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.17">
+<meta name="generator" content="Asciidoctor.js 4.0.8">
 <title>AsciiDoc comments</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CNoto+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
 /* Uncomment the following line when using as a custom stylesheet */
@@ -84,20 +84,20 @@ code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;
 ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
 ul,ol{margin-left:1.5em}
 ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
-ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
-ul.square{list-style-type:square}
 ul.circle{list-style-type:circle}
 ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
 ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
 dl dt{margin-bottom:.3125em;font-weight:bold}
 dl dd{margin-bottom:1.25em}
 blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
 blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
 @media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
-h1{font-size:2.75em}
-h2{font-size:2.3125em}
-h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
-h4{font-size:1.4375em}}
+  h1{font-size:2.75em}
+  h2{font-size:2.3125em}
+  h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+  h4{font-size:1.4375em}}
 table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
 table thead,table tfoot{background:#f7f8f7}
 table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
@@ -116,7 +116,6 @@ h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title str
 :not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
 pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
 pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
-pre>code{display:block}
 pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
 em em{font-style:normal}
 strong strong{font-weight:400}
@@ -140,7 +139,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #content::before{content:none}
 #header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
 #header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
-#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
 #header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
 #header .details span:first-child{margin-left:-.125em}
 #header .details span.email a{color:rgba(0,0,0,.85)}
@@ -161,20 +160,21 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #toc a:active{text-decoration:underline}
 #toctitle{color:#7a2518;font-size:1.2em}
 @media screen and (min-width:768px){#toctitle{font-size:1.375em}
-body.toc2{padding-left:15em;padding-right:0}
-#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
-#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
-#toc.toc2>ul{font-size:.9em;margin-bottom:0}
-#toc.toc2 ul ul{margin-left:0;padding-left:1em}
-#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
-body.toc2.toc-right{padding-left:0;padding-right:15em}
-body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+  body.toc2{padding-left:15em;padding-right:0}
+  body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+  #toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+  #toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+  #toc.toc2>ul{font-size:.9em;margin-bottom:0}
+  #toc.toc2 ul ul{margin-left:0;padding-left:1em}
+  #toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+  body.toc2.toc-right{padding-left:0;padding-right:15em}
+  body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
 @media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
-#toc.toc2{width:20em}
-#toc.toc2 #toctitle{font-size:1.375em}
-#toc.toc2>ul{font-size:.95em}
-#toc.toc2 ul ul{padding-left:1.25em}
-body.toc2.toc-right{padding-left:0;padding-right:20em}}
+  #toc.toc2{width:20em}
+  #toc.toc2 #toctitle{font-size:1.375em}
+  #toc.toc2>ul{font-size:.95em}
+  #toc.toc2 ul ul{padding-left:1.25em}
+  body.toc2.toc-right{padding-left:0;padding-right:20em}}
 #content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
 #content #toc>:first-child{margin-top:0}
 #content #toc>:last-child{margin-bottom:0}
@@ -183,7 +183,7 @@ body.toc2.toc-right{padding-left:0;padding-right:20em}}
 #content{margin-bottom:.625em}
 .sect1{padding-bottom:.625em}
 @media screen and (min-width:768px){#content{margin-bottom:1.25em}
-.sect1{padding-bottom:1.25em}}
+  .sect1{padding-bottom:1.25em}}
 .sect1:last-child{padding-bottom:0}
 .sect1+.sect1{border-top:1px solid #e7e7e9}
 #content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
@@ -208,19 +208,17 @@ table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
 .admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
 .admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
 .exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
-.exampleblock>.content>:first-child{margin-top:0}
-.exampleblock>.content>:last-child{margin-bottom:0}
 .sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
-.sidebarblock>:first-child{margin-top:0}
-.sidebarblock>:last-child{margin-bottom:0}
 .sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
-.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
 .literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
 @media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
 @media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
 .literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
 .literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
 .listingblock>.content{position:relative}
+.listingblock pre>code{display:block}
 .listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
 .listingblock:hover code[data-lang]::before{display:block}
 .listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
@@ -330,7 +328,7 @@ a.image{text-decoration:none;display:inline-block}
 a.image object{pointer-events:none}
 sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
 sup.footnote a,sup.footnoteref a{text-decoration:none}
-sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
 #footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
 #footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
 #footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
@@ -393,46 +391,46 @@ b.conum *{color:inherit!important}
 dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
 h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
 p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
-p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
 p{margin-bottom:1.25rem}
 .sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
 .exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
 .print-only{display:none!important}
 @page{margin:1.25cm .75cm}
 @media print{*{box-shadow:none!important;text-shadow:none!important}
-html{font-size:80%}
-a{color:inherit!important;text-decoration:underline!important}
-a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
-a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
-abbr[title]{border-bottom:1px dotted}
-abbr[title]::after{content:" (" attr(title) ")"}
-pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
-thead{display:table-header-group}
-svg{max-width:100%}
-p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
-h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
-#header,#content,#footnotes,#footer{max-width:none}
-#toc,.sidebarblock,.exampleblock>.content{background:none!important}
-#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
-body.book #header{text-align:center}
-body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
-body.book #header .details{border:0!important;display:block;padding:0!important}
-body.book #header .details span:first-child{margin-left:0!important}
-body.book #header .details br{display:block}
-body.book #header .details br+span::before{content:none!important}
-body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
-body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
-.listingblock code[data-lang]::before{display:block}
-#footer{padding:0 .9375em}
-.hide-on-print{display:none!important}
-.print-only{display:block!important}
-.hide-for-print{display:none!important}
-.show-for-print{display:inherit!important}}
+  html{font-size:80%}
+  a{color:inherit!important;text-decoration:underline!important}
+  a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+  a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+  abbr[title]{border-bottom:1px dotted}
+  abbr[title]::after{content:" (" attr(title) ")"}
+  pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+  thead{display:table-header-group}
+  svg{max-width:100%}
+  p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+  h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+  #header,#content,#footnotes,#footer{max-width:none}
+  #toc,.sidebarblock,.exampleblock>.content{background:none!important}
+  #toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+  body.book #header{text-align:center}
+  body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+  body.book #header .details{border:0!important;display:block;padding:0!important}
+  body.book #header .details span:first-child{margin-left:0!important}
+  body.book #header .details br{display:block}
+  body.book #header .details br+span::before{content:none!important}
+  body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+  body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+  .listingblock code[data-lang]::before{display:block}
+  #footer{padding:0 .9375em}
+  .hide-on-print{display:none!important}
+  .print-only{display:block!important}
+  .hide-for-print{display:none!important}
+  .show-for-print{display:inherit!important}}
 @media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
-.sect1{padding:0!important}
-.sect1+.sect1{border:0}
-#footer{background:none}
-#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+  .sect1{padding:0!important}
+  .sect1+.sect1{border:0}
+  #footer{background:none}
+  #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 </head>
@@ -441,42 +439,42 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>AsciiDoc comments</h1>
 </div>
 <div id="content">
-<div id="comment_0" class="paragraph">
+<div id="document--block-1" class="paragraph">
 <p>This package allows you to add unique IDs to each AsciiDoc block.</p>
 </div>
-<div id="comment_1" class="olist arabic">
+<div id="document--block-2" class="olist arabic">
 <ol class="arabic">
-<li id="comment_2">
+<li id="document--block-3">
 <p>Add the bookmarklet, drag the following link into your browser bookmarks bar:</p>
 </li>
 </ol>
 </div>
  &nbsp; &nbsp;<a class="bookmarklet" href="javascript:(function()%7Bjavascript%3A(function%20hello()%7Blet%20titleText%20%3D%20document.title%3Blet%20selStuff%20%3D%20document.getSelection()%3Blet%20elementSelected%20%3D%20selStuff.anchorNode.parentElement%3Blet%20commentid%20%3D%20elementSelected.getAttribute('id')%3Bwhile(!commentid%20%26%26%20elementSelected)%20%7Blet%20prevElement%20%3D%20elementSelected%3BelementSelected%20%3D%20elementSelected.previousElementSibling%20%3Bif(!elementSelected)%7BelementSelected%20%3D%20prevElement.parentElement%3B%7Dcommentid%20%20%3D%20elementSelected.getAttribute('id')%3B%7Dlet%20myUrl%20%3D%20document.location%3BmyUrl%20%3D%20myUrl.toString()%3Bif(commentid)%7Blet%20result%20%3D%20myUrl.indexOf(%22%23%22)%3Bif%20(result%20%3C%200)%20%7Bresult%20%3D%20myUrl.length%7D%3BmyUrl%20%3D%20myUrl.substr(0%2Cresult)%3BmyUrl%20%3D%20myUrl%2B%22%23%22%2Bcommentid%3B%7Dlet%20selText%20%3D%20selStuff.toString()%2B%22%22%3Bif%20(selText.length%20!%3D%200)%7BselText%20%3D%20%22%5Cn%3E%20%22%2BselText%3B%7D%3Bnavigator.clipboard.writeText(%22%5B%22%2BtitleText%2B%22%7C%22%2BmyUrl%2B%22%5D%22%2BselText%2B%22%22)%3Breturn%20false%7D())%7D)()">CommentCapture</a><br><br>
-<div id="comment_4" class="olist arabic">
+<div id="document--block-4" class="olist arabic">
 <ol class="arabic" start="2">
-<li id="comment_5">
+<li id="document--block-5">
 <p>Navigate to <a href="test.html">Test document</a>.</p>
 </li>
-<li id="comment_6">
+<li id="document--block-6">
 <p>Highlight some text and click bookmarklet.</p>
 </li>
 </ol>
 </div>
-<div id="comment_7" class="paragraph">
+<div id="document--block-7" class="paragraph">
 <p>Each block is unique addressable as a url, eg <a href="test.html#comment_90">a block lower in the document</a>.</p>
 </div>
-<div id="comment_8" class="paragraph">
+<div id="document--block-8" class="paragraph">
 <p>To use this package to convert your AsciiDoc to HTML, install it using</p>
 </div>
-<div id="comment_9" class="listingblock">
+<div id="document--block-9" class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash">npm i -g @techwriter/asciidoc-comments</code></pre>
 </div>
 </div>
-<div id="comment_10" class="paragraph">
+<div id="document--block-10" class="paragraph">
 <p>To convert your AsciiDoc files:</p>
 </div>
-<div id="comment_11" class="listingblock">
+<div id="document--block-11" class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash">asciidoc-comments &lt;filename&gt;</code></pre>
 </div>
@@ -484,8 +482,62 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-07-08 11:07:32 +0100
+Last updated 2026-08-16 10:34:55 +0100
 </div>
 </div>
+
+<script>
+(() => {
+  const attributeOptions = {"test":{"default":"Test attribute","options":["test1","test2","test3"]}};
+  let menu;
+
+  function closeMenu() {
+    if (menu) menu.remove();
+    menu = null;
+  }
+
+  function setAttributeValue(name, value) {
+    document.querySelectorAll(`.attribute-substitution[data-attribute="${CSS.escape(name)}"]`).forEach((button) => {
+      button.textContent = value;
+      button.dataset.value = value;
+    });
+  }
+
+  function showMenu(button, name) {
+    closeMenu();
+    const config = attributeOptions[name];
+    if (!config) return;
+
+    menu = document.createElement('div');
+    menu.className = 'attribute-substitution-menu';
+    menu.setAttribute('role', 'menu');
+    for (const option of config.options) {
+      const item = document.createElement('button');
+      item.type = 'button';
+      item.textContent = option;
+      item.setAttribute('role', 'menuitem');
+      item.addEventListener('click', () => {
+        setAttributeValue(name, option);
+        closeMenu();
+      });
+      menu.append(item);
+    }
+    button.insertAdjacentElement('afterend', menu);
+  }
+
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest?.('.attribute-substitution');
+    if (!button) {
+      if (!event.target.closest?.('.attribute-substitution-menu')) closeMenu();
+      return;
+    }
+
+    const name = button.dataset.attribute;
+    if (!attributeOptions[name]) return;
+    event.preventDefault();
+    showMenu(button, name);
+  });
+})();
+</script>
 </body>
 </html>

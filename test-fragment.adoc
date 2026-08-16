@@ -1,3 +1,0 @@
-This is included content from a separate file.
-
-It has multiple paragraphs.

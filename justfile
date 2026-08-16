@@ -7,12 +7,14 @@ default:
 
 # Convert a single AsciiDoc file to HTML
 convert FILE OUTPUT="output.html":
-    node index.js "{{FILE}}" -o "{{OUTPUT}}"
-    @echo "✅ Converted {{FILE}} → {{OUTPUT}}"
+    #!/usr/bin/env bash
+    mkdir -p "$(dirname {{OUTPUT}})"
+    node index.js "{{FILE}}" > "{{OUTPUT}}"
+    echo "✅ Converted {{FILE}} → {{OUTPUT}}"
 
 # Convert with attribute options
 convert-with-options FILE OPTIONS OUTPUT="output.html":
-    node index.js --attribute-options "{{OPTIONS}}" "{{FILE}}" -o "{{OUTPUT}}"
+    node index.js --attribute-options "{{OPTIONS}}" "{{FILE}}" > "{{OUTPUT}}"
     @echo "✅ Converted {{FILE}} with options → {{OUTPUT}}"
 
 # Convert all assembly files in a specific directory
@@ -24,7 +26,7 @@ convert-assemblies CATEGORY OUTPUT_DIR="build/assemblies":
     for file in dist/test/assemblies/{{CATEGORY}}/*.adoc; do
         if [ -f "$file" ]; then
             basename=$(basename "$file" .adoc)
-            node index.js "$file" -o "{{OUTPUT_DIR}}/{{CATEGORY}}/${basename}.html" 2>/dev/null || echo "⚠️  Failed: $file"
+            node index.js "$file" > "{{OUTPUT_DIR}}/{{CATEGORY}}/${basename}.html" 2>&1 || echo "⚠️  Failed: $file"
             count=$((count + 1))
         fi
     done
@@ -51,7 +53,7 @@ convert-modules CATEGORY OUTPUT_DIR="build/modules":
     for file in dist/test/modules/{{CATEGORY}}/*.adoc; do
         if [ -f "$file" ]; then
             basename=$(basename "$file" .adoc)
-            node index.js "$file" -o "{{OUTPUT_DIR}}/{{CATEGORY}}/${basename}.html" 2>/dev/null || echo "⚠️  Failed: $file"
+            node index.js "$file" > "{{OUTPUT_DIR}}/{{CATEGORY}}/${basename}.html" 2>&1 || echo "⚠️  Failed: $file"
             count=$((count + 1))
         fi
     done
@@ -72,6 +74,29 @@ convert-all-modules OUTPUT_DIR="build/modules":
 # Convert everything (assemblies + modules)
 convert-all: convert-all-assemblies convert-all-modules
     @echo "✅ All files converted"
+
+# Convert all with interactive attribute buttons (demo feature)
+convert-all-demo:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "📁 Converting with attribute buttons enabled..."
+    just convert-assemblies-with-options configure_configuring-rhdh rhdh-test.json build/demo/assemblies
+    echo "✅ Demo conversion complete - check build/demo/ for interactive buttons"
+
+# Convert assemblies with attribute options
+convert-assemblies-with-options CATEGORY OPTIONS OUTPUT_DIR="build/assemblies":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    mkdir -p "{{OUTPUT_DIR}}/{{CATEGORY}}"
+    count=0
+    for file in dist/test/assemblies/{{CATEGORY}}/*.adoc; do
+        if [ -f "$file" ]; then
+            basename=$(basename "$file" .adoc)
+            node index.js --attribute-options "{{OPTIONS}}" "$file" > "{{OUTPUT_DIR}}/{{CATEGORY}}/${basename}.html" 2>&1 || echo "⚠️  Failed: $file"
+            count=$((count + 1))
+        fi
+    done
+    echo "✅ Converted $count files with attribute options from {{CATEGORY}}"
 
 # Extract titles from all AsciiDoc files
 extract-titles OUTPUT="titles.txt":
@@ -280,13 +305,38 @@ convert-all-titles OUTPUT_DIR="build/titles":
             title=$(basename "$title_dir")
             echo "[$((count + 1))/$total] Processing: $title"
 
-            node index.js "${title_dir}master.adoc" -o "{{OUTPUT_DIR}}/${title}.html" 2>/dev/null || echo "  ⚠️  Failed: $title"
+            node index.js "${title_dir}master.adoc" > "{{OUTPUT_DIR}}/${title}.html" 2>&1 || echo "  ⚠️  Failed: $title"
             count=$((count + 1))
         fi
     done
 
     echo ""
     echo "✅ Converted $count title files"
+    echo "   Output directory: {{OUTPUT_DIR}}"
+
+# Convert all titles with attribute options (for interactive buttons)
+convert-titles OUTPUT_DIR="build/titles-demo":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    mkdir -p "{{OUTPUT_DIR}}"
+
+    count=0
+    total=$(ls -1d dist/test/titles/*/ 2>/dev/null | wc -l)
+
+    echo "Converting $total title master.adoc files with rhdh-test.json..."
+
+    for title_dir in dist/test/titles/*/; do
+        if [ -d "$title_dir" ]; then
+            title=$(basename "$title_dir")
+            echo "[$((count + 1))/$total] Processing: $title"
+
+            node index.js --attribute-options rhdh-test.json "${title_dir}master.adoc" > "{{OUTPUT_DIR}}/${title}.html" 2>&1 || echo "  ⚠️  Failed: $title"
+            count=$((count + 1))
+        fi
+    done
+
+    echo ""
+    echo "✅ Converted $count title files with attribute buttons"
     echo "   Output directory: {{OUTPUT_DIR}}"
 
 # List all available titles
@@ -458,6 +508,59 @@ titles-stats:
     done
     echo "  $total_includes total include directives"
 
+# Convert docs/*.adoc files to HTML (demonstrates all features)
+convert-docs OUTPUT_DIR="docs":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    mkdir -p "{{OUTPUT_DIR}}"
+
+    count=0
+    for file in docs/*.adoc; do
+        if [ -f "$file" ]; then
+            basename=$(basename "$file" .adoc)
+            echo "Converting: $basename.adoc"
+            node index.js "$file" > "{{OUTPUT_DIR}}/${basename}.html" 2>&1 || echo "  ⚠️  Failed: $file"
+            count=$((count + 1))
+        fi
+    done
+
+    echo ""
+    echo "✅ Converted $count docs files"
+    echo "   Output directory: {{OUTPUT_DIR}}"
+    echo ""
+    echo "Features demonstrated:"
+    echo "  • Semantic IDs: $(grep -c 'id=".*--block-' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') block IDs"
+    echo "  • Include boundaries: $(grep -c 'include-boundary' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') markers"
+    echo ""
+    echo "Open {{OUTPUT_DIR}}/test.html to see include boundaries and semantic IDs"
+
+# Convert docs/*.adoc with attribute buttons
+convert-docs-demo OUTPUT_DIR="docs":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    mkdir -p "{{OUTPUT_DIR}}"
+
+    count=0
+    for file in docs/*.adoc; do
+        if [ -f "$file" ]; then
+            basename=$(basename "$file" .adoc)
+            echo "Converting: $basename.adoc (with attribute buttons)"
+            node index.js --attribute-options docs.json "$file" > "{{OUTPUT_DIR}}/${basename}.html" 2>&1 || echo "  ⚠️  Failed: $file"
+            count=$((count + 1))
+        fi
+    done
+
+    echo ""
+    echo "✅ Converted $count docs files with interactive attribute buttons"
+    echo "   Output directory: {{OUTPUT_DIR}}"
+    echo ""
+    echo "Features demonstrated:"
+    echo "  • Semantic IDs: $(grep -c 'id=".*--block-' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') block IDs"
+    echo "  • Include boundaries: $(grep -c 'include-boundary' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') markers"
+    echo "  • Attribute buttons: $(grep -c 'attribute-substitution' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') interactive buttons"
+    echo ""
+    echo "Open {{OUTPUT_DIR}}/test.html in a browser to test all features"
+
 # Install dependencies (if needed)
 install:
     npm install
@@ -466,3 +569,12 @@ install:
 # Run all tests
 test: test-sample test-with-options test-includes
     @echo "✅ All tests complete"
+
+# Quick test: convert one title with buttons
+test-title-buttons TITLE="configure_configuring-rhdh":
+    just convert-titles
+    @echo ""
+    @echo "📊 Checking {{TITLE}}.html for attribute buttons..."
+    @grep -c 'attribute-substitution' build/titles-demo/{{TITLE}}.html || echo "0"
+    @echo "Unique buttonized attributes:"
+    @grep -o 'data-attribute="[^"]*"' build/titles-demo/{{TITLE}}.html | sed 's/data-attribute="\([^"]*\)"/\1/' | sort -u | head -10

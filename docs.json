@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "fields": {
+    "test": {
+      "default": "Test attribute",
+      "options": ["test1", "test2", "test3"]
+    }
+  }
+}

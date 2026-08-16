@@ -1,0 +1,354 @@
+[
+  {
+    "id": "user-value-chain",
+    "title": "User Value Chain",
+    "abstract": "How asciidoc-comments delivers value from reader/author experience down through processing to infrastructure.",
+    "categories": [
+      {
+        "id": "reader-experience",
+        "title": "Reader Experience",
+        "items": [
+          {
+            "id": "copy-block-links",
+            "name": "Copy Block Links",
+            "deps": ["bookmarklet", "semantic-ids"]
+          },
+          {
+            "id": "interactive-attributes",
+            "name": "Interactive Attributes",
+            "deps": ["attribute-buttons", "attribute-menu"]
+          }
+        ]
+      },
+      {
+        "id": "author-experience",
+        "title": "Author Experience",
+        "items": [
+          {
+            "id": "stable-ids",
+            "name": "Stable IDs",
+            "deps": ["semantic-ids", "collision-handling"]
+          },
+          {
+            "id": "include-visibility",
+            "name": "Include Visibility",
+            "deps": ["include-boundaries"]
+          },
+          {
+            "id": "opt-out-controls",
+            "name": "Opt-out Controls",
+            "deps": ["document-attributes", "block-attributes"]
+          }
+        ]
+      },
+      {
+        "id": "features",
+        "title": "Features",
+        "items": [
+          {
+            "id": "semantic-ids",
+            "name": "Semantic IDs",
+            "deps": ["tree-processor", "id-generation"]
+          },
+          {
+            "id": "include-boundaries",
+            "name": "Include Boundaries",
+            "deps": ["preprocessor", "html-injection"]
+          },
+          {
+            "id": "attribute-buttons",
+            "name": "Attribute Buttons",
+            "deps": ["preprocessor", "postprocessor"]
+          },
+          {
+            "id": "bookmarklet",
+            "name": "Bookmarklet",
+            "deps": ["semantic-ids"]
+          }
+        ]
+      },
+      {
+        "id": "processing",
+        "title": "Processing",
+        "items": [
+          {
+            "id": "preprocessor",
+            "name": "Preprocessor",
+            "deps": ["extension-registry"]
+          },
+          {
+            "id": "tree-processor",
+            "name": "Tree Processor",
+            "deps": ["extension-registry"]
+          },
+          {
+            "id": "postprocessor",
+            "name": "Postprocessor",
+            "deps": ["extension-registry"]
+          },
+          {
+            "id": "id-generation",
+            "name": "ID Generation",
+            "deps": ["slugify", "collision-handling"]
+          },
+          {
+            "id": "html-injection",
+            "name": "HTML Injection",
+            "deps": []
+          }
+        ]
+      },
+      {
+        "id": "infrastructure",
+        "title": "Infrastructure",
+        "items": [
+          {
+            "id": "extension-registry",
+            "name": "Extension Registry",
+            "deps": ["asciidoctor-js"]
+          },
+          {
+            "id": "asciidoctor-js",
+            "name": "Asciidoctor.js",
+            "deps": [],
+            "external": "https://docs.asciidoctor.org/asciidoctor.js/latest/"
+          },
+          {
+            "id": "attribute-menu",
+            "name": "Attribute Menu JS",
+            "deps": []
+          },
+          {
+            "id": "slugify",
+            "name": "Slugify",
+            "deps": []
+          },
+          {
+            "id": "collision-handling",
+            "name": "Collision Handling",
+            "deps": []
+          },
+          {
+            "id": "document-attributes",
+            "name": "Document Attributes",
+            "deps": []
+          },
+          {
+            "id": "block-attributes",
+            "name": "Block Attributes",
+            "deps": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "processing-pipeline",
+    "title": "Processing Pipeline",
+    "abstract": "The agnostic pipeline model: Source → Parse → Intervene → Generate → Output",
+    "categories": [
+      {
+        "id": "input",
+        "title": "Input",
+        "items": [
+          {
+            "id": "adoc-source",
+            "name": "AsciiDoc Source",
+            "deps": []
+          },
+          {
+            "id": "attribute-options",
+            "name": "Attribute Options JSON",
+            "deps": []
+          }
+        ]
+      },
+      {
+        "id": "parse",
+        "title": "Parse Stage",
+        "items": [
+          {
+            "id": "line-reader",
+            "name": "Line Reader",
+            "deps": ["adoc-source"]
+          },
+          {
+            "id": "ast-builder",
+            "name": "AST Builder",
+            "deps": ["line-reader"]
+          }
+        ]
+      },
+      {
+        "id": "intervene",
+        "title": "Intervention Stage",
+        "items": [
+          {
+            "id": "line-intervention",
+            "name": "Line Intervention",
+            "deps": ["line-reader"],
+            "color": "#4CAF50"
+          },
+          {
+            "id": "tree-intervention",
+            "name": "Tree Intervention",
+            "deps": ["ast-builder"],
+            "color": "#4CAF50"
+          },
+          {
+            "id": "output-intervention",
+            "name": "Output Intervention",
+            "deps": ["html-generator"],
+            "color": "#4CAF50"
+          }
+        ]
+      },
+      {
+        "id": "generate",
+        "title": "Generate Stage",
+        "items": [
+          {
+            "id": "html-generator",
+            "name": "HTML Generator",
+            "deps": ["tree-intervention"]
+          },
+          {
+            "id": "script-injector",
+            "name": "Script Injector",
+            "deps": ["output-intervention", "attribute-options"]
+          }
+        ]
+      },
+      {
+        "id": "output",
+        "title": "Output",
+        "items": [
+          {
+            "id": "html-output",
+            "name": "HTML Output",
+            "deps": ["script-injector"]
+          },
+          {
+            "id": "browser-runtime",
+            "name": "Browser Runtime",
+            "deps": ["html-output"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "feature-architecture",
+    "title": "Feature Architecture",
+    "abstract": "How features are layered from core ID generation to interactive enhancements.",
+    "categories": [
+      {
+        "id": "interactive-layer",
+        "title": "Interactive Layer",
+        "items": [
+          {
+            "id": "click-to-copy",
+            "name": "Click to Copy",
+            "deps": ["block-ids"],
+            "color": "#FFFFFF"
+          },
+          {
+            "id": "attribute-selector",
+            "name": "Attribute Selector",
+            "deps": ["button-substitution", "option-metadata"],
+            "color": "#FFFFFF"
+          }
+        ]
+      },
+      {
+        "id": "visual-layer",
+        "title": "Visual Layer",
+        "items": [
+          {
+            "id": "button-substitution",
+            "name": "Button Substitution",
+            "deps": ["attribute-parsing"]
+          },
+          {
+            "id": "boundary-markers",
+            "name": "Boundary Markers",
+            "deps": ["include-detection", "include-ids"]
+          }
+        ]
+      },
+      {
+        "id": "id-layer",
+        "title": "ID Layer",
+        "items": [
+          {
+            "id": "block-ids",
+            "name": "Block IDs",
+            "deps": ["section-scoping", "collision-resolution"]
+          },
+          {
+            "id": "include-ids",
+            "name": "Include IDs",
+            "deps": ["section-scoping", "collision-resolution"]
+          }
+        ]
+      },
+      {
+        "id": "core-layer",
+        "title": "Core Layer",
+        "items": [
+          {
+            "id": "section-scoping",
+            "name": "Section Scoping",
+            "deps": ["heading-parser"]
+          },
+          {
+            "id": "collision-resolution",
+            "name": "Collision Resolution",
+            "deps": ["id-registry"]
+          },
+          {
+            "id": "include-detection",
+            "name": "Include Detection",
+            "deps": ["directive-parser"]
+          },
+          {
+            "id": "attribute-parsing",
+            "name": "Attribute Parsing",
+            "deps": ["reference-parser"]
+          }
+        ]
+      },
+      {
+        "id": "foundation",
+        "title": "Foundation",
+        "items": [
+          {
+            "id": "heading-parser",
+            "name": "Heading Parser",
+            "deps": []
+          },
+          {
+            "id": "directive-parser",
+            "name": "Directive Parser",
+            "deps": []
+          },
+          {
+            "id": "reference-parser",
+            "name": "Reference Parser",
+            "deps": []
+          },
+          {
+            "id": "id-registry",
+            "name": "ID Registry",
+            "deps": []
+          },
+          {
+            "id": "option-metadata",
+            "name": "Option Metadata",
+            "deps": []
+          }
+        ]
+      }
+    ]
+  }
+]
