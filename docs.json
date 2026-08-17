@@ -3,7 +3,19 @@
   "fields": {
     "test": {
       "default": "Test attribute",
-      "options": ["test1", "test2", "test3"]
+      "options": [
+        "test1",
+        "test2",
+        "test3"
+      ]
+    },
+    "product-short": {
+      "default": "Container Tools",
+      "options": [
+        "podman",
+        "docker",
+        "kubernetes"
+      ]
     }
   }
 }

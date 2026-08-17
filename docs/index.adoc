@@ -1,5 +1,7 @@
 = AsciiDoc comments
 
+:product-short: Container tools
+
 This package allows you to add unique IDs to each AsciiDoc block.
 
 . Add the bookmarklet, drag the following link into your browser bookmarks bar:
@@ -29,3 +31,32 @@ To convert your AsciiDoc files:
 ----
 asciidoc-comments <filename>
 ----
+
+== Attribute Button Options
+
+By default, attribute references like `{product-short}` render as interactive buttons showing the current value. You can configure alternative values that readers can select by clicking the button.
+
+Create an options file (e.g., `options.json`) with this structure:
+
+[source,json]
+----
+{
+  "version": 1,
+  "fields": {
+    "product-short": {
+      "default": "Developer Hub",
+      "options": ["podman", "docker", "kubernetes"]
+    }
+  }
+}
+----
+
+Then render with the options file:
+
+[source,bash]
+----
+asciidoc-comments --attribute-options options.json <filename>
+----
+
+When readers click an attribute button, they see a list of configured options. Selecting a value updates all instances of that attribute throughout the page.
+All values for {product-short} are affected.

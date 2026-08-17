@@ -639,9 +639,25 @@ Last updated 2026-08-16 20:37:58 +0100
 </div>
 </div>
 
+<style>
+.attribute-substitution-menu {
+  position: absolute;
+  z-index: 1000;
+  margin-top: 2px;
+  font-family: inherit;
+  font-size: 0.9em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  background-color: white;
+  min-width: 150px;
+  max-width: 250px;
+  width: auto;
+}
+</style>
 <script>
 (() => {
-  const attributeOptions = {"test":{"default":"Test attribute","options":["test1","test2","test3"]}};
+  const attributeOptions = {"test":{"default":"Test attribute","options":["test1","test2","test3"]},"product-short":{"default":"Container Tools","options":["podman","docker","kubernetes"]}};
   let menu;
 
   function closeMenu() {
@@ -661,21 +677,64 @@ Last updated 2026-08-16 20:37:58 +0100
     const config = attributeOptions[name];
     if (!config) return;
 
-    menu = document.createElement('div');
-    menu.className = 'attribute-substitution-menu';
-    menu.setAttribute('role', 'menu');
-    for (const option of config.options) {
-      const item = document.createElement('button');
-      item.type = 'button';
-      item.textContent = option;
-      item.setAttribute('role', 'menuitem');
-      item.addEventListener('click', () => {
-        setAttributeValue(name, option);
-        closeMenu();
-      });
-      menu.append(item);
+    // Build comprehensive list of all available options
+    const allOptions = [];
+    const currentValue = button.dataset.value;
+    const attributeRef = `{${name}}`;
+
+    // Add current value if it's different from other values
+    if (currentValue && currentValue !== attributeRef && currentValue !== config.default && !config.options.includes(currentValue)) {
+      allOptions.push(currentValue);
     }
+
+    // Add attribute reference
+    allOptions.push(attributeRef);
+
+    // Add default value if it exists and is different from current value
+    if (config.default && config.default !== currentValue) {
+      allOptions.push(config.default);
+    }
+
+    // Add all configured options
+    for (const option of config.options) {
+      if (!allOptions.includes(option)) {
+        allOptions.push(option);
+      }
+    }
+
+    // Create native select dropdown
+    menu = document.createElement('select');
+    menu.className = 'attribute-substitution-menu';
+    menu.setAttribute('size', Math.min(allOptions.length, 10));
+
+    // Add placeholder option
+    const placeholder = document.createElement('option');
+    placeholder.textContent = `Select value for {${name}}...`;
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    menu.append(placeholder);
+
+    // Add all options
+    for (const option of allOptions) {
+      const optionElement = document.createElement('option');
+      optionElement.value = option;
+      optionElement.textContent = option;
+      menu.append(optionElement);
+    }
+
+    // Handle selection
+    menu.addEventListener('change', () => {
+      setAttributeValue(name, menu.value);
+      closeMenu();
+    });
+
+    // Close on blur
+    menu.addEventListener('blur', () => {
+      closeMenu();
+    });
+
     button.insertAdjacentElement('afterend', menu);
+    menu.focus();
   }
 
   document.addEventListener('click', (event) => {

@@ -439,6 +439,8 @@ p{margin-bottom:1.25rem}
 <h1>AsciiDoc comments</h1>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div id="document--block-1" class="paragraph">
 <p>This package allows you to add unique IDs to each AsciiDoc block.</p>
 </div>
@@ -480,15 +482,69 @@ p{margin-bottom:1.25rem}
 </div>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_attribute_button_options">Attribute Button Options</h2>
+<div class="sectionbody">
+<div id="attribute-button-options--block-1" class="paragraph">
+<p>By default, attribute references like <code><button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Container tools" title="product-short">Container tools</button></code> render as interactive buttons showing the current value. You can configure alternative values that readers can select by clicking the button.</p>
+</div>
+<div id="attribute-button-options--block-2" class="paragraph">
+<p>Create an options file (e.g., <code>options.json</code>) with this structure:</p>
+</div>
+<div id="attribute-button-options--block-3" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  "version": 1,
+  "fields": {
+    "product-short": {
+      "default": "Developer Hub",
+      "options": ["podman", "docker", "kubernetes"]
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div id="attribute-button-options--block-4" class="paragraph">
+<p>Then render with the options file:</p>
+</div>
+<div id="attribute-button-options--block-5" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">asciidoc-comments --attribute-options options.json &lt;filename&gt;</code></pre>
+</div>
+</div>
+<div id="attribute-button-options--block-6" class="paragraph">
+<p>When readers click an attribute button, they see a list of configured options. Selecting a value updates all instances of that attribute throughout the page.
+All values for <button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Container tools" title="product-short">Container tools</button> are affected.</p>
+</div>
+</div>
+</div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-08-16 10:34:55 +0100
+Last updated 2026-08-17 09:45:09 +0100
 </div>
 </div>
 
+<style>
+.attribute-substitution-menu {
+  position: absolute;
+  z-index: 1000;
+  margin-top: 2px;
+  font-family: inherit;
+  font-size: 0.9em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  background-color: white;
+  min-width: 150px;
+  max-width: 250px;
+  width: auto;
+}
+</style>
 <script>
 (() => {
-  const attributeOptions = {"test":{"default":"Test attribute","options":["test1","test2","test3"]}};
+  const attributeOptions = {"test":{"default":"Test attribute","options":["test1","test2","test3"]},"product-short":{"default":"Container Tools","options":["podman","docker","kubernetes"]}};
   let menu;
 
   function closeMenu() {
@@ -508,21 +564,64 @@ Last updated 2026-08-16 10:34:55 +0100
     const config = attributeOptions[name];
     if (!config) return;
 
-    menu = document.createElement('div');
-    menu.className = 'attribute-substitution-menu';
-    menu.setAttribute('role', 'menu');
-    for (const option of config.options) {
-      const item = document.createElement('button');
-      item.type = 'button';
-      item.textContent = option;
-      item.setAttribute('role', 'menuitem');
-      item.addEventListener('click', () => {
-        setAttributeValue(name, option);
-        closeMenu();
-      });
-      menu.append(item);
+    // Build comprehensive list of all available options
+    const allOptions = [];
+    const currentValue = button.dataset.value;
+    const attributeRef = `{${name}}`;
+
+    // Add current value if it's different from other values
+    if (currentValue && currentValue !== attributeRef && currentValue !== config.default && !config.options.includes(currentValue)) {
+      allOptions.push(currentValue);
     }
+
+    // Add attribute reference
+    allOptions.push(attributeRef);
+
+    // Add default value if it exists and is different from current value
+    if (config.default && config.default !== currentValue) {
+      allOptions.push(config.default);
+    }
+
+    // Add all configured options
+    for (const option of config.options) {
+      if (!allOptions.includes(option)) {
+        allOptions.push(option);
+      }
+    }
+
+    // Create native select dropdown
+    menu = document.createElement('select');
+    menu.className = 'attribute-substitution-menu';
+    menu.setAttribute('size', Math.min(allOptions.length, 10));
+
+    // Add placeholder option
+    const placeholder = document.createElement('option');
+    placeholder.textContent = `Select value for {${name}}...`;
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    menu.append(placeholder);
+
+    // Add all options
+    for (const option of allOptions) {
+      const optionElement = document.createElement('option');
+      optionElement.value = option;
+      optionElement.textContent = option;
+      menu.append(optionElement);
+    }
+
+    // Handle selection
+    menu.addEventListener('change', () => {
+      setAttributeValue(name, menu.value);
+      closeMenu();
+    });
+
+    // Close on blur
+    menu.addEventListener('blur', () => {
+      closeMenu();
+    });
+
     button.insertAdjacentElement('afterend', menu);
+    menu.focus();
   }
 
   document.addEventListener('click', (event) => {
