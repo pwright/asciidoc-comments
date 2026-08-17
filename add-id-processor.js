@@ -14,6 +14,7 @@ const DEFAULT_OPTIONS = {
 
 const ELIGIBLE_CONTEXTS = new Set([
   'admonition',
+  'dlist',
   'example',
   'list_item',
   'listing',
@@ -229,12 +230,16 @@ export function register(registry, options = {}) {
         usedIds: collectUsedIds(doc),
         sectionCounters: new Map(),
         tableMetadata: new Map(),
+        dlistMetadata: new Map(),
       }
 
       walkBlocks(doc, null, state)
 
       // Pass table metadata to postprocessor
       doc.tableMetadata = state.tableMetadata
+
+      // Pass dlist metadata to postprocessor
+      doc.dlistMetadata = state.dlistMetadata
 
       return doc
     })
@@ -247,6 +252,11 @@ export function register(registry, options = {}) {
       // Add row anchors to tables
       if (doc.tableMetadata && doc.tableMetadata.size > 0) {
         normalizedOutput = addTableRowAnchors(normalizedOutput, doc.tableMetadata)
+      }
+
+      // Add term anchors to dlists
+      if (doc.dlistMetadata && doc.dlistMetadata.size > 0) {
+        normalizedOutput = addDlistTermAnchors(normalizedOutput, doc.dlistMetadata)
       }
 
       // Add attribute options script if configured
@@ -404,6 +414,38 @@ function addTableRowAnchors(html, tableMetadata) {
       )
 
       return `${openingTag}${withRowIds}</table>`
+    })
+  }
+
+  return html
+}
+
+function addDlistTermAnchors(html, dlistMetadata) {
+  // For each dlist with a generated ID, add term IDs to <dt> elements
+  for (const [dlistId] of dlistMetadata.entries()) {
+    const escapedId = escapeRegExp(dlistId)
+
+    // Match the specific dlist element
+    const dlistPattern = new RegExp(
+      `(<div[^>]*\\bid="${escapedId}"[^>]*\\bclass="dlist"[^>]*>\\s*<dl>)([\\s\\S]*?)</dl>`,
+      'g',
+    )
+
+    html = html.replace(dlistPattern, (_match, openingTags, content) => {
+      let termIndex = 0
+
+      // Add id attributes to each <dt> element
+      const withTermIds = content.replace(
+        /<dt([^>]*)>/g,
+        (_dtMatch, attributes) => {
+          termIndex += 1
+          const termId = `${dlistId}-term-${termIndex}`
+          // Add id attribute to <dt> tag
+          return `<dt id="${escapeHtml(termId)}"${attributes}>`
+        },
+      )
+
+      return `${openingTags}${withTermIds}</dl>`
     })
   }
 
@@ -782,6 +824,12 @@ function assignGeneratedId(node, section, state) {
     const rowCount = countTableRows(node)
     state.tableMetadata.set(id, { rowCount })
   }
+
+  // Track dlist metadata for postprocessor
+  if (getContext(node) === 'dlist') {
+    const termCount = countDlistTerms(node)
+    state.dlistMetadata.set(id, { termCount })
+  }
 }
 
 function uniqueGeneratedId(candidate, usedIds) {
@@ -887,4 +935,19 @@ function countTableRows(tableNode) {
   const body = rows.body?.length || 0
   const foot = rows.foot?.length || 0
   return head + body + foot
+}
+
+function countDlistTerms(dlistNode) {
+  const items = dlistNode.getItems?.()
+  if (!items || !Array.isArray(items)) return 0
+
+  let termCount = 0
+  for (const item of items) {
+    // Each item is a tuple: [[term1, term2, ...], descriptionBlock]
+    if (Array.isArray(item) && Array.isArray(item[0])) {
+      termCount += item[0].length
+    }
+  }
+
+  return termCount
 }

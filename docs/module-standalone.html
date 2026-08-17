@@ -434,7 +434,7 @@ p{margin-bottom:1.25rem}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 </head>
-<body class="article">
+<body class="book">
 <div id="header">
 </div>
 <div id="content">
@@ -614,6 +614,7 @@ Last updated 2026-08-17 11:25:53 +0100
 (() => {
   let idsVisible = false;
   const button = document.getElementById('toggle-ids-button');
+  const originalTitles = new Map();
 
   if (!button) return;
 
@@ -623,8 +624,21 @@ Last updated 2026-08-17 11:25:53 +0100
     document.querySelectorAll('[id]').forEach((el) => {
       if (idsVisible) {
         el.style.border = 'solid 2px red';
+        // Store original title if it exists
+        if (el.title) {
+          originalTitles.set(el, el.title);
+        }
+        // Set tooltip to show the ID
+        el.title = 'ID: ' + el.id;
       } else {
         el.style.border = '';
+        // Restore original title or remove it
+        if (originalTitles.has(el)) {
+          el.title = originalTitles.get(el);
+          originalTitles.delete(el);
+        } else {
+          el.removeAttribute('title');
+        }
       }
     });
 

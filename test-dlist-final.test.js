@@ -1,6 +1,6 @@
 import { convert, Extensions } from '@asciidoctor/core'
 import test from 'node:test'
-import { register } from '../add-id-processor.js'
+import { register } from './add-id-processor.js'
 
 test('dlist with semantic IDs', async () => {
   const registry = Extensions.create()

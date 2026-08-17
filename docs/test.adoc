@@ -32,7 +32,6 @@ This paragraph opts out of semantic IDs.
 * Item two with ^superscript^ and ~subscript~
 * Item three
 
-[[defs]]
 term::
   definition text
 another term::
@@ -94,4 +93,9 @@ See the <<defs,definition list>> or jump to <<wrapup>>.
 == Wrap-up
 
 Testing complete! Visit http://asciidoc.org for more info.
+
+term::
+  definition text
+another term::
+  another definition
 
