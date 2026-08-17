@@ -76,7 +76,7 @@ export function register(registry, options = {}) {
           const index = increment(includeCounters, sectionBase)
           const includeId = `${sectionBase}--include-${index}`
           if (shouldShowVisibleIncludeBoundary) {
-            rewritten.push(...includeBoundaryBlock(includeId, 'Start include', include.target, { hrBefore: true }))
+            rewritten.push(...includeBoundaryBlock(includeId, 'Start', include.target, { hrBefore: true }))
           } else {
             rewritten.push(`[[${includeId}]]`)
             rewritten.push('')
@@ -89,7 +89,7 @@ export function register(registry, options = {}) {
           && !isAttributeDeclaration(line)
         rewritten.push(shouldRewriteAttributes ? buttonizeAttributeReferences(line) : line)
         if (shouldShowVisibleIncludeBoundary) {
-          rewritten.push(...includeBoundaryBlock(null, 'End include', include.target, { hrAfter: true }))
+          rewritten.push(...includeBoundaryBlock(null, 'End', include.target, { hrAfter: true }))
         }
         delimitedBlock = nextDelimitedBlock(line, delimitedBlock)
         pendingLines = nextPendingLines(line, pendingLines)
@@ -162,7 +162,7 @@ function includeBoundaryBlock(id, label, target, { hrBefore = false, hrAfter = f
     '++++',
   ]
   if (hrBefore) lines.push('<hr>')
-  lines.push(`<div${idAttribute} class="include-boundary">${escapeHtml(label)}: <code>${escapeHtml(target)}</code></div>`)
+  lines.push(`<div${idAttribute} class="include-boundary" style="margin-left: -40px;"><span style="color: red;">${escapeHtml(label)}</span>: <code>${escapeHtml(target)}</code></div>`)
   if (hrAfter) lines.push('<hr>')
   lines.push('++++', '')
   return lines
