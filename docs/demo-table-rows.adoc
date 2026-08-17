@@ -1,5 +1,7 @@
 = API Configuration Reference
 
+include::module.adoc[]
+
 == Configuration Parameters
 
 The following table lists all available configuration parameters. Each parameter can be referenced directly using its row anchor (e.g., `#configuration-parameters--block-1-row-15` for the 15th parameter).

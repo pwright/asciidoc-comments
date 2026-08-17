@@ -451,7 +451,7 @@ p{margin-bottom:1.25rem}
 </li>
 </ol>
 </div>
- &nbsp; &nbsp;<a class="bookmarklet" href="javascript:(function()%7Bjavascript%3A(function%20hello()%7Blet%20titleText%20%3D%20document.title%3Blet%20selStuff%20%3D%20document.getSelection()%3Blet%20elementSelected%20%3D%20selStuff.anchorNode.parentElement%3Blet%20commentid%20%3D%20elementSelected.getAttribute('id')%3Bwhile(!commentid%20%26%26%20elementSelected)%20%7Blet%20prevElement%20%3D%20elementSelected%3BelementSelected%20%3D%20elementSelected.previousElementSibling%20%3Bif(!elementSelected)%7BelementSelected%20%3D%20prevElement.parentElement%3B%7Dcommentid%20%20%3D%20elementSelected.getAttribute('id')%3B%7Dlet%20myUrl%20%3D%20document.location%3BmyUrl%20%3D%20myUrl.toString()%3Bif(commentid)%7Blet%20result%20%3D%20myUrl.indexOf(%22%23%22)%3Bif%20(result%20%3C%200)%20%7Bresult%20%3D%20myUrl.length%7D%3BmyUrl%20%3D%20myUrl.substr(0%2Cresult)%3BmyUrl%20%3D%20myUrl%2B%22%23%22%2Bcommentid%3B%7Dlet%20selText%20%3D%20selStuff.toString()%2B%22%22%3Bif%20(selText.length%20!%3D%200)%7BselText%20%3D%20%22%5Cn%3E%20%22%2BselText%3B%7D%3Bnavigator.clipboard.writeText(%22%5B%22%2BtitleText%2B%22%7C%22%2BmyUrl%2B%22%5D%22%2BselText%2B%22%22)%3Breturn%20false%7D())%7D)()">CommentCapture</a><br><br>
+ &nbsp; &nbsp;<a class="bookmarklet" href="javascript:(async()=>{const escapeLinkText=(value)=>value.replace(/\\/g,'\\\\').replace(/\[/g,'\\[').replace(/\]/g,'\\]');const quote=(value)=>value.split(/\r?\n/).map((line)=>`> ${line}`).join('\n');const selection=window.getSelection();const selectedText=selection?selection.toString().trim():'';const selectedNode=selection&&selection.rangeCount>0?selection.getRangeAt(0).commonAncestorContainer:null;let element=selectedNode&&selectedNode.nodeType===Node.ELEMENT_NODE?selectedNode:selectedNode?.parentElement;if(!element&&window.location.hash)element=document.getElementById(decodeURIComponent(window.location.hash.slice(1)));if(!element)element=document.activeElement||document.body;const target=element?.closest?.('[id]');if(!target?.id){window.alert('No nearby block ID found.');return}const url=new URL(window.location.href);url.hash=target.id;const title=escapeLinkText((document.title||url.href).replace(/\s+/g,' ').trim());const markdown=`[${title}](${url.href})${selectedText?`\n\n${quote(selectedText)}`:''}`; try{await navigator.clipboard.writeText(markdown)}catch(error){window.prompt('Copy Markdown link',markdown)}})()">CommentCapture</a><br><br>
 <div id="document--block-4" class="olist arabic">
 <ol class="arabic" start="2">
 <li id="document--block-5">
@@ -473,34 +473,37 @@ p{margin-bottom:1.25rem}
 <div id="feature-demonstrations--block-1" class="ulist">
 <ul>
 <li id="feature-demonstrations--block-2">
-<p><a href="test.html">Test document</a> - Shows semantic IDs, include boundaries, and attribute buttons</p>
+<p><a href="demo-table-rows.html">Table row anchors</a> - Long table with below-the-fold navigation (30 rows with individual IDs)</p>
 </li>
 <li id="feature-demonstrations--block-3">
-<p><a href="master.html">Master document demo</a> - Demonstrates attribute inheritance with <code>--master-attributes</code></p>
+<p><a href="test.html">Test document</a> - Shows semantic IDs, include boundaries, and attribute buttons</p>
 </li>
 <li id="feature-demonstrations--block-4">
-<p><a href="module.html">Module with master attributes</a> - Module rendered with attributes from master.adoc</p>
+<p><a href="master.html">Master document demo</a> - Demonstrates attribute inheritance with <code>--master-attributes</code></p>
 </li>
 <li id="feature-demonstrations--block-5">
-<p><a href="module-standalone.html">Module standalone</a> - Module without master attributes (undefined)</p>
+<p><a href="module.html">Module with master attributes</a> - Module rendered with attributes from master.adoc</p>
 </li>
 <li id="feature-demonstrations--block-6">
+<p><a href="module-standalone.html">Module standalone</a> - Module without master attributes (undefined)</p>
+</li>
+<li id="feature-demonstrations--block-7">
 <p><a href="module-combined.html">Module combined</a> - Module with master attributes + alternatives</p>
 </li>
 </ul>
 </div>
-<div id="feature-demonstrations--block-7" class="paragraph">
+<div id="feature-demonstrations--block-8" class="paragraph">
 <p>To use this package to convert your AsciiDoc to HTML, install it using</p>
 </div>
-<div id="feature-demonstrations--block-8" class="listingblock">
+<div id="feature-demonstrations--block-9" class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash">npm i -g @techwriter/asciidoc-comments</code></pre>
 </div>
 </div>
-<div id="feature-demonstrations--block-9" class="paragraph">
+<div id="feature-demonstrations--block-10" class="paragraph">
 <p>To convert your AsciiDoc files:</p>
 </div>
-<div id="feature-demonstrations--block-10" class="listingblock">
+<div id="feature-demonstrations--block-11" class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash">asciidoc-comments &lt;filename&gt;</code></pre>
 </div>
@@ -556,7 +559,7 @@ All values for <button type="button" class="attribute-substitution" data-attribu
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-08-17 11:34:17 +0100
+Last updated 2026-08-17 12:34:15 +0100
 </div>
 </div>
 </body>

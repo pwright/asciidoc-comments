@@ -439,6 +439,91 @@ p{margin-bottom:1.25rem}
 <h1>API Configuration Reference</h1>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<hr>
+<div id="usage-examples--include-1" class="include-boundary" style="margin-left: -40px;"><span style="color: red;">Start</span>: <code>module.adoc</code></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_guide">Installation Guide</h2>
+<div class="sectionbody">
+<div id="installation-guide--block-1" class="paragraph">
+<p>To install {product-short} version {version}, follow these steps.</p>
+</div>
+<div id="installation-guide--block-2" class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li id="installation-guide--block-3">
+<p>A system running Linux or macOS</p>
+</li>
+<li id="installation-guide--block-4">
+<p>{author} approved configuration</p>
+</li>
+<li id="installation-guide--block-5">
+<p>Network access to package repositories</p>
+</li>
+</ul>
+</div>
+<div id="installation-guide--block-6" class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li id="installation-guide--block-7">
+<p>Download {product-short}:</p>
+<div id="installation-guide--block-8" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">curl -O https://example.com/{product-short}/{version}/installer.sh</code></pre>
+</div>
+</div>
+</li>
+<li id="installation-guide--block-9">
+<p>Run the installer:</p>
+<div id="installation-guide--block-10" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">bash installer.sh</code></pre>
+</div>
+</div>
+</li>
+<li id="installation-guide--block-11">
+<p>Verify the installation:</p>
+<div id="installation-guide--block-12" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">{product-short} --version</code></pre>
+</div>
+</div>
+<div id="installation-guide--block-13" class="paragraph">
+<p>Expected output: <code>{product-short} {version}</code></p>
+</div>
+</li>
+</ol>
+</div>
+<div id="installation-guide--block-14" class="ulist">
+<div class="title">Additional resources</div>
+<ul>
+<li id="installation-guide--block-15">
+<p>{product-short} documentation: <a href="https://docs.example.com/{product-short}" class="bare">https://docs.example.com/{product-short}</a></p>
+</li>
+<li id="installation-guide--block-16">
+<p>Support contact: {author}</p>
+</li>
+</ul>
+</div>
+<div id="installation-guide--block-17" class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This module renders with attribute values from the point where it&#8217;s included in master.adoc. Try using <code>--master-attributes master.adoc module.adoc</code> to see the attributes from master.adoc applied here.
+</td>
+</tr>
+</table>
+</div>
+<div class="include-boundary" style="margin-left: -40px;"><span style="color: red;">End</span>: <code>module.adoc</code></div>
+<hr>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_configuration_parameters">Configuration Parameters</h2>
 <div class="sectionbody">
@@ -669,7 +754,7 @@ p{margin-bottom:1.25rem}
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-08-17 12:07:18 +0100
+Last updated 2026-08-17 12:24:48 +0100
 </div>
 </div>
 </body>
