@@ -5,7 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor.js 4.0.8">
-<title>Test Document</title>
+<meta name="author" content="Red Hat Documentation Team">
+<title>Installation Guide</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CNoto+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,217 +437,203 @@ p{margin-bottom:1.25rem}
 </head>
 <body class="article">
 <div id="header">
-<h1>Test Document</h1>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_features_demo">Features Demo</h2>
+<h2 id="_installation_guide">Installation Guide</h2>
 <div class="sectionbody">
-<div id="features-demo--block-1" class="paragraph">
-<p>Testing attribute substitution: <button type="button" class="attribute-substitution" data-attribute="test" data-value="Test attribute" title="test">Test attribute</button>.</p>
+<div id="installation-guide--block-1" class="paragraph">
+<p>To install <button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button> version <button type="button" class="attribute-substitution" data-attribute="version" data-value="1.2.3" title="version">1.2.3</button>, follow these steps.</p>
 </div>
-<div id="features-demo--block-2" class="paragraph">
-<p>When using <strong><button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button></strong>, you can deploy containers with ease.
-The current version is <button type="button" class="attribute-substitution" data-attribute="version" data-value="1.2.3" title="version">1.2.3</button>.</p>
+<div id="installation-guide--block-2" class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li id="installation-guide--block-3">
+<p>A system running Linux or macOS</p>
+</li>
+<li id="installation-guide--block-4">
+<p><button type="button" class="attribute-substitution" data-attribute="author" data-value="Red Hat Documentation Team" title="author">Red Hat Documentation Team</button> approved configuration</p>
+</li>
+<li id="installation-guide--block-5">
+<p>Network access to package repositories</p>
+</li>
+</ul>
 </div>
-<div id="features-demo--block-3" class="paragraph">
-<p>This paragraph has auto-generated semantic IDs.</p>
-</div>
-<div id="custom-id" class="paragraph">
-<p>This paragraph has an explicit ID.</p>
-</div>
-<div class="paragraph">
-<p>This paragraph opts out of semantic IDs.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_lists">Lists</h2>
-<div class="sectionbody">
-<div id="lists--block-1" class="olist arabic">
-<div class="title">Ordered list</div>
+<div id="installation-guide--block-6" class="olist arabic">
+<div class="title">Procedure</div>
 <ol class="arabic">
-<li id="lists--block-2">
-<p>First item</p>
+<li id="installation-guide--block-7">
+<p>Download <button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button>:</p>
+<div id="installation-guide--block-8" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">curl -O https://example.com/{product-short}/{version}/installer.sh</code></pre>
+</div>
+</div>
 </li>
-<li id="lists--block-3">
-<p>Second item</p>
-<div id="lists--block-4" class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li id="lists--block-5">
-<p>Nested item</p>
+<li id="installation-guide--block-9">
+<p>Run the installer:</p>
+<div id="installation-guide--block-10" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">bash installer.sh</code></pre>
+</div>
+</div>
 </li>
-<li id="lists--block-6">
-<p>Another nested item</p>
+<li id="installation-guide--block-11">
+<p>Verify the installation:</p>
+<div id="installation-guide--block-12" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">{product-short} --version</code></pre>
+</div>
+</div>
+<div id="installation-guide--block-13" class="paragraph">
+<p>Expected output: <code><button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button> <button type="button" class="attribute-substitution" data-attribute="version" data-value="1.2.3" title="version">1.2.3</button></code></p>
+</div>
 </li>
 </ol>
 </div>
-</li>
-</ol>
-</div>
-<div id="lists--block-7" class="ulist">
-<div class="title">Unordered list</div>
+<div id="installation-guide--block-14" class="ulist">
+<div class="title">Additional resources</div>
 <ul>
-<li id="lists--block-8">
-<p>Item one with <strong>bold</strong> and 'emphasis'</p>
+<li id="installation-guide--block-15">
+<p><button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button> documentation: <a href="https://docs.example.com/<button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button>" class="bare">https://docs.example.com/<button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button></a></p>
 </li>
-<li id="lists--block-9">
-<p>Item two with <sup>superscript</sup> and <sub>subscript</sub></p>
-</li>
-<li id="lists--block-10">
-<p>Item three</p>
+<li id="installation-guide--block-16">
+<p>Support contact: <button type="button" class="attribute-substitution" data-attribute="author" data-value="Red Hat Documentation Team" title="author">Red Hat Documentation Team</button></p>
 </li>
 </ul>
 </div>
-<div id="defs" class="dlist">
-<dl>
-<dt class="hdlist1">term</dt>
-<dd>
-<p>definition text</p>
-</dd>
-<dt class="hdlist1">another term</dt>
-<dd>
-<p>another definition</p>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_code_and_literals">Code and Literals</h2>
-<div class="sectionbody">
-<div id="code-and-literals--block-1" class="paragraph">
-<p>Install <button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button> tools:</p>
-</div>
-<div id="code-and-literals--block-2" class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">npm install @techwriter/asciidoc-comments</code></pre>
-</div>
-</div>
-<div id="code-and-literals--block-3" class="paragraph">
-<p>Or use <button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button> version <button type="button" class="attribute-substitution" data-attribute="version" data-value="1.2.3" title="version">1.2.3</button> directly.</p>
-</div>
-<div id="code-and-literals--block-4" class="literalblock">
-<div class="content">
-<pre>This is a literal block.
-It preserves spacing.</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_tables">Tables</h2>
-<div class="sectionbody">
-<table id="tables--block-1" class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col width="50%">
-<col width="50%">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Header 1</th>
-<th class="tableblock halign-left valign-top">Header 2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normal cell</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>AsciiDoc cell</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>List item</p>
-</li>
-<li>
-<p>Another item</p>
-</li>
-</ul>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_includes">Includes</h2>
-<div class="sectionbody">
-<div id="includes--block-1" class="paragraph">
-<p>Content before the include.</p>
-</div>
-<hr>
-<div id="'wrapup'--include-1" class="include-boundary" style="margin-left: -40px;"><span style="color: red;">Start</span>: <code>include.asciidoc.txt</code></div>
-<div id="includes--block-2" class="paragraph">
-<p>This text was included from the <code>include.asciidoc.txt</code> file.</p>
-</div>
-<div class="include-boundary" style="margin-left: -40px;"><span style="color: red;">End</span>: <code>include.asciidoc.txt</code></div>
-<hr>
-<div id="includes--block-3" class="paragraph">
-<p>Content after the include.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_admonitions_and_quotes">Admonitions and Quotes</h2>
-<div class="sectionbody">
-<div id="admonitions-and-quotes--block-1" class="admonitionblock note">
+<div id="installation-guide--block-17" class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
 <div class="title">Note</div>
 </td>
 <td class="content">
-This is a note admonition. Click any attribute button to see alternative values when using <code>--attribute-add alt.adoc</code>.
+This module renders with attribute values from the point where it&#8217;s included in master.adoc. Try using <code>--master-attributes master.adoc module.adoc</code> to see the attributes from master.adoc applied here.
 </td>
 </tr>
 </table>
-</div>
-<div id="admonitions-and-quotes--block-2" class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Tip</div>
-</td>
-<td class="content">
-When using <button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button>, check the version compatibility: <button type="button" class="attribute-substitution" data-attribute="version" data-value="1.2.3" title="version">1.2.3</button>.
-</td>
-</tr>
-</table>
-</div>
-<div class="quoteblock">
-<blockquote>
-<div id="admonitions-and-quotes--block-3" class="paragraph">
-<p>This is a quote block.</p>
-</div>
-</blockquote>
-<div class="attribution">
-&#8212; Author Name
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_cross_references">Cross-references</h2>
-<div class="sectionbody">
-<div id="cross-references--block-1" class="paragraph">
-<p>See the <a href="#defs">definition list</a> or jump to <a href="#wrapup">Wrap-up</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="wrapup">Wrap-up</h2>
-<div class="sectionbody">
-<div id="wrapup--block-1" class="paragraph">
-<p>Testing complete! Visit <a href="http://asciidoc.org" class="bare">http://asciidoc.org</a> for more info.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-08-17 11:12:09 +0100
+Last updated 2026-08-17 11:25:53 +0100
 </div>
 </div>
+
+<style>
+.attribute-substitution-menu {
+  position: absolute;
+  z-index: 1000;
+  margin-top: 2px;
+  font-family: inherit;
+  font-size: 0.9em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  background-color: white;
+  min-width: 150px;
+  max-width: 250px;
+  width: auto;
+}
+</style>
+<script>
+(() => {
+  const attributeOptions = {"test":{"default":"Test attribute","options":["Test attribute","test1","test2","test3"]},"product-short":{"default":"alternative-value","options":["alternative-value"]},"version":{"default":"1.2.3","options":["1.2.3","1.0.0","1.1.0","2.0.0"]}};
+  let menu;
+
+  function closeMenu() {
+    if (menu) menu.remove();
+    menu = null;
+  }
+
+  function setAttributeValue(name, value) {
+    document.querySelectorAll(`.attribute-substitution[data-attribute="${CSS.escape(name)}"]`).forEach((button) => {
+      button.textContent = value;
+      button.dataset.value = value;
+    });
+  }
+
+  function showMenu(button, name) {
+    closeMenu();
+    const config = attributeOptions[name];
+    if (!config) return;
+
+    // Build comprehensive list of all available options
+    const allOptions = [];
+    const currentValue = button.dataset.value;
+    const attributeRef = `{${name}}`;
+
+    // Add current value if it's different from other values
+    if (currentValue && currentValue !== attributeRef && currentValue !== config.default && !config.options.includes(currentValue)) {
+      allOptions.push(currentValue);
+    }
+
+    // Add attribute reference
+    allOptions.push(attributeRef);
+
+    // Add default value if it exists and is different from current value
+    if (config.default && config.default !== currentValue) {
+      allOptions.push(config.default);
+    }
+
+    // Add all configured options
+    for (const option of config.options) {
+      if (!allOptions.includes(option)) {
+        allOptions.push(option);
+      }
+    }
+
+    // Create native select dropdown
+    menu = document.createElement('select');
+    menu.className = 'attribute-substitution-menu';
+    menu.setAttribute('size', Math.min(allOptions.length, 10));
+
+    // Add placeholder option
+    const placeholder = document.createElement('option');
+    placeholder.textContent = `Select value for {${name}}...`;
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    menu.append(placeholder);
+
+    // Add all options
+    for (const option of allOptions) {
+      const optionElement = document.createElement('option');
+      optionElement.value = option;
+      optionElement.textContent = option;
+      menu.append(optionElement);
+    }
+
+    // Handle selection
+    menu.addEventListener('change', () => {
+      setAttributeValue(name, menu.value);
+      closeMenu();
+    });
+
+    // Close on blur
+    menu.addEventListener('blur', () => {
+      closeMenu();
+    });
+
+    button.insertAdjacentElement('afterend', menu);
+    menu.focus();
+  }
+
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest?.('.attribute-substitution');
+    if (!button) {
+      if (!event.target.closest?.('.attribute-substitution-menu')) closeMenu();
+      return;
+    }
+
+    const name = button.dataset.attribute;
+    if (!attributeOptions[name]) return;
+    event.preventDefault();
+    showMenu(button, name);
+  });
+})();
+</script>
 </body>
 </html>

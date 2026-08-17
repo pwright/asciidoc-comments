@@ -14,7 +14,7 @@ convert FILE OUTPUT="output.html":
 
 # Convert with attribute options
 convert-with-options FILE OPTIONS OUTPUT="output.html":
-    node index.js --attribute-options "{{OPTIONS}}" "{{FILE}}" > "{{OUTPUT}}"
+    node index.js --attribute-add "{{OPTIONS}}" "{{FILE}}" > "{{OUTPUT}}"
     @echo "✅ Converted {{FILE}} with options → {{OUTPUT}}"
 
 # Convert all assembly files in a specific directory
@@ -92,7 +92,7 @@ convert-assemblies-with-options CATEGORY OPTIONS OUTPUT_DIR="build/assemblies":
     for file in dist/test/assemblies/{{CATEGORY}}/*.adoc; do
         if [ -f "$file" ]; then
             basename=$(basename "$file" .adoc)
-            node index.js --attribute-options "{{OPTIONS}}" "$file" > "{{OUTPUT_DIR}}/{{CATEGORY}}/${basename}.html" 2>&1 || echo "⚠️  Failed: $file"
+            node index.js --attribute-add "{{OPTIONS}}" "$file" > "{{OUTPUT_DIR}}/{{CATEGORY}}/${basename}.html" 2>&1 || echo "⚠️  Failed: $file"
             count=$((count + 1))
         fi
     done
@@ -184,7 +184,7 @@ test-sample:
 
 # Test with attribute options
 test-with-options:
-    node index.js --attribute-options test-options.json test-doc.adoc -o build/test-with-options.html
+    node index.js --attribute-add test-options.json test-doc.adoc -o build/test-with-options.html
     @echo "✅ Testing attribute buttons"
     @grep -c '<button.*attribute-substitution' build/test-with-options.html && echo "Buttons found" || echo "No buttons"
 
@@ -330,7 +330,7 @@ convert-titles OUTPUT_DIR="build/titles-demo":
             title=$(basename "$title_dir")
             echo "[$((count + 1))/$total] Processing: $title"
 
-            node index.js --attribute-options rhdh-test.json "${title_dir}master.adoc" > "{{OUTPUT_DIR}}/${title}.html" 2>&1 || echo "  ⚠️  Failed: $title"
+            node index.js --attribute-add rhdh-test.json "${title_dir}master.adoc" > "{{OUTPUT_DIR}}/${title}.html" 2>&1 || echo "  ⚠️  Failed: $title"
             count=$((count + 1))
         fi
     done
@@ -544,11 +544,36 @@ convert-docs-demo OUTPUT_DIR="docs":
     for file in docs/*.adoc; do
         if [ -f "$file" ]; then
             basename=$(basename "$file" .adoc)
-            echo "Converting: $basename.adoc (with attribute buttons)"
-            node index.js --attribute-options docs.json "$file" > "{{OUTPUT_DIR}}/${basename}.html" 2>&1 || echo "  ⚠️  Failed: $file"
+
+            # Skip module.adoc - we'll handle it specially
+            if [ "$basename" = "module" ]; then
+                continue
+            fi
+
+            echo "Converting: $basename.adoc"
+            node index.js "$file" > "{{OUTPUT_DIR}}/${basename}.html" || echo "  ⚠️  Failed: $file"
             count=$((count + 1))
         fi
     done
+
+    # Special handling for module.adoc to demonstrate --master-attributes
+    echo ""
+    echo "📋 Demonstrating --master-attributes feature with module.adoc:"
+    echo ""
+
+    # 1. Module with master attributes (this is the main module.html)
+    echo "  1. module.adoc with --master-attributes master.adoc"
+    node index.js --master-attributes docs/master.adoc docs/module.adoc > "{{OUTPUT_DIR}}/module.html" || echo "     ⚠️  Failed"
+
+    # 2. Standalone module (no master attributes)
+    echo "  2. module.adoc standalone (no attributes)"
+    node index.js docs/module.adoc > "{{OUTPUT_DIR}}/module-standalone.html" || echo "     ⚠️  Failed"
+
+    # 3. Module with master attributes AND alternatives
+    echo "  3. module.adoc with --master-attributes + --attribute-add"
+    node index.js --master-attributes docs/master.adoc --attribute-add alt.adoc docs/module.adoc > "{{OUTPUT_DIR}}/module-combined.html" || echo "     ⚠️  Failed"
+
+    count=$((count + 3))
 
     echo ""
     echo "✅ Converted $count docs files with interactive attribute buttons"
@@ -559,12 +584,64 @@ convert-docs-demo OUTPUT_DIR="docs":
     echo "  • Include boundaries: $(grep -c 'include-boundary' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') markers"
     echo "  • Attribute buttons: $(grep -c 'attribute-substitution' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') interactive buttons"
     echo ""
-    echo "Open {{OUTPUT_DIR}}/test.html in a browser to test all features"
+    echo "Files to compare:"
+    echo "  master.html              - Full master document with includes"
+    echo "  module.html              - Module with master attributes (Developer Hub, 1.2.3)"
+    echo "  module-standalone.html   - Module without master attributes (undefined)"
+    echo "  module-combined.html     - Module with master + alternatives (interactive)"
+    echo ""
+    echo "To view the demo:"
+    echo "  just serve"
+    echo ""
+    echo "Then open: http://localhost:8000/index.html"
+
+# Convert docs/*.adoc with attribute alternatives from alt.adoc
+convert-docs-alt OUTPUT_DIR="docs":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    mkdir -p "{{OUTPUT_DIR}}"
+
+    count=0
+    for file in docs/*.adoc; do
+        if [ -f "$file" ]; then
+            basename=$(basename "$file" .adoc)
+            echo "Converting: $basename.adoc (with AsciiDoc attribute alternatives)"
+            node index.js --attribute-add alt.adoc "$file" > "{{OUTPUT_DIR}}/${basename}.html" 2>&1 || echo "  ⚠️  Failed: $file"
+            count=$((count + 1))
+        fi
+    done
+
+    echo ""
+    echo "✅ Converted $count docs files with AsciiDoc-based attribute alternatives"
+    echo "   Output directory: {{OUTPUT_DIR}}"
+    echo ""
+    echo "Features demonstrated:"
+    echo "  • Semantic IDs: $(grep -c 'id=".*--block-' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') block IDs"
+    echo "  • Include boundaries: $(grep -c 'include-boundary' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') markers"
+    echo "  • Attribute buttons: $(grep -c 'attribute-substitution' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') interactive buttons"
+    echo ""
+    echo "Alternative values from alt.adoc:"
+    echo "  • product-short: Developer Hub | podman | docker | kubernetes"
+    echo "  • version: 1.2.3 | 1.0.0 | 1.1.0 | 2.0.0"
+    echo ""
+    echo "Open {{OUTPUT_DIR}}/test.html in a browser and click attribute buttons to test"
 
 # Install dependencies (if needed)
 install:
     npm install
     @echo "✅ Dependencies installed"
+
+# Serve docs/ directory on localhost:8000
+serve PORT="8000":
+    #!/usr/bin/env bash
+    echo "🌐 Serving docs/ at http://localhost:{{PORT}}"
+    echo ""
+    echo "  Index:  http://localhost:{{PORT}}/index.html"
+    echo "  Master: http://localhost:{{PORT}}/master.html"
+    echo "  Test:   http://localhost:{{PORT}}/test.html"
+    echo ""
+    echo "Press Ctrl+C to stop"
+    cd docs && python3 -m http.server {{PORT}} 2>/dev/null || python -m SimpleHTTPServer {{PORT}}
 
 # Run all tests
 test: test-sample test-with-options test-includes
@@ -578,3 +655,45 @@ test-title-buttons TITLE="configure_configuring-rhdh":
     @grep -c 'attribute-substitution' build/titles-demo/{{TITLE}}.html || echo "0"
     @echo "Unique buttonized attributes:"
     @grep -o 'data-attribute="[^"]*"' build/titles-demo/{{TITLE}}.html | sed 's/data-attribute="\([^"]*\)"/\1/' | sort -u | head -10
+
+# Test --master-attributes feature
+test-master-attributes:
+    #!/usr/bin/env bash
+    set -e
+    mkdir -p build/test
+
+    echo "Testing --master-attributes feature..."
+    echo ""
+
+    # Test 1: Basic master attributes
+    node index.js --master-attributes test-master.adoc docs/test.adoc > build/test/test-master.html
+
+    product=$(grep -o 'data-value="Developer Hub"' build/test/test-master.html | head -1)
+    version=$(grep -o 'data-value="1.2.3"' build/test/test-master.html | head -1)
+
+    if [ -n "$product" ] && [ -n "$version" ]; then
+        echo "✅ Master attributes extracted correctly"
+        echo "   product-short: Developer Hub (from master.adoc)"
+        echo "   version: 1.2.3 (from master.adoc)"
+    else
+        echo "❌ Master attributes not found"
+        exit 1
+    fi
+    echo ""
+
+    # Test 2: Combined with attribute-add
+    node index.js --master-attributes test-master.adoc --attribute-add alt.adoc docs/test.adoc > build/test/test-combined.html
+
+    options=$(grep -o 'attributeOptions = {' build/test/test-combined.html)
+    if [ -n "$options" ]; then
+        echo "✅ Combined master-attributes + attribute-add works"
+        echo "   Baseline values from test-master.adoc"
+        echo "   Alternative values from alt.adoc"
+    else
+        echo "❌ Combined mode failed"
+        exit 1
+    fi
+    echo ""
+    echo "Output files:"
+    echo "  build/test/test-master.html (master attributes only)"
+    echo "  build/test/test-combined.html (master + alternatives)"

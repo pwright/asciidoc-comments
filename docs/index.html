@@ -455,7 +455,7 @@ p{margin-bottom:1.25rem}
 <div id="document--block-4" class="olist arabic">
 <ol class="arabic" start="2">
 <li id="document--block-5">
-<p>Navigate to <a href="test.html">Test document</a>.</p>
+<p>Navigate to <a href="test.html">Test document</a> or <a href="master.html">Master document demo</a>.</p>
 </li>
 <li id="document--block-6">
 <p>Highlight some text and click bookmarklet.</p>
@@ -465,18 +465,42 @@ p{margin-bottom:1.25rem}
 <div id="document--block-7" class="paragraph">
 <p>Each block is unique addressable as a url, eg <a href="test.html#comment_90">a block lower in the document</a>.</p>
 </div>
-<div id="document--block-8" class="paragraph">
+</div>
+</div>
+<div class="sect1">
+<h2 id="_feature_demonstrations">Feature Demonstrations</h2>
+<div class="sectionbody">
+<div id="feature-demonstrations--block-1" class="ulist">
+<ul>
+<li id="feature-demonstrations--block-2">
+<p><a href="test.html">Test document</a> - Shows semantic IDs, include boundaries, and attribute buttons</p>
+</li>
+<li id="feature-demonstrations--block-3">
+<p><a href="master.html">Master document demo</a> - Demonstrates attribute inheritance with <code>--master-attributes</code></p>
+</li>
+<li id="feature-demonstrations--block-4">
+<p><a href="module.html">Module with master attributes</a> - Module rendered with attributes from master.adoc</p>
+</li>
+<li id="feature-demonstrations--block-5">
+<p><a href="module-standalone.html">Module standalone</a> - Module without master attributes (undefined)</p>
+</li>
+<li id="feature-demonstrations--block-6">
+<p><a href="module-combined.html">Module combined</a> - Module with master attributes + alternatives</p>
+</li>
+</ul>
+</div>
+<div id="feature-demonstrations--block-7" class="paragraph">
 <p>To use this package to convert your AsciiDoc to HTML, install it using</p>
 </div>
-<div id="document--block-9" class="listingblock">
+<div id="feature-demonstrations--block-8" class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash">npm i -g @techwriter/asciidoc-comments</code></pre>
 </div>
 </div>
-<div id="document--block-10" class="paragraph">
+<div id="feature-demonstrations--block-9" class="paragraph">
 <p>To convert your AsciiDoc files:</p>
 </div>
-<div id="document--block-11" class="listingblock">
+<div id="feature-demonstrations--block-10" class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash">asciidoc-comments &lt;filename&gt;</code></pre>
 </div>
@@ -510,10 +534,20 @@ p{margin-bottom:1.25rem}
 </div>
 <div id="attribute-button-options--block-5" class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">asciidoc-comments --attribute-options options.json &lt;filename&gt;</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">asciidoc-comments --attribute-add options.json &lt;filename&gt;</code></pre>
 </div>
 </div>
 <div id="attribute-button-options--block-6" class="paragraph">
+<p>You can also use AsciiDoc format for alternatives:</p>
+</div>
+<div id="attribute-button-options--block-7" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">:product-short: Developer Hub
+:product-short: podman
+:product-short: docker</code></pre>
+</div>
+</div>
+<div id="attribute-button-options--block-8" class="paragraph">
 <p>When readers click an attribute button, they see a list of configured options. Selecting a value updates all instances of that attribute throughout the page.
 All values for <button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Container tools" title="product-short">Container tools</button> are affected.</p>
 </div>
@@ -522,121 +556,8 @@ All values for <button type="button" class="attribute-substitution" data-attribu
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-08-17 09:45:09 +0100
+Last updated 2026-08-17 11:34:17 +0100
 </div>
 </div>
-
-<style>
-.attribute-substitution-menu {
-  position: absolute;
-  z-index: 1000;
-  margin-top: 2px;
-  font-family: inherit;
-  font-size: 0.9em;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  background-color: white;
-  min-width: 150px;
-  max-width: 250px;
-  width: auto;
-}
-</style>
-<script>
-(() => {
-  const attributeOptions = {"test":{"default":"Test attribute","options":["test1","test2","test3"]},"product-short":{"default":"Container Tools","options":["podman","docker","kubernetes"]}};
-  let menu;
-
-  function closeMenu() {
-    if (menu) menu.remove();
-    menu = null;
-  }
-
-  function setAttributeValue(name, value) {
-    document.querySelectorAll(`.attribute-substitution[data-attribute="${CSS.escape(name)}"]`).forEach((button) => {
-      button.textContent = value;
-      button.dataset.value = value;
-    });
-  }
-
-  function showMenu(button, name) {
-    closeMenu();
-    const config = attributeOptions[name];
-    if (!config) return;
-
-    // Build comprehensive list of all available options
-    const allOptions = [];
-    const currentValue = button.dataset.value;
-    const attributeRef = `{${name}}`;
-
-    // Add current value if it's different from other values
-    if (currentValue && currentValue !== attributeRef && currentValue !== config.default && !config.options.includes(currentValue)) {
-      allOptions.push(currentValue);
-    }
-
-    // Add attribute reference
-    allOptions.push(attributeRef);
-
-    // Add default value if it exists and is different from current value
-    if (config.default && config.default !== currentValue) {
-      allOptions.push(config.default);
-    }
-
-    // Add all configured options
-    for (const option of config.options) {
-      if (!allOptions.includes(option)) {
-        allOptions.push(option);
-      }
-    }
-
-    // Create native select dropdown
-    menu = document.createElement('select');
-    menu.className = 'attribute-substitution-menu';
-    menu.setAttribute('size', Math.min(allOptions.length, 10));
-
-    // Add placeholder option
-    const placeholder = document.createElement('option');
-    placeholder.textContent = `Select value for {${name}}...`;
-    placeholder.disabled = true;
-    placeholder.selected = true;
-    menu.append(placeholder);
-
-    // Add all options
-    for (const option of allOptions) {
-      const optionElement = document.createElement('option');
-      optionElement.value = option;
-      optionElement.textContent = option;
-      menu.append(optionElement);
-    }
-
-    // Handle selection
-    menu.addEventListener('change', () => {
-      setAttributeValue(name, menu.value);
-      closeMenu();
-    });
-
-    // Close on blur
-    menu.addEventListener('blur', () => {
-      closeMenu();
-    });
-
-    button.insertAdjacentElement('afterend', menu);
-    menu.focus();
-  }
-
-  document.addEventListener('click', (event) => {
-    const button = event.target.closest?.('.attribute-substitution');
-    if (!button) {
-      if (!event.target.closest?.('.attribute-substitution-menu')) closeMenu();
-      return;
-    }
-
-    const name = button.dataset.attribute;
-    if (!attributeOptions[name]) return;
-    event.preventDefault();
-    showMenu(button, name);
-  });
-})();
-</script>
 </body>
 </html>

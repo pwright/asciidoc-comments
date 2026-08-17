@@ -12,11 +12,19 @@ This package allows you to add unique IDs to each AsciiDoc block.
 
 
 [start=2]
-. Navigate to xref:test.adoc[Test document].
+. Navigate to xref:test.adoc[Test document] or xref:master.adoc[Master document demo].
 
 . Highlight some text and click bookmarklet.
 
 Each block is unique addressable as a url, eg xref:test.adoc#comment_90[a block lower in the document].
+
+== Feature Demonstrations
+
+* xref:test.adoc[Test document] - Shows semantic IDs, include boundaries, and attribute buttons
+* xref:master.adoc[Master document demo] - Demonstrates attribute inheritance with `--master-attributes`
+* link:module.html[Module with master attributes] - Module rendered with attributes from master.adoc
+* link:module-standalone.html[Module standalone] - Module without master attributes (undefined)
+* link:module-combined.html[Module combined] - Module with master attributes + alternatives
 
 To use this package to convert your AsciiDoc to HTML, install it using
 
@@ -55,7 +63,16 @@ Then render with the options file:
 
 [source,bash]
 ----
-asciidoc-comments --attribute-options options.json <filename>
+asciidoc-comments --attribute-add options.json <filename>
+----
+
+You can also use AsciiDoc format for alternatives:
+
+[source,asciidoc]
+----
+:product-short: Developer Hub
+:product-short: podman
+:product-short: docker
 ----
 
 When readers click an attribute button, they see a list of configured options. Selecting a value updates all instances of that attribute throughout the page.

@@ -66,11 +66,31 @@ const html = await convertFile('document.adoc', {
 asciidoc-comments <filename>.adoc
 ```
 
-To enable alternative values for attribute buttons, pass an options file:
+### Render with master.adoc attributes
+
+When a module is included in master.adoc, attributes may be redefined before the inclusion point. To render the module with the attribute values from master.adoc at its inclusion point:
 
 ```bash
-asciidoc-comments --attribute-options rhdh-test.json <filename>.adoc
+asciidoc-comments --master-attributes master.adoc module.adoc
 ```
+
+This extracts attributes from master.adoc up to the point where module.adoc is included, so the standalone module renders with the same attribute values it would have in the full document.
+
+### Add alternative attribute values
+
+To enable alternative values for attribute buttons, pass an options file (either `.adoc` or `.json` format):
+
+```bash
+asciidoc-comments --attribute-add alternatives.adoc <filename>.adoc
+```
+
+### Combine both features
+
+```bash
+asciidoc-comments --master-attributes master.adoc --attribute-add alternatives.adoc module.adoc
+```
+
+This renders the module with master.adoc's attributes as the baseline, while offering alternative values in the UI dropdowns.
 
 ## Bookmarklet
 
@@ -126,7 +146,18 @@ Disable attribute substitution buttons for a document:
 ```
 
 To offer alternative values when a reader clicks an attribute button, define the
-values in a JSON file:
+values in an AsciiDoc file by repeating attribute definitions:
+
+```asciidoc
+:product-short: Developer Hub
+:product-short: podman
+:product-short: docker
+:product-short: kubernetes
+```
+
+The first definition becomes the default, and all definitions appear as options in the UI dropdown.
+
+Alternatively, use JSON format:
 
 ```json
 {
@@ -143,7 +174,7 @@ values in a JSON file:
 Then render with:
 
 ```bash
-asciidoc-comments --attribute-options rhdh-test.json <filename>.adoc
+asciidoc-comments --attribute-add alternatives.adoc <filename>.adoc
 ```
 
 Clicking any `product-short` button opens the configured list. Choosing a value

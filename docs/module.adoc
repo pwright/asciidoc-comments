@@ -1,0 +1,44 @@
+// This is a module that gets included in master.adoc
+// Demonstrates attribute inheritance from master.adoc
+
+== Installation Guide
+
+To install {product-short} version {version}, follow these steps.
+
+.Prerequisites
+
+* A system running Linux or macOS
+* {author} approved configuration
+* Network access to package repositories
+
+.Procedure
+
+. Download {product-short}:
++
+[source,bash]
+----
+curl -O https://example.com/{product-short}/{version}/installer.sh
+----
+
+. Run the installer:
++
+[source,bash]
+----
+bash installer.sh
+----
+
+. Verify the installation:
++
+[source,bash]
+----
+{product-short} --version
+----
++
+Expected output: `{product-short} {version}`
+
+.Additional resources
+
+* {product-short} documentation: https://docs.example.com/{product-short}
+* Support contact: {author}
+
+NOTE: This module renders with attribute values from the point where it's included in master.adoc. Try using `--master-attributes master.adoc module.adoc` to see the attributes from master.adoc applied here.
