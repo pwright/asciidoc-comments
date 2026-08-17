@@ -187,3 +187,39 @@ include::partials/setup.adoc[include-boundary=false]
 When visible markers are disabled, the processor still inserts an invisible
 semantic boundary ID before the include so the first rendered block from the
 include remains addressable as `install--include-1`.
+
+### Nested includes
+
+By default, include boundaries are rendered **recursively for all nested includes**.
+For example, if `master.adoc` includes `chapter.adoc`, which itself includes
+`section.adoc`, both include directives will get boundary markers.
+
+This is implemented using an `includeProcessor` that reads and wraps each include
+file's content before passing it back to Asciidoctor for further processing.
+
+**Limitations:**
+
+- The processor bypasses Asciidoctor's built-in include resolution, so advanced
+  include directive attributes like `tag`, `tags`, `lines`, and `indent` are
+  **not currently supported**.
+- Only basic file includes work. Includes with line filtering or tag selection
+  will include the entire file.
+
+### One-level includes mode
+
+For simpler use cases or when you need Asciidoctor's full include directive
+support, use `--one-level-includes`:
+
+```bash
+asciidoc-comments --one-level-includes <filename>.adoc
+```
+
+This uses a preprocessor-based approach that:
+- ✅ Only renders boundaries for **top-level includes** (includes in the main document)
+- ✅ Fully supports all Asciidoctor include directive attributes (`tag`, `tags`, `lines`, etc.)
+- ❌ Does **not** render boundaries for nested includes (includes within included files)
+
+**When to use `--one-level-includes`:**
+- You need `tag`, `tags`, `lines`, or other advanced include directive features
+- Your documentation structure is flat (no nested includes)
+- You only care about top-level assembly boundaries, not module-level nesting

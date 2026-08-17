@@ -104,8 +104,8 @@ include::partials/intro.adoc[]
     { base_dir: dir },
   )
 
-  assert.match(html, /<hr>\n<div id="install--include-1" class="include-boundary">Start include: <code>partials\/intro.adoc<\/code><\/div>/)
-  assert.match(html, /Included paragraph\.[\s\S]*<div class="include-boundary">End include: <code>partials\/intro.adoc<\/code><\/div>\n<hr>/)
+  assert.match(html, /<hr>\n<div id="install--include-1" class="include-boundary" style="margin-left: -40px;"><span style="color: red;">Start<\/span>: <code>partials\/intro.adoc<\/code><\/div>/)
+  assert.match(html, /Included paragraph\.[\s\S]*<div class="include-boundary" style="margin-left: -40px;"><span style="color: red;">End<\/span>: <code>partials\/intro.adoc<\/code><\/div>\n<hr>/)
 })
 
 test('uses explicit heading ids for include-boundary bases before the AST exists', async () => {

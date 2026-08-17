@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+
 const DEFAULT_OPTIONS = {
   disableAttribute: 'no-semantic-ids',
   controlAttribute: 'semantic-id',
@@ -6,6 +9,7 @@ const DEFAULT_OPTIONS = {
   disableAttributeButtonsAttribute: 'no-attribute-buttons',
   attributeOptions: null,
   idSeparator: '-',
+  oneLevelIncludes: false,
 }
 
 const ELIGIBLE_CONTEXTS = new Set([
@@ -40,64 +44,181 @@ function escapeRegExp(value) {
 export function register(registry, options = {}) {
   const config = { ...DEFAULT_OPTIONS, ...options }
 
-  registry.preprocessor(function () {
-    this.process(function (doc, reader) {
-      if (isDocumentDisabled(doc, config)) return reader
+  // Shared state for include tracking
+  const includeCounters = new Map()
+  const sectionStack = []
 
-      const lines = reader.lines
-      const rewritten = []
-      const sectionStack = []
-      let pendingLines = []
-      let includeBoundariesEnabled = !hasAttribute(doc, config.disableIncludeBoundariesAttribute)
-      let attributeButtonsEnabled = !hasAttribute(doc, config.disableAttributeButtonsAttribute)
-      let delimitedBlock = null
-      const includeCounters = new Map()
+  // Use includeProcessor for nested includes unless oneLevelIncludes is true
+  if (!config.oneLevelIncludes) {
+    // Track sections via preprocessor to maintain section context for ID generation
+    registry.preprocessor(function () {
+      this.process(function (doc, reader) {
+        if (isDocumentDisabled(doc, config)) return reader
 
-      for (const line of lines) {
-        if (isDisableIncludeBoundariesAttributeLine(line, config)) {
-          includeBoundariesEnabled = false
-        }
-        if (isDisableAttributeButtonsAttributeLine(line, config)) {
-          attributeButtonsEnabled = false
-        }
+        const lines = reader.lines
+        let pendingLines = []
 
-        const heading = parseHeading(line)
-        if (heading) {
-          updateSectionStack(heading, sectionStack, pendingLines, config)
-          pendingLines = []
+        for (const line of lines) {
+          const heading = parseHeading(line)
+          if (heading) {
+            updateSectionStack(heading, sectionStack, pendingLines, config)
+            pendingLines = []
+          }
+          pendingLines = nextPendingLines(line, pendingLines)
         }
 
-        const include = parseIncludeDirective(line)
-        const shouldAddIncludeBoundary = include && !isOptOutLine(rewritten, config)
-        const shouldShowVisibleIncludeBoundary = shouldAddIncludeBoundary && shouldShowIncludeBoundary(include, includeBoundariesEnabled, config)
+        return reader
+      })
+    })
 
-        if (shouldAddIncludeBoundary) {
+    registry.includeProcessor(function () {
+      const self = this
+      self.handles(function () {
+        return true
+      })
+      self.process(function (doc, reader, target, attrs) {
+        if (isDocumentDisabled(doc, config)) {
+          // Let default processor handle it
+          return
+        }
+
+        const includeBoundariesEnabled = !hasAttribute(doc, config.disableIncludeBoundariesAttribute)
+        const shouldShowBoundary = includeBoundariesEnabled && !hasFalseAttribute(attrs, config.includeBoundaryAttribute)
+
+        // Get directory from reader cursor
+        const dir = reader._dir || reader.dir || reader.cursor?.dir
+        if (!dir) {
+          // No directory context, let default processor handle it
+          return
+        }
+
+        const filePath = join(dir, target)
+
+        let content
+        try {
+          content = readFileSync(filePath, 'utf8')
+        } catch (err) {
+          // File doesn't exist - let default processor handle the error
+          return
+        }
+
+        const lines = content.trimEnd().split('\n')
+
+        if (shouldShowBoundary) {
           const sectionBase = currentSectionBase(sectionStack)
           const index = increment(includeCounters, sectionBase)
           const includeId = `${sectionBase}--include-${index}`
-          if (shouldShowVisibleIncludeBoundary) {
-            rewritten.push(...includeBoundaryBlock(includeId, 'Start', include.target, { hrBefore: true }))
-          } else {
-            rewritten.push(`[[${includeId}]]`)
-            rewritten.push('')
-          }
+          const wrappedLines = [
+            '++++',
+            '<hr>',
+            `<div id="${escapeHtml(includeId)}" class="include-boundary" style="margin-left: -40px;"><span style="color: red;">Start</span>: <code>${escapeHtml(target)}</code></div>`,
+            '++++',
+            '',
+            ...lines,
+            '',
+            '++++',
+            `<div class="include-boundary" style="margin-left: -40px;"><span style="color: red;">End</span>: <code>${escapeHtml(target)}</code></div>`,
+            '<hr>',
+            '++++',
+          ]
+          reader.pushInclude(wrappedLines, filePath, target, 1, attrs)
+        } else {
+          reader.pushInclude(lines, filePath, target, 1, attrs)
         }
 
-        const shouldRewriteAttributes = attributeButtonsEnabled
-          && !delimitedBlock
-          && !include
-          && !isAttributeDeclaration(line)
-        rewritten.push(shouldRewriteAttributes ? buttonizeAttributeReferences(line) : line)
-        if (shouldShowVisibleIncludeBoundary) {
-          rewritten.push(...includeBoundaryBlock(null, 'End', include.target, { hrAfter: true }))
-        }
-        delimitedBlock = nextDelimitedBlock(line, delimitedBlock)
-        pendingLines = nextPendingLines(line, pendingLines)
-      }
-
-      return new reader.constructor(doc, rewritten, reader.getCursor(), { normalize: true })
+        return reader
+      })
     })
-  })
+  } else {
+    // One-level includes mode: use preprocessor for top-level includes only
+    registry.preprocessor(function () {
+      this.process(function (doc, reader) {
+        if (isDocumentDisabled(doc, config)) return reader
+
+        const lines = reader.lines
+        const rewritten = []
+        const sectionStack = []
+        let pendingLines = []
+        let includeBoundariesEnabled = !hasAttribute(doc, config.disableIncludeBoundariesAttribute)
+        let attributeButtonsEnabled = !hasAttribute(doc, config.disableAttributeButtonsAttribute)
+        let delimitedBlock = null
+        const includeCounters = new Map()
+
+        for (const line of lines) {
+          if (isDisableIncludeBoundariesAttributeLine(line, config)) {
+            includeBoundariesEnabled = false
+          }
+          if (isDisableAttributeButtonsAttributeLine(line, config)) {
+            attributeButtonsEnabled = false
+          }
+
+          const heading = parseHeading(line)
+          if (heading) {
+            updateSectionStack(heading, sectionStack, pendingLines, config)
+            pendingLines = []
+          }
+
+          const include = parseIncludeDirective(line)
+          const shouldAddIncludeBoundary = include && !isOptOutLine(rewritten, config)
+          const shouldShowVisibleIncludeBoundary = shouldAddIncludeBoundary && shouldShowIncludeBoundary(include, includeBoundariesEnabled, config)
+
+          if (shouldAddIncludeBoundary) {
+            const sectionBase = currentSectionBase(sectionStack)
+            const index = increment(includeCounters, sectionBase)
+            const includeId = `${sectionBase}--include-${index}`
+            if (shouldShowVisibleIncludeBoundary) {
+              rewritten.push(...includeBoundaryBlock(includeId, 'Start', include.target, { hrBefore: true }))
+            } else {
+              rewritten.push(`[[${includeId}]]`)
+              rewritten.push('')
+            }
+          }
+
+          const shouldRewriteAttributes = attributeButtonsEnabled
+            && !delimitedBlock
+            && !include
+            && !isAttributeDeclaration(line)
+          rewritten.push(shouldRewriteAttributes ? buttonizeAttributeReferences(line) : line)
+          if (shouldShowVisibleIncludeBoundary) {
+            rewritten.push(...includeBoundaryBlock(null, 'End', include.target, { hrAfter: true }))
+          }
+          delimitedBlock = nextDelimitedBlock(line, delimitedBlock)
+          pendingLines = nextPendingLines(line, pendingLines)
+        }
+
+        return new reader.constructor(doc, rewritten, reader.getCursor(), { normalize: true })
+      })
+    })
+  }
+
+  // Attribute button handling (only in includeProcessor mode, since preprocessor mode handles it inline)
+  if (!config.oneLevelIncludes) {
+    registry.preprocessor(function () {
+      this.process(function (doc, reader) {
+        if (isDocumentDisabled(doc, config)) return reader
+
+        const lines = reader.lines
+        const rewritten = []
+        let attributeButtonsEnabled = !hasAttribute(doc, config.disableAttributeButtonsAttribute)
+        let delimitedBlock = null
+
+        for (const line of lines) {
+          if (isDisableAttributeButtonsAttributeLine(line, config)) {
+            attributeButtonsEnabled = false
+          }
+
+          const shouldRewriteAttributes = attributeButtonsEnabled
+            && !delimitedBlock
+            && !parseIncludeDirective(line)
+            && !isAttributeDeclaration(line)
+          rewritten.push(shouldRewriteAttributes ? buttonizeAttributeReferences(line) : line)
+          delimitedBlock = nextDelimitedBlock(line, delimitedBlock)
+        }
+
+        return new reader.constructor(doc, rewritten, reader.getCursor(), { normalize: true })
+      })
+    })
+  }
 
   registry.treeProcessor(function () {
     this.process(function (doc) {
@@ -152,6 +273,12 @@ function shouldShowIncludeBoundary(include, includeBoundariesEnabled, config) {
 }
 
 function hasFalseAttribute(attributes, name) {
+  // Handle object attrs from includeProcessor
+  if (typeof attributes === 'object' && attributes !== null && !Array.isArray(attributes)) {
+    const value = attributes[name]
+    return value === false || value === 'false'
+  }
+  // Handle string attrs from preprocessor
   const pattern = new RegExp(`(?:^|,)\\s*${escapeRegExp(name)}\\s*=\\s*false(?:\\s*,|$)`)
   return pattern.test(String(attributes))
 }

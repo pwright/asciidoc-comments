@@ -9,16 +9,16 @@ export { register }
 export { default } from './add-id-processor.js'
 
 async function main() {
-  const { file, attributeOptionsFile } = parseArgs(process.argv.slice(2))
+  const { file, attributeOptionsFile, oneLevelIncludes } = parseArgs(process.argv.slice(2))
   if (!file) {
-    console.error('Usage: asciidoc-comments [--attribute-options options.json] <file.adoc>')
+    console.error('Usage: asciidoc-comments [--attribute-options options.json] [--one-level-includes] <file.adoc>')
     process.exitCode = 1
     return
   }
 
   const attributeOptions = attributeOptionsFile ? readJson(attributeOptionsFile) : null
   const registry = Extensions.create()
-  register(registry, { attributeOptions })
+  register(registry, { attributeOptions, oneLevelIncludes })
   const output = await convertFile(file, {
     extension_registry: registry,
     safe: 'unsafe',
@@ -33,6 +33,7 @@ function parseArgs(args) {
   const result = {
     file: null,
     attributeOptionsFile: null,
+    oneLevelIncludes: false,
   }
 
   for (let index = 0; index < args.length; index += 1) {
@@ -42,6 +43,8 @@ function parseArgs(args) {
       index += 1
     } else if (arg.startsWith('--attribute-options=')) {
       result.attributeOptionsFile = arg.slice('--attribute-options='.length)
+    } else if (arg === '--one-level-includes') {
+      result.oneLevelIncludes = true
     } else if (!result.file) {
       result.file = arg
     }
