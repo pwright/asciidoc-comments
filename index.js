@@ -32,7 +32,7 @@ async function main() {
   register(registry, { attributeOptions, oneLevelIncludes })
   const output = await convertFile(file, {
     extension_registry: registry,
-    attributes: masterAttributes,
+    attributes: { doctype: 'book', ...masterAttributes },
     safe: 'unsafe',
     standalone: true,
     to_file: false,
