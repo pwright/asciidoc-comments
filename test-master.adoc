@@ -1,0 +1,19 @@
+= Master Document
+:product-short: Initial Value
+:version: 1.0.0
+:author: Original Author
+
+== Introduction
+
+This is the introduction with {product-short} {version}.
+
+// Redefine attributes before including the module
+:product-short: Developer Hub
+:version: 1.2.3
+:author: Updated Author
+
+include::docs/test.adoc[]
+
+== Conclusion
+
+Back to master document.

@@ -1,20 +1,31 @@
 = AsciiDoc comments
 
+:product-short: Container tools
+
 This package allows you to add unique IDs to each AsciiDoc block.
 
 . Add the bookmarklet, drag the following link into your browser bookmarks bar:
 
 ++++
- &nbsp; &nbsp;<a class="bookmarklet" href="javascript:(function()%7Bjavascript%3A(function%20hello()%7Blet%20titleText%20%3D%20document.title%3Blet%20selStuff%20%3D%20document.getSelection()%3Blet%20elementSelected%20%3D%20selStuff.anchorNode.parentElement%3Blet%20commentid%20%3D%20elementSelected.getAttribute('id')%3Bwhile(!commentid%20%26%26%20elementSelected)%20%7Blet%20prevElement%20%3D%20elementSelected%3BelementSelected%20%3D%20elementSelected.previousElementSibling%20%3Bif(!elementSelected)%7BelementSelected%20%3D%20prevElement.parentElement%3B%7Dcommentid%20%20%3D%20elementSelected.getAttribute('id')%3B%7Dlet%20myUrl%20%3D%20document.location%3BmyUrl%20%3D%20myUrl.toString()%3Bif(commentid)%7Blet%20result%20%3D%20myUrl.indexOf(%22%23%22)%3Bif%20(result%20%3C%200)%20%7Bresult%20%3D%20myUrl.length%7D%3BmyUrl%20%3D%20myUrl.substr(0%2Cresult)%3BmyUrl%20%3D%20myUrl%2B%22%23%22%2Bcommentid%3B%7Dlet%20selText%20%3D%20selStuff.toString()%2B%22%22%3Bif%20(selText.length%20!%3D%200)%7BselText%20%3D%20%22%5Cn%3E%20%22%2BselText%3B%7D%3Bnavigator.clipboard.writeText(%22%5B%22%2BtitleText%2B%22%7C%22%2BmyUrl%2B%22%5D%22%2BselText%2B%22%22)%3Breturn%20false%7D())%7D)()">CommentCapture</a><br><br>
+ &nbsp; &nbsp;<a class="bookmarklet" href="javascript:(async()=>{const escapeLinkText=(value)=>value.replace(/\\/g,'\\\\').replace(/\[/g,'\\[').replace(/\]/g,'\\]');const quote=(value)=>value.split(/\r?\n/).map((line)=>`> ${line}`).join('\n');const selection=window.getSelection();const selectedText=selection?selection.toString().trim():'';const selectedNode=selection&&selection.rangeCount>0?selection.getRangeAt(0).commonAncestorContainer:null;let element=selectedNode&&selectedNode.nodeType===Node.ELEMENT_NODE?selectedNode:selectedNode?.parentElement;if(!element&&window.location.hash)element=document.getElementById(decodeURIComponent(window.location.hash.slice(1)));if(!element)element=document.activeElement||document.body;const target=element?.closest?.('[id]');if(!target?.id){window.alert('No nearby block ID found.');return}const url=new URL(window.location.href);url.hash=target.id;const title=escapeLinkText((document.title||url.href).replace(/\s+/g,' ').trim());const markdown=`[${title}](${url.href})${selectedText?`\n\n${quote(selectedText)}`:''}`; try{await navigator.clipboard.writeText(markdown)}catch(error){window.prompt('Copy Markdown link',markdown)}})()">CommentCapture</a><br><br>
 ++++
 
 
 [start=2]
-. Navigate to xref:test.adoc[Test document].
+. Navigate to xref:test.adoc[Test document] or xref:master.adoc[Master document demo].
 
 . Highlight some text and click bookmarklet.
 
 Each block is unique addressable as a url, eg xref:test.adoc#comment_90[a block lower in the document].
+
+== Feature Demonstrations
+
+* xref:demo-table-rows.adoc[Table row anchors] - Long table with below-the-fold navigation (30 rows with individual IDs)
+* xref:test.adoc[Test document] - Shows semantic IDs, include boundaries, and attribute buttons
+* xref:master.adoc[Master document demo] - Demonstrates attribute inheritance with `--master-attributes`
+* link:module.html[Module with master attributes] - Module rendered with attributes from master.adoc
+* link:module-standalone.html[Module standalone] - Module without master attributes (undefined)
+* link:module-combined.html[Module combined] - Module with master attributes + alternatives
 
 To use this package to convert your AsciiDoc to HTML, install it using
 
@@ -29,3 +40,41 @@ To convert your AsciiDoc files:
 ----
 asciidoc-comments <filename>
 ----
+
+== Attribute Button Options
+
+By default, attribute references like `{product-short}` render as interactive buttons showing the current value. You can configure alternative values that readers can select by clicking the button.
+
+Create an options file (e.g., `options.json`) with this structure:
+
+[source,json]
+----
+{
+  "version": 1,
+  "fields": {
+    "product-short": {
+      "default": "Developer Hub",
+      "options": ["podman", "docker", "kubernetes"]
+    }
+  }
+}
+----
+
+Then render with the options file:
+
+[source,bash]
+----
+asciidoc-comments --attribute-add options.json <filename>
+----
+
+You can also use AsciiDoc format for alternatives:
+
+[source,asciidoc]
+----
+:product-short: Developer Hub
+:product-short: podman
+:product-short: docker
+----
+
+When readers click an attribute button, they see a list of configured options. Selecting a value updates all instances of that attribute throughout the page.
+All values for {product-short} are affected.

@@ -1,16 +1,27 @@
 {
   "name": "@techwriter/asciidoc-comments",
-  "version": "1.0.2",
-  "description": "Render asciidoc to html with each block addressable  for comments",
+  "version": "2.0.2",
+  "description": "Asciidoctor.js v4 extension for semantic generated block IDs, include boundaries, and attribute buttons",
+  "type": "module",
   "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "add-id-processor.js",
+    "bookmarklet.js",
+    "index.js",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pwright/asciidoc-comments.git"
   },
-  "author": "",
+  "author": "Paul Wright",
   "license": "ISC",
   "bin": {
     "asciidoc-comments": "./index.js"
@@ -19,7 +30,15 @@
     "url": "https://github.com/pwright/asciidoc-comments/issues"
   },
   "homepage": "https://github.com/pwright/asciidoc-comments#readme",
+  "keywords": [
+    "asciidoc",
+    "asciidoctor",
+    "documentation",
+    "semantic-ids",
+    "include-boundaries",
+    "attribute-buttons"
+  ],
   "dependencies": {
-    "asciidoctor": "^2.2.6"
+    "@asciidoctor/core": "^4.0.8"
   }
 }

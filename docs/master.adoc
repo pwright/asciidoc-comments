@@ -1,0 +1,61 @@
+= Master Document Demo
+:doctype: article
+:product-short: Initial Product
+:version: 0.9.0
+:author: Initial Author
+
+== Introduction
+
+This master document demonstrates attribute inheritance and redefinition.
+
+Initial attribute values:
+
+* Product: {product-short}
+* Version: {version}
+* Author: {author}
+
+== Early Section
+
+At this point, the attributes still have their initial values:
+
+{product-short} version {version} by {author}.
+
+== Attribute Redefinition
+
+Now we'll redefine the attributes before including the module:
+
+// Redefine attributes for the included module
+:product-short: Developer Hub
+:version: 1.2.3
+:author: Red Hat Documentation Team
+
+The attributes are now updated:
+
+* Product: {product-short}
+* Version: {version}
+* Author: {author}
+
+== Included Module
+
+The following content is included from `module.adoc` and will use the redefined attribute values:
+
+---
+
+include::module.adoc[]
+
+---
+
+== Conclusion
+
+Back in the master document with {product-short} {version}.
+
+To test this feature:
+
+. Render master.adoc normally to see the full document with includes
+. Render module.adoc with `--master-attributes master.adoc` to see it inherit the redefined values
+. Compare with rendering module.adoc standalone (uses default values from module or undefined)
+
+[NOTE]
+====
+The `--master-attributes` flag extracts attribute values from master.adoc at the point where module.adoc is included, allowing you to render the module standalone with the correct context.
+====
