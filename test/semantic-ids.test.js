@@ -274,3 +274,123 @@ More about two.
   assert.match(html, /<li id="steps--block-3">/)
   assert.match(html, /<div id="steps--block-4" class="paragraph">/)
 })
+
+test('adds row anchors to long tables for below-the-fold navigation', async () => {
+  const html = await render(`
+= Document
+
+== Configuration Options
+
+|===
+|Parameter |Type |Description
+
+|database-url
+|string
+|Connection string
+
+|timeout
+|integer
+|Request timeout
+
+|retry-count
+|integer
+|Retry attempts
+
+|log-level
+|string
+|Logging level
+
+|max-connections
+|integer
+|Max DB connections
+
+|cache-size
+|integer
+|Cache size
+
+|auth-method
+|string
+|Auth method
+
+|ssl-enabled
+|boolean
+|Enable SSL
+
+|port
+|integer
+|Server port
+
+|host
+|string
+|Server hostname
+
+|api-key
+|string
+|API key
+
+|rate-limit
+|integer
+|Rate limit
+
+|backup-enabled
+|boolean
+|Enable backups
+
+|backup-schedule
+|string
+|Backup schedule
+
+|encryption-key
+|string
+|Encryption key
+
+|compression
+|boolean
+|Enable compression
+
+|debug-mode
+|boolean
+|Debug mode
+
+|metrics-enabled
+|boolean
+|Enable metrics
+
+|health-check-path
+|string
+|Health check path
+
+|cors-origins
+|string
+|CORS origins
+|===
+`)
+
+  // Table gets auto-generated ID
+  assert.match(html, /<table id="configuration-options--block-1"/)
+
+  // Each body row gets an ID attribute
+  assert.match(html, /<tr id="configuration-options--block-1-row-1"/)
+  assert.match(html, /<tr id="configuration-options--block-1-row-5"/)
+  assert.match(html, /<tr id="configuration-options--block-1-row-10"/)
+  assert.match(html, /<tr id="configuration-options--block-1-row-15"/)
+  assert.match(html, /<tr id="configuration-options--block-1-row-20"/)
+
+  // Row IDs are on the <tr> tags in tbody
+  assert.match(html, /<tbody>[\s\S]*<tr id="configuration-options--block-1-row-1"/)
+
+  // Explicit ID tables don't get row IDs
+  const explicitHtml = await render(`
+= Document
+
+[#my-table]
+|===
+|A |B
+
+|1
+|2
+|===
+`)
+  assert.match(explicitHtml, /<table id="my-table"/)
+  assert.doesNotMatch(explicitHtml, /<tr id="my-table-row-/)
+})

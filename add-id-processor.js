@@ -228,16 +228,27 @@ export function register(registry, options = {}) {
         config,
         usedIds: collectUsedIds(doc),
         sectionCounters: new Map(),
+        tableMetadata: new Map(),
       }
 
       walkBlocks(doc, null, state)
+
+      // Pass table metadata to postprocessor
+      doc.tableMetadata = state.tableMetadata
+
       return doc
     })
   })
 
   registry.postprocessor(function () {
-    this.process(function (_doc, output) {
-      const normalizedOutput = normalizeUnresolvedAttributeButtons(String(output))
+    this.process(function (doc, output) {
+      let normalizedOutput = normalizeUnresolvedAttributeButtons(String(output))
+
+      // Add row anchors to tables
+      if (doc.tableMetadata && doc.tableMetadata.size > 0) {
+        normalizedOutput = addTableRowAnchors(normalizedOutput, doc.tableMetadata)
+      }
+
       if (!hasAttributeOptions(config.attributeOptions)) return normalizedOutput
       return appendAttributeOptionsScript(normalizedOutput, config.attributeOptions)
     })
@@ -353,6 +364,45 @@ function normalizeAttributeOptions(attributeOptions) {
     }
   }
   return normalized
+}
+
+function addTableRowAnchors(html, tableMetadata) {
+  // For each table with a generated ID, add row IDs to tbody/tfoot rows
+  for (const [tableId] of tableMetadata.entries()) {
+    const escapedId = escapeRegExp(tableId)
+
+    // Match the specific table element
+    const tablePattern = new RegExp(
+      `(<table[^>]*\\bid="${escapedId}"[^>]*>)([\\s\\S]*?)</table>`,
+      'g',
+    )
+
+    html = html.replace(tablePattern, (_match, openingTag, content) => {
+      let rowIndex = 0
+
+      // Add id attributes to each <tr> in <tbody> and <tfoot>
+      // Skip <thead> rows (they're header rows, not data rows)
+      const withRowIds = content.replace(
+        /(<tbody>|<tfoot>)([\s\S]*?)(<\/tbody>|<\/tfoot>)/g,
+        (_sectionMatch, openTag, sectionContent, closeTag) => {
+          const withIds = sectionContent.replace(
+            /<tr([^>]*)>/g,
+            (_rowMatch, attributes) => {
+              rowIndex += 1
+              const rowId = `${tableId}-row-${rowIndex}`
+              // Add id attribute to <tr> tag
+              return `<tr id="${escapeHtml(rowId)}"${attributes}>`
+            },
+          )
+          return `${openTag}${withIds}${closeTag}`
+        },
+      )
+
+      return `${openingTag}${withRowIds}</table>`
+    })
+  }
+
+  return html
 }
 
 function appendAttributeOptionsScript(output, attributeOptions) {
@@ -577,6 +627,12 @@ function assignGeneratedId(node, section, state) {
   const id = uniqueGeneratedId(candidate, state.usedIds)
   node.setId(id)
   state.usedIds.add(id)
+
+  // Track table metadata for postprocessor
+  if (getContext(node) === 'table') {
+    const rowCount = countTableRows(node)
+    state.tableMetadata.set(id, { rowCount })
+  }
 }
 
 function uniqueGeneratedId(candidate, usedIds) {
@@ -673,4 +729,13 @@ function increment(counters, key) {
   const next = (counters.get(key) || 0) + 1
   counters.set(key, next)
   return next
+}
+
+function countTableRows(tableNode) {
+  const rows = tableNode.getRows?.()
+  if (!rows) return 0
+  const head = rows.head?.length || 0
+  const body = rows.body?.length || 0
+  const foot = rows.foot?.length || 0
+  return head + body + foot
 }

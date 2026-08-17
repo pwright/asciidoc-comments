@@ -1,0 +1,175 @@
+= API Configuration Reference
+
+== Configuration Parameters
+
+The following table lists all available configuration parameters. Each parameter can be referenced directly using its row anchor (e.g., `#configuration-parameters--block-1-row-15` for the 15th parameter).
+
+|===
+|Parameter |Type |Default |Description
+
+|database.url
+|string
+|localhost:5432
+|PostgreSQL connection URL
+
+|database.pool.min
+|integer
+|5
+|Minimum connection pool size
+
+|database.pool.max
+|integer
+|20
+|Maximum connection pool size
+
+|database.timeout
+|integer
+|30000
+|Connection timeout in milliseconds
+
+|cache.enabled
+|boolean
+|true
+|Enable in-memory caching
+
+|cache.ttl
+|integer
+|3600
+|Cache time-to-live in seconds
+
+|cache.size
+|integer
+|1000
+|Maximum cache entries
+
+|api.rate.limit
+|integer
+|100
+|Requests per minute per client
+
+|api.timeout
+|integer
+|60000
+|API request timeout in milliseconds
+
+|api.retry.count
+|integer
+|3
+|Number of retry attempts
+
+|api.retry.delay
+|integer
+|1000
+|Delay between retries in milliseconds
+
+|auth.method
+|string
+|oauth2
+|Authentication method (oauth2, jwt, basic)
+
+|auth.session.duration
+|integer
+|86400
+|Session duration in seconds
+
+|auth.token.expiry
+|integer
+|3600
+|Access token expiry in seconds
+
+|auth.refresh.enabled
+|boolean
+|true
+|Enable refresh token mechanism
+
+|ssl.enabled
+|boolean
+|true
+|Enable SSL/TLS connections
+
+|ssl.certificate.path
+|string
+|/etc/ssl/cert.pem
+|Path to SSL certificate
+
+|ssl.key.path
+|string
+|/etc/ssl/key.pem
+|Path to SSL private key
+
+|logging.level
+|string
+|info
+|Log level (debug, info, warn, error)
+
+|logging.format
+|string
+|json
+|Log output format
+
+|logging.file.enabled
+|boolean
+|false
+|Enable file logging
+
+|logging.file.path
+|string
+|/var/log/app.log
+|Log file path
+
+|metrics.enabled
+|boolean
+|true
+|Enable metrics collection
+
+|metrics.port
+|integer
+|9090
+|Metrics endpoint port
+
+|health.check.path
+|string
+|/health
+|Health check endpoint path
+
+|health.check.interval
+|integer
+|30
+|Health check interval in seconds
+
+|cors.enabled
+|boolean
+|true
+|Enable CORS
+
+|cors.origins
+|string
+|*
+|Allowed CORS origins
+
+|backup.enabled
+|boolean
+|false
+|Enable automatic backups
+
+|backup.schedule
+|string
+|0 2 * * *
+|Backup cron schedule
+|===
+
+== Usage Examples
+
+To reference row 15 (auth.refresh.enabled):
+
+[source,asciidoc]
+----
+See the xref:configuration-parameters--block-1-row-15[refresh token configuration].
+----
+
+To create a link to row 25 (cors.enabled):
+
+[source,asciidoc]
+----
+Check the xref:configuration-parameters--block-1-row-25[CORS settings].
+----

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor.js 4.0.8">
-<title>Test Document</title>
+<title>API Configuration Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CNoto+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,216 +436,240 @@ p{margin-bottom:1.25rem}
 </head>
 <body class="article">
 <div id="header">
-<h1>Test Document</h1>
+<h1>API Configuration Reference</h1>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_features_demo">Features Demo</h2>
+<h2 id="_configuration_parameters">Configuration Parameters</h2>
 <div class="sectionbody">
-<div id="features-demo--block-1" class="paragraph">
-<p>Testing attribute substitution: <button type="button" class="attribute-substitution" data-attribute="test" data-value="Test attribute" title="test">Test attribute</button>.</p>
+<div id="configuration-parameters--block-1" class="paragraph">
+<p>The following table lists all available configuration parameters. Each parameter can be referenced directly using its row anchor (e.g., <code>#configuration-parameters&#8212;&#8203;block-1-row-15</code> for the 15th parameter).</p>
 </div>
-<div id="features-demo--block-2" class="paragraph">
-<p>When using <strong><button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button></strong>, you can deploy containers with ease.
-The current version is <button type="button" class="attribute-substitution" data-attribute="version" data-value="1.2.3" title="version">1.2.3</button>.</p>
-</div>
-<div id="features-demo--block-3" class="paragraph">
-<p>This paragraph has auto-generated semantic IDs.</p>
-</div>
-<div id="custom-id" class="paragraph">
-<p>This paragraph has an explicit ID.</p>
-</div>
-<div class="paragraph">
-<p>This paragraph opts out of semantic IDs.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_lists">Lists</h2>
-<div class="sectionbody">
-<div id="lists--block-1" class="olist arabic">
-<div class="title">Ordered list</div>
-<ol class="arabic">
-<li id="lists--block-2">
-<p>First item</p>
-</li>
-<li id="lists--block-3">
-<p>Second item</p>
-<div id="lists--block-4" class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li id="lists--block-5">
-<p>Nested item</p>
-</li>
-<li id="lists--block-6">
-<p>Another nested item</p>
-</li>
-</ol>
-</div>
-</li>
-</ol>
-</div>
-<div id="lists--block-7" class="ulist">
-<div class="title">Unordered list</div>
-<ul>
-<li id="lists--block-8">
-<p>Item one with <strong>bold</strong> and 'emphasis'</p>
-</li>
-<li id="lists--block-9">
-<p>Item two with <sup>superscript</sup> and <sub>subscript</sub></p>
-</li>
-<li id="lists--block-10">
-<p>Item three</p>
-</li>
-</ul>
-</div>
-<div id="defs" class="dlist">
-<dl>
-<dt class="hdlist1">term</dt>
-<dd>
-<p>definition text</p>
-</dd>
-<dt class="hdlist1">another term</dt>
-<dd>
-<p>another definition</p>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_code_and_literals">Code and Literals</h2>
-<div class="sectionbody">
-<div id="code-and-literals--block-1" class="paragraph">
-<p>Install <button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button> tools:</p>
-</div>
-<div id="code-and-literals--block-2" class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">npm install @techwriter/asciidoc-comments</code></pre>
-</div>
-</div>
-<div id="code-and-literals--block-3" class="paragraph">
-<p>Or use <button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button> version <button type="button" class="attribute-substitution" data-attribute="version" data-value="1.2.3" title="version">1.2.3</button> directly.</p>
-</div>
-<div id="code-and-literals--block-4" class="literalblock">
-<div class="content">
-<pre>This is a literal block.
-It preserves spacing.</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_tables">Tables</h2>
-<div class="sectionbody">
-<table id="tables--block-1" class="tableblock frame-all grid-all stretch">
+<table id="configuration-parameters--block-2" class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col width="50%">
-<col width="50%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Header 1</th>
-<th class="tableblock halign-left valign-top">Header 2</th>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
-<tr id="tables--block-1-row-1">
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normal cell</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>AsciiDoc cell</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>List item</p>
-</li>
-<li>
-<p>Another item</p>
-</li>
-</ul>
-</div></div></td>
+<tr id="configuration-parameters--block-2-row-1">
+<td class="tableblock halign-left valign-top"><p class="tableblock">database.url</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">localhost:5432</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PostgreSQL connection URL</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-2">
+<td class="tableblock halign-left valign-top"><p class="tableblock">database.pool.min</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Minimum connection pool size</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-3">
+<td class="tableblock halign-left valign-top"><p class="tableblock">database.pool.max</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum connection pool size</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-4">
+<td class="tableblock halign-left valign-top"><p class="tableblock">database.timeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Connection timeout in milliseconds</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-5">
+<td class="tableblock halign-left valign-top"><p class="tableblock">cache.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable in-memory caching</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-6">
+<td class="tableblock halign-left valign-top"><p class="tableblock">cache.ttl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3600</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cache time-to-live in seconds</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-7">
+<td class="tableblock halign-left valign-top"><p class="tableblock">cache.size</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum cache entries</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-8">
+<td class="tableblock halign-left valign-top"><p class="tableblock">api.rate.limit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requests per minute per client</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-9">
+<td class="tableblock halign-left valign-top"><p class="tableblock">api.timeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">60000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API request timeout in milliseconds</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-10">
+<td class="tableblock halign-left valign-top"><p class="tableblock">api.retry.count</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of retry attempts</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-11">
+<td class="tableblock halign-left valign-top"><p class="tableblock">api.retry.delay</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delay between retries in milliseconds</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-12">
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth.method</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">oauth2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication method (oauth2, jwt, basic)</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-13">
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth.session.duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">86400</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Session duration in seconds</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-14">
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth.token.expiry</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3600</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access token expiry in seconds</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-15">
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth.refresh.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable refresh token mechanism</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-16">
+<td class="tableblock halign-left valign-top"><p class="tableblock">ssl.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable SSL/TLS connections</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-17">
+<td class="tableblock halign-left valign-top"><p class="tableblock">ssl.certificate.path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/etc/ssl/cert.pem</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to SSL certificate</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-18">
+<td class="tableblock halign-left valign-top"><p class="tableblock">ssl.key.path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/etc/ssl/key.pem</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to SSL private key</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-19">
+<td class="tableblock halign-left valign-top"><p class="tableblock">logging.level</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">info</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log level (debug, info, warn, error)</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-20">
+<td class="tableblock halign-left valign-top"><p class="tableblock">logging.format</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">json</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log output format</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-21">
+<td class="tableblock halign-left valign-top"><p class="tableblock">logging.file.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable file logging</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-22">
+<td class="tableblock halign-left valign-top"><p class="tableblock">logging.file.path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/var/log/app.log</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log file path</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-23">
+<td class="tableblock halign-left valign-top"><p class="tableblock">metrics.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable metrics collection</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-24">
+<td class="tableblock halign-left valign-top"><p class="tableblock">metrics.port</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9090</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Metrics endpoint port</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-25">
+<td class="tableblock halign-left valign-top"><p class="tableblock">health.check.path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/health</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Health check endpoint path</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-26">
+<td class="tableblock halign-left valign-top"><p class="tableblock">health.check.interval</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Health check interval in seconds</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-27">
+<td class="tableblock halign-left valign-top"><p class="tableblock">cors.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable CORS</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-28">
+<td class="tableblock halign-left valign-top"><p class="tableblock">cors.origins</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">*</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed CORS origins</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-29">
+<td class="tableblock halign-left valign-top"><p class="tableblock">backup.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable automatic backups</p></td>
+</tr>
+<tr id="configuration-parameters--block-2-row-30">
+<td class="tableblock halign-left valign-top"><p class="tableblock">backup.schedule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0 2 * * *</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Backup cron schedule</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_includes">Includes</h2>
+<h2 id="_usage_examples">Usage Examples</h2>
 <div class="sectionbody">
-<div id="includes--block-1" class="paragraph">
-<p>Content before the include.</p>
+<div id="usage-examples--block-1" class="paragraph">
+<p>To reference row 15 (auth.refresh.enabled):</p>
 </div>
-<hr>
-<div id="'wrapup'--include-1" class="include-boundary" style="margin-left: -40px;"><span style="color: red;">Start</span>: <code>include.asciidoc.txt</code></div>
-<div id="includes--block-2" class="paragraph">
-<p>This text was included from the <code>include.asciidoc.txt</code> file.</p>
-</div>
-<div class="include-boundary" style="margin-left: -40px;"><span style="color: red;">End</span>: <code>include.asciidoc.txt</code></div>
-<hr>
-<div id="includes--block-3" class="paragraph">
-<p>Content after the include.</p>
+<div id="usage-examples--block-2" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">See the xref:configuration-parameters--block-1-row-15[refresh token configuration].</code></pre>
 </div>
 </div>
+<div id="usage-examples--block-3" class="paragraph">
+<p>To create a link to row 25 (cors.enabled):</p>
 </div>
-<div class="sect1">
-<h2 id="_admonitions_and_quotes">Admonitions and Quotes</h2>
-<div class="sectionbody">
-<div id="admonitions-and-quotes--block-1" class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-This is a note admonition. Click any attribute button to see alternative values when using <code>--attribute-add alt.adoc</code>.
-</td>
-</tr>
-</table>
+<div id="usage-examples--block-4" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">Check the xref:configuration-parameters--block-1-row-25[CORS settings].</code></pre>
 </div>
-<div id="admonitions-and-quotes--block-2" class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Tip</div>
-</td>
-<td class="content">
-When using <button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button>, check the version compatibility: <button type="button" class="attribute-substitution" data-attribute="version" data-value="1.2.3" title="version">1.2.3</button>.
-</td>
-</tr>
-</table>
-</div>
-<div class="quoteblock">
-<blockquote>
-<div id="admonitions-and-quotes--block-3" class="paragraph">
-<p>This is a quote block.</p>
-</div>
-</blockquote>
-<div class="attribution">
-&#8212; Author Name
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_cross_references">Cross-references</h2>
-<div class="sectionbody">
-<div id="cross-references--block-1" class="paragraph">
-<p>See the <a href="#defs">definition list</a> or jump to <a href="#wrapup">Wrap-up</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="wrapup">Wrap-up</h2>
-<div class="sectionbody">
-<div id="wrapup--block-1" class="paragraph">
-<p>Testing complete! Visit <a href="http://asciidoc.org" class="bare">http://asciidoc.org</a> for more info.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-08-17 11:12:09 +0100
+Last updated 2026-08-17 12:07:18 +0100
 </div>
 </div>
 </body>

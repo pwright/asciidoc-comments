@@ -75,13 +75,33 @@ convert-all-modules OUTPUT_DIR="build/modules":
 convert-all: convert-all-assemblies convert-all-modules
     @echo "✅ All files converted"
 
-# Convert all with interactive attribute buttons (demo feature)
-convert-all-demo:
+# Convert all demo files in docs/ directory
+convert-all-demo OUTPUT_DIR="docs":
     #!/usr/bin/env bash
     set -euo pipefail
-    echo "📁 Converting with attribute buttons enabled..."
-    just convert-assemblies-with-options configure_configuring-rhdh rhdh-test.json build/demo/assemblies
-    echo "✅ Demo conversion complete - check build/demo/ for interactive buttons"
+    mkdir -p "{{OUTPUT_DIR}}"
+
+    echo "📁 Converting demo files in docs/ ..."
+    count=0
+    for file in docs/*.adoc; do
+        if [ -f "$file" ]; then
+            basename=$(basename "$file" .adoc)
+            echo "  Converting: $basename.adoc"
+            node index.js "$file" > "{{OUTPUT_DIR}}/${basename}.html" 2>&1 || echo "  ⚠️  Failed: $file"
+            count=$((count + 1))
+        fi
+    done
+
+    echo ""
+    echo "✅ Converted $count demo files"
+    echo "   Output directory: {{OUTPUT_DIR}}"
+    echo ""
+    echo "Demo files:"
+    echo "  • docs/demo-table-rows.html - Table row anchors for below-the-fold navigation"
+    echo "  • docs/test.html - Include boundaries and semantic IDs"
+    echo "  • docs/index.html - Feature overview"
+    echo ""
+    echo "Open docs/demo-table-rows.html to test bookmarklet with table rows"
 
 # Convert assemblies with attribute options
 convert-assemblies-with-options CATEGORY OPTIONS OUTPUT_DIR="build/assemblies":
@@ -590,10 +610,7 @@ convert-docs-demo OUTPUT_DIR="docs":
     echo "  module-standalone.html   - Module without master attributes (undefined)"
     echo "  module-combined.html     - Module with master + alternatives (interactive)"
     echo ""
-    echo "To view the demo:"
-    echo "  just serve"
-    echo ""
-    echo "Then open: http://localhost:8000/index.html"
+    echo "Open docs/index.html in a browser to view the demo"
 
 # Convert docs/*.adoc with attribute alternatives from alt.adoc
 convert-docs-alt OUTPUT_DIR="docs":
@@ -630,18 +647,6 @@ convert-docs-alt OUTPUT_DIR="docs":
 install:
     npm install
     @echo "✅ Dependencies installed"
-
-# Serve docs/ directory on localhost:8000
-serve PORT="8000":
-    #!/usr/bin/env bash
-    echo "🌐 Serving docs/ at http://localhost:{{PORT}}"
-    echo ""
-    echo "  Index:  http://localhost:{{PORT}}/index.html"
-    echo "  Master: http://localhost:{{PORT}}/master.html"
-    echo "  Test:   http://localhost:{{PORT}}/test.html"
-    echo ""
-    echo "Press Ctrl+C to stop"
-    cd docs && python3 -m http.server {{PORT}} 2>/dev/null || python -m SimpleHTTPServer {{PORT}}
 
 # Run all tests
 test: test-sample test-with-options test-includes
