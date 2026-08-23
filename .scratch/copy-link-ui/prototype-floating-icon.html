@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PROTOTYPE - Copy Link UI</title>
+  <style>
+    :root {
+      --ink: #1f2933;
+      --muted: #64748b;
+      --line: #d8dee8;
+      --panel: #f7f9fb;
+      --blue: #2156a5;
+      --green: #18794e;
+      --red: #b42318;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #ffffff;
+      line-height: 1.55;
+    }
+
+    header,
+    main,
+    .state-panel {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    header {
+      padding-top: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    main {
+      padding-top: 24px;
+      padding-bottom: 230px;
+    }
+
+    h2 {
+      margin-top: 36px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    p,
+    li {
+      font-size: 17px;
+    }
+
+    .paragraph,
+    .ulist,
+    .listingblock,
+    .include-boundary {
+      position: relative;
+      margin: 20px 0;
+    }
+
+    .listingblock pre {
+      overflow-x: auto;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: #f4f6f8;
+    }
+
+    .include-boundary {
+      padding: 8px 12px;
+      border-left: 3px solid var(--blue);
+      background: #eef4ff;
+      color: #24446f;
+    }
+
+    .attribute-substitution {
+      border: 1px solid #a5b4fc;
+      border-radius: 4px;
+      padding: 1px 5px;
+      background: #eef2ff;
+      color: #273b89;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .copy-link-button {
+      position: absolute;
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: 1px solid #9aa8bb;
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--blue);
+      box-shadow: 0 3px 12px rgba(15, 23, 42, 0.22);
+      cursor: pointer;
+    }
+
+    .copy-link-button.visible {
+      display: inline-flex;
+    }
+
+    .copy-link-button:focus {
+      outline: 3px solid rgba(33, 86, 165, 0.28);
+      outline-offset: 2px;
+    }
+
+    .copy-link-button.copied {
+      color: var(--green);
+      border-color: var(--green);
+    }
+
+    .copy-link-button.failed {
+      color: var(--red);
+      border-color: var(--red);
+    }
+
+    .copy-link-status {
+      position: absolute;
+      z-index: 49;
+      display: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: #111827;
+      color: #ffffff;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .copy-link-status.visible {
+      display: block;
+    }
+
+    .floating-footer {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      box-sizing: border-box;
+      height: 180px;
+      padding: 10px 24px 12px;
+      border-top: 1px solid var(--line);
+      background: rgba(247, 249, 251, 0.97);
+      box-shadow: 0 -4px 18px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+
+    .footer-row {
+      max-width: 920px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .state-panel {
+      min-width: 0;
+      max-height: 158px;
+      overflow: auto;
+    }
+
+    .state-panel dl {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 4px 12px;
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .state-panel dt {
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .state-panel dd {
+      margin: 0;
+      overflow-wrap: anywhere;
+      max-height: 42px;
+      overflow: auto;
+    }
+
+    #state-selected,
+    #state-payload {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .footer-tools {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+      max-width: 300px;
+    }
+
+    .variant-bar {
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #ffffff;
+    }
+
+    .variant-bar a,
+    .footer-tool {
+      min-height: 32px;
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 9px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      color: var(--blue);
+      background: #ffffff;
+      text-decoration: none;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .variant-bar a.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #ffffff;
+    }
+
+    .footer-tool:hover,
+    .footer-tool:focus,
+    .variant-bar a:hover,
+    .variant-bar a:focus {
+      outline: 2px solid rgba(33, 86, 165, 0.26);
+      outline-offset: 1px;
+    }
+
+    .footer-tool.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #ffffff;
+    }
+
+    .footer-tool svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    body.ids-visible [id] {
+      outline: 2px solid rgba(180, 35, 24, 0.78);
+      outline-offset: 2px;
+    }
+
+    body[data-variant="margin"] .copy-link-button {
+      transform: translate(-48px, -2px);
+    }
+
+    body[data-variant="selection"] .copy-link-button {
+      transform: translate(-50%, -48px);
+    }
+
+    body[data-variant="block"] .copy-link-button {
+      transform: translate(10px, 10px);
+    }
+
+    @media (max-width: 720px) {
+      header,
+      main,
+      .state-panel {
+        padding-right: 16px;
+        padding-left: 16px;
+      }
+
+      .state-panel dl {
+        grid-template-columns: 96px 1fr;
+      }
+
+      .floating-footer {
+        height: 210px;
+        padding-right: 12px;
+        padding-left: 12px;
+      }
+
+      .state-panel {
+        max-height: 126px;
+      }
+
+      .footer-row {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-tools {
+        justify-content: flex-start;
+        max-width: none;
+      }
+
+      body[data-variant="margin"] .copy-link-button,
+      body[data-variant="selection"] .copy-link-button {
+        transform: translate(-50%, -48px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PROTOTYPE - Copy Link UI</h1>
+    <p>Select text in the rendered content. The prototype shows three candidate placements and the copied Markdown state.</p>
+  </header>
+
+  <main id="content">
+    <h2 id="_install">Install</h2>
+
+    <div id="install--block-1" class="paragraph">
+      <p>Install the package globally when you want to convert AsciiDoc files from the command line. Select this sentence and press the floating copy button.</p>
+    </div>
+
+    <div id="install--block-2" class="ulist">
+      <ul>
+        <li id="install--block-3"><p>Generated IDs make each block addressable.</p></li>
+        <li id="install--block-4"><p>Author-provided IDs should work the same way.</p></li>
+      </ul>
+    </div>
+
+    <div id="install--include-1" class="include-boundary">Start include: <code>module.adoc</code></div>
+
+    <h2 id="_usage">Usage</h2>
+
+    <div id="usage--block-1" class="paragraph">
+      <p>Attribute buttons such as <button type="button" class="attribute-substitution" data-attribute="product-short">Container tools</button> should still receive clicks without opening the copy link workflow.</p>
+    </div>
+
+    <div id="usage--block-2" class="listingblock">
+      <pre><code>asciidoc-comments --attribute-add options.adoc module.adoc</code></pre>
+    </div>
+  </main>
+
+  <button type="button" class="copy-link-button" id="copy-link-button" aria-label="Copy Markdown link" title="Copy Markdown link">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+    </svg>
+  </button>
+  <div class="copy-link-status" id="copy-link-status" role="status" aria-live="polite"></div>
+
+  <footer class="floating-footer" aria-label="Document tools">
+    <div class="footer-row">
+      <section class="state-panel" aria-label="Prototype state">
+        <dl>
+          <dt>Copy option</dt>
+          <dd id="state-variant"></dd>
+          <dt>Target</dt>
+          <dd id="state-target">none</dd>
+          <dt>Selected</dt>
+          <dd id="state-selected">none</dd>
+          <dt>Payload</dt>
+          <dd id="state-payload">none</dd>
+          <dt>Feedback</dt>
+          <dd id="state-feedback">none</dd>
+        </dl>
+      </section>
+
+      <div class="footer-tools">
+        <nav class="variant-bar" aria-label="Copy icon placement">
+          <a href="?variant=margin" data-variant-link="margin">Margin</a>
+          <a href="?variant=selection" data-variant-link="selection">Selection</a>
+          <a href="?variant=block" data-variant-link="block">Block</a>
+        </nav>
+        <button type="button" class="footer-tool" id="toggle-ids-button" aria-pressed="false">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2Zm1 0v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1Z"></path>
+          </svg>
+          <span>Toggle IDs</span>
+        </button>
+        <a class="footer-tool" href="https://github.com/pwright/asciidoc-comments" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path>
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const params = new URLSearchParams(window.location.search);
+      const variant = params.get('variant') || 'margin';
+      const button = document.getElementById('copy-link-button');
+      const status = document.getElementById('copy-link-status');
+      const toggleIdsButton = document.getElementById('toggle-ids-button');
+      const state = {
+        variant: document.getElementById('state-variant'),
+        target: document.getElementById('state-target'),
+        selected: document.getElementById('state-selected'),
+        payload: document.getElementById('state-payload'),
+        feedback: document.getElementById('state-feedback'),
+      };
+      let currentTarget = null;
+      let currentText = '';
+
+      document.body.dataset.variant = variant;
+      state.variant.textContent = variant;
+      document.querySelectorAll('[data-variant-link]').forEach((link) => {
+        link.classList.toggle('active', link.dataset.variantLink === variant);
+      });
+
+      function nearestIdElement(node) {
+        let element = node && node.nodeType === Node.ELEMENT_NODE ? node : node?.parentElement;
+        return element?.closest?.('[id]') || null;
+      }
+
+      function selectionInfo() {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0 || selection.toString().trim() === '') return null;
+        const range = selection.getRangeAt(0);
+        const target = nearestIdElement(range.startContainer);
+        if (!target || target.id === button.id || target.id === status.id) return null;
+        return {
+          text: selection.toString().trim(),
+          target,
+          rect: range.getBoundingClientRect(),
+          targetRect: target.getBoundingClientRect(),
+        };
+      }
+
+      function markdownFor(target, selectedText) {
+        const url = new URL(window.location.href);
+        url.search = '';
+        url.hash = target.id;
+        const title = document.title.replace(/^PROTOTYPE - /, '').replace(/\s+/g, ' ').trim();
+        const escapedTitle = title.replace(/\\/g, '\\\\').replace(/\[/g, '\\[').replace(/\]/g, '\\]');
+        const quote = selectedText
+          ? '\n\n' + selectedText.split(/\r?\n/).map((line) => '> ' + line).join('\n')
+          : '';
+        return '[' + escapedTitle + '](' + url.href + ')' + quote;
+      }
+
+      function place(info) {
+        currentTarget = info.target;
+        currentText = info.text;
+        const scrollX = window.scrollX;
+        const scrollY = window.scrollY;
+        let left;
+        let top;
+
+        if (variant === 'block') {
+          left = info.targetRect.right + scrollX;
+          top = info.targetRect.top + scrollY;
+        } else if (variant === 'selection') {
+          left = info.rect.left + (info.rect.width / 2) + scrollX;
+          top = info.rect.top + scrollY;
+        } else {
+          left = info.targetRect.left + scrollX;
+          top = info.targetRect.top + scrollY;
+        }
+
+        button.style.left = left + 'px';
+        button.style.top = top + 'px';
+        button.classList.add('visible');
+        state.target.textContent = info.target.id;
+        state.selected.textContent = info.text;
+        state.payload.textContent = markdownFor(info.target, info.text);
+      }
+
+      function hideUnlessFocused() {
+        if (document.activeElement === button) return;
+        button.classList.remove('visible', 'copied', 'failed');
+        status.classList.remove('visible');
+        currentTarget = null;
+        currentText = '';
+        state.target.textContent = 'none';
+        state.selected.textContent = 'none';
+        state.payload.textContent = 'none';
+      }
+
+      function updateFromSelection() {
+        const info = selectionInfo();
+        if (!info) {
+          hideUnlessFocused();
+          return;
+        }
+        place(info);
+      }
+
+      function showStatus(message, className) {
+        button.classList.remove('copied', 'failed');
+        if (className) button.classList.add(className);
+        status.textContent = message;
+        status.style.left = (button.offsetLeft + 42) + 'px';
+        status.style.top = (button.offsetTop + 6) + 'px';
+        status.classList.add('visible');
+        state.feedback.textContent = message;
+        window.setTimeout(() => {
+          status.classList.remove('visible');
+          button.classList.remove('copied', 'failed');
+        }, 1400);
+      }
+
+      button.addEventListener('click', async () => {
+        if (!currentTarget) updateFromSelection();
+        if (!currentTarget) {
+          showStatus('No block ID found', 'failed');
+          return;
+        }
+        const payload = markdownFor(currentTarget, currentText);
+        state.payload.textContent = payload;
+        try {
+          await navigator.clipboard.writeText(payload);
+          showStatus('Copied', 'copied');
+        } catch (_error) {
+          window.prompt('Copy Markdown link', payload);
+          showStatus('Copy fallback opened', 'failed');
+        }
+      });
+
+      document.addEventListener('selectionchange', () => {
+        window.setTimeout(updateFromSelection, 0);
+      });
+
+      document.addEventListener('mouseup', updateFromSelection);
+      document.addEventListener('keyup', (event) => {
+        if (event.key === 'Escape') hideUnlessFocused();
+        else updateFromSelection();
+      });
+
+      document.addEventListener('click', (event) => {
+        if (event.target.closest?.('.attribute-substitution')) return;
+        if (event.target === button || event.target.closest?.('.copy-link-button')) return;
+        window.setTimeout(updateFromSelection, 0);
+      });
+
+      toggleIdsButton.addEventListener('click', () => {
+        const visible = !document.body.classList.contains('ids-visible');
+        document.body.classList.toggle('ids-visible', visible);
+        toggleIdsButton.classList.toggle('active', visible);
+        toggleIdsButton.setAttribute('aria-pressed', String(visible));
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -9,9 +9,9 @@ export { register }
 export { default } from './add-id-processor.js'
 
 async function main() {
-  const { file, attributeAddFile, masterAttributesFile, oneLevelIncludes } = parseArgs(process.argv.slice(2))
+  const { file, attributeAddFile, masterAttributesFile, oneLevelIncludes, copyLinkUi } = parseArgs(process.argv.slice(2))
   if (!file) {
-    console.error('Usage: asciidoc-comments [--attribute-add options.json] [--master-attributes master.adoc] [--one-level-includes] <file.adoc>')
+    console.error('Usage: asciidoc-comments [--attribute-add options.json] [--master-attributes master.adoc] [--one-level-includes] [--no-copy-link-ui] <file.adoc>')
     process.exitCode = 1
     return
   }
@@ -29,7 +29,7 @@ async function main() {
     : null
 
   const registry = Extensions.create()
-  register(registry, { attributeOptions, oneLevelIncludes })
+  register(registry, { attributeOptions, oneLevelIncludes, copyLinkUi })
   const output = await convertFile(file, {
     extension_registry: registry,
     attributes: { doctype: 'book', ...masterAttributes },
@@ -41,12 +41,13 @@ async function main() {
   if (typeof output === 'string') process.stdout.write(output)
 }
 
-function parseArgs(args) {
+export function parseArgs(args) {
   const result = {
     file: null,
     attributeAddFile: null,
     masterAttributesFile: null,
     oneLevelIncludes: false,
+    copyLinkUi: true,
   }
 
   for (let index = 0; index < args.length; index += 1) {
@@ -63,6 +64,8 @@ function parseArgs(args) {
       result.masterAttributesFile = arg.slice('--master-attributes='.length)
     } else if (arg === '--one-level-includes') {
       result.oneLevelIncludes = true
+    } else if (arg === '--no-copy-link-ui') {
+      result.copyLinkUi = false
     } else if (!result.file) {
       result.file = arg
     }

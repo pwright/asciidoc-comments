@@ -92,11 +92,11 @@ asciidoc-comments --master-attributes master.adoc --attribute-add alternatives.a
 
 This renders the module with master.adoc's attributes as the baseline, while offering alternative values in the UI dropdowns.
 
-## Bookmarklet
+## Copy link UI
 
-The bookmarklet in [bookmarklet.js](bookmarklet.js) copies a Markdown link to
-the nearest block ID. If text is selected, it appends the selected text as a
-Markdown quote:
+Rendered HTML includes a floating copy link UI by default. Select text in an
+addressable block, then click the floating link icon to copy a Markdown link to
+that block. The selected text is appended as a Markdown quote:
 
 ```markdown
 [Page title](https://example.com/page.html#install--block-1)
@@ -105,6 +105,26 @@ Markdown quote:
 ```
 
 Create a browser bookmark whose URL is the contents of `bookmarklet.js`.
+
+If no text is selected, the copy link UI copies only the Markdown link.
+
+Disable the copy link UI for a document:
+
+```asciidoc
+:no-copy-link-ui:
+```
+
+Disable it from the CLI:
+
+```bash
+asciidoc-comments --no-copy-link-ui <filename>.adoc
+```
+
+### Deprecated bookmarklet
+
+The bookmarklet in [bookmarklet.js](bookmarklet.js) remains available for
+compatibility, but the generated copy link UI is the preferred workflow. The
+bookmarklet may be removed in a future release.
 
 ## Opt out
 

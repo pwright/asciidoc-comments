@@ -11,6 +11,7 @@
     "add-id-processor.js",
     "bookmarklet.js",
     "index.js",
+    "render-enhancements.js",
     "README.md",
     "LICENSE"
   ],

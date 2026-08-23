@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { appendRenderEnhancements } from './render-enhancements.js'
 
 const DEFAULT_OPTIONS = {
   disableAttribute: 'no-semantic-ids',
@@ -7,7 +8,9 @@ const DEFAULT_OPTIONS = {
   includeBoundaryAttribute: 'include-boundary',
   disableIncludeBoundariesAttribute: 'no-include-boundaries',
   disableAttributeButtonsAttribute: 'no-attribute-buttons',
+  disableCopyLinkUiAttribute: 'no-copy-link-ui',
   attributeOptions: null,
+  copyLinkUi: true,
   idSeparator: '-',
   oneLevelIncludes: false,
 }
@@ -105,10 +108,11 @@ export function register(registry, options = {}) {
 
         const lines = content.trimEnd().split('\n')
 
+        const sectionBase = currentSectionBase(sectionStack)
+        const index = increment(includeCounters, sectionBase)
+        const includeId = `${sectionBase}--include-${index}`
+
         if (shouldShowBoundary) {
-          const sectionBase = currentSectionBase(sectionStack)
-          const index = increment(includeCounters, sectionBase)
-          const includeId = `${sectionBase}--include-${index}`
           const wrappedLines = [
             '++++',
             '<hr>',
@@ -124,7 +128,7 @@ export function register(registry, options = {}) {
           ]
           reader.pushInclude(wrappedLines, filePath, target, 1, attrs)
         } else {
-          reader.pushInclude(lines, filePath, target, 1, attrs)
+          reader.pushInclude([`[[${includeId}]]`, '', ...lines], filePath, target, 1, attrs)
         }
 
         return reader
@@ -259,13 +263,10 @@ export function register(registry, options = {}) {
         normalizedOutput = addDlistTermAnchors(normalizedOutput, doc.dlistMetadata)
       }
 
-      // Add attribute options script if configured
-      if (hasAttributeOptions(config.attributeOptions)) {
-        normalizedOutput = appendAttributeOptionsScript(normalizedOutput, config.attributeOptions)
-      }
-
-      // Always append footer enhancements
-      return appendFooterEnhancements(normalizedOutput)
+      return appendRenderEnhancements(normalizedOutput, {
+        ...config,
+        copyLinkUi: config.copyLinkUi !== false && !hasAttribute(doc, config.disableCopyLinkUiAttribute),
+      })
     })
   })
 }

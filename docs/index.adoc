@@ -4,19 +4,15 @@
 
 This package allows you to add unique IDs to each AsciiDoc block.
 
-. Add the bookmarklet, drag the following link into your browser bookmarks bar:
-
-++++
- &nbsp; &nbsp;<a class="bookmarklet" href="javascript:(async()=>{const escapeLinkText=(value)=>value.replace(/\\/g,'\\\\').replace(/\[/g,'\\[').replace(/\]/g,'\\]');const quote=(value)=>value.split(/\r?\n/).map((line)=>`> ${line}`).join('\n');const selection=window.getSelection();const selectedText=selection?selection.toString().trim():'';const selectedNode=selection&&selection.rangeCount>0?selection.getRangeAt(0).commonAncestorContainer:null;let element=selectedNode&&selectedNode.nodeType===Node.ELEMENT_NODE?selectedNode:selectedNode?.parentElement;if(!element&&window.location.hash)element=document.getElementById(decodeURIComponent(window.location.hash.slice(1)));if(!element)element=document.activeElement||document.body;const target=element?.closest?.('[id]');if(!target?.id){window.alert('No nearby block ID found.');return}const url=new URL(window.location.href);url.hash=target.id;const title=escapeLinkText((document.title||url.href).replace(/\s+/g,' ').trim());const markdown=`[${title}](${url.href})${selectedText?`\n\n${quote(selectedText)}`:''}`; try{await navigator.clipboard.writeText(markdown)}catch(error){window.prompt('Copy Markdown link',markdown)}})()">CommentCapture</a><br><br>
-++++
-
-
-[start=2]
 . Navigate to xref:test.adoc[Test document] or xref:master.adoc[Master document demo].
 
-. Highlight some text and click bookmarklet.
+. Highlight some text in an addressable block and click the floating copy link icon.
 
-Each block is unique addressable as a url, eg xref:test.adoc#comment_90[a block lower in the document].
+The generated copy link UI copies a Markdown link to the nearest block ID. If text is selected, it appends the selected text as a Markdown quote. If no text is selected, it copies only the Markdown link.
+
+Use the floating icon to Copy Markdown link for the selected block.
+
+Each block is uniquely addressable as a URL, for example xref:test.adoc#install--block-1[a block lower in the document].
 
 == Feature Demonstrations
 
@@ -78,3 +74,7 @@ You can also use AsciiDoc format for alternatives:
 
 When readers click an attribute button, they see a list of configured options. Selecting a value updates all instances of that attribute throughout the page.
 All values for {product-short} are affected.
+
+== Deprecated Bookmarklet
+
+The deprecated copy-link bookmarklet remains available for compatibility, but the generated copy link UI is the preferred workflow. The bookmarklet may be removed in a future release.
