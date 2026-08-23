@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor.js 4.0.8">
-<meta name="author" content="Red Hat Documentation Team">
-<title>Installation Guide</title>
+<meta name="author" content="Initial Author">
+<title>Master Document Demo</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CNoto+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -435,15 +435,89 @@ p{margin-bottom:1.25rem}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 </head>
-<body class="article">
+<body class="book">
 <div id="header">
+<h1>Master Document Demo</h1>
+<div class="details">
+<span id="author" class="author">Initial Author</span><br>
+</div>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="_introduction">Introduction</h2>
+<div class="sectionbody">
+<div id="introduction--block-1" class="paragraph">
+<p>This master document demonstrates attribute inheritance and redefinition.</p>
+</div>
+<div id="introduction--block-2" class="paragraph">
+<p>Initial attribute values:</p>
+</div>
+<div id="introduction--block-3" class="ulist">
+<ul>
+<li id="introduction--block-4">
+<p>Product: <button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Initial Product" title="product-short">Initial Product</button></p>
+</li>
+<li id="introduction--block-5">
+<p>Version: <button type="button" class="attribute-substitution" data-attribute="version" data-value="0.9.0" title="version">0.9.0</button></p>
+</li>
+<li id="introduction--block-6">
+<p>Author: <button type="button" class="attribute-substitution" data-attribute="author" data-value="Initial Author" title="author">Initial Author</button></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_early_section">Early Section</h2>
+<div class="sectionbody">
+<div id="early-section--block-1" class="paragraph">
+<p>At this point, the attributes still have their initial values:</p>
+</div>
+<div id="early-section--block-2" class="paragraph">
+<p><button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Initial Product" title="product-short">Initial Product</button> version <button type="button" class="attribute-substitution" data-attribute="version" data-value="0.9.0" title="version">0.9.0</button> by <button type="button" class="attribute-substitution" data-attribute="author" data-value="Initial Author" title="author">Initial Author</button>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_attribute_redefinition">Attribute Redefinition</h2>
+<div class="sectionbody">
+<div id="attribute-redefinition--block-1" class="paragraph">
+<p>Now we&#8217;ll redefine the attributes before including the module:</p>
+</div>
+<div id="attribute-redefinition--block-2" class="paragraph">
+<p>The attributes are now updated:</p>
+</div>
+<div id="attribute-redefinition--block-3" class="ulist">
+<ul>
+<li id="attribute-redefinition--block-4">
+<p>Product: <button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button></p>
+</li>
+<li id="attribute-redefinition--block-5">
+<p>Version: <button type="button" class="attribute-substitution" data-attribute="version" data-value="1.2.3" title="version">1.2.3</button></p>
+</li>
+<li id="attribute-redefinition--block-6">
+<p>Author: <button type="button" class="attribute-substitution" data-attribute="author" data-value="Red Hat Documentation Team" title="author">Red Hat Documentation Team</button></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_included_module">Included Module</h2>
+<div class="sectionbody">
+<div id="included-module--block-1" class="paragraph">
+<p>The following content is included from <code>module.adoc</code> and will use the redefined attribute values:</p>
+</div>
+<hr>
+<hr>
+<div id="conclusion--include-1" class="include-boundary" style="margin-left: -40px;"><span style="color: red;">Start</span>: <code>module.adoc</code></div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_installation_guide">Installation Guide</h2>
 <div class="sectionbody">
 <div id="installation-guide--block-1" class="paragraph">
-<p>To install <button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button> version <button type="button" class="attribute-substitution" data-attribute="version" data-value="1.2.3" title="version">1.2.3</button>, follow these steps.</p>
+<p>To install Developer Hub version 1.2.3, follow these steps.</p>
 </div>
 <div id="installation-guide--block-2" class="ulist">
 <div class="title">Prerequisites</div>
@@ -452,7 +526,7 @@ p{margin-bottom:1.25rem}
 <p>A system running Linux or macOS</p>
 </li>
 <li id="installation-guide--block-4">
-<p><button type="button" class="attribute-substitution" data-attribute="author" data-value="Red Hat Documentation Team" title="author">Red Hat Documentation Team</button> approved configuration</p>
+<p>Red Hat Documentation Team approved configuration</p>
 </li>
 <li id="installation-guide--block-5">
 <p>Network access to package repositories</p>
@@ -463,7 +537,7 @@ p{margin-bottom:1.25rem}
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li id="installation-guide--block-7">
-<p>Download <button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button>:</p>
+<p>Download Developer Hub:</p>
 <div id="installation-guide--block-8" class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash">curl -O https://example.com/{product-short}/{version}/installer.sh</code></pre>
@@ -486,7 +560,7 @@ p{margin-bottom:1.25rem}
 </div>
 </div>
 <div id="installation-guide--block-13" class="paragraph">
-<p>Expected output: <code><button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button> <button type="button" class="attribute-substitution" data-attribute="version" data-value="1.2.3" title="version">1.2.3</button></code></p>
+<p>Expected output: <code>Developer Hub 1.2.3</code></p>
 </div>
 </li>
 </ol>
@@ -495,10 +569,10 @@ p{margin-bottom:1.25rem}
 <div class="title">Additional resources</div>
 <ul>
 <li id="installation-guide--block-15">
-<p><button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button> documentation: <a href="https://docs.example.com/<button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button>" class="bare">https://docs.example.com/<button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button></a></p>
+<p>Developer Hub documentation: <a href="https://docs.example.com/Developer" class="bare">https://docs.example.com/Developer</a> Hub</p>
 </li>
 <li id="installation-guide--block-16">
-<p>Support contact: <button type="button" class="attribute-substitution" data-attribute="author" data-value="Red Hat Documentation Team" title="author">Red Hat Documentation Team</button></p>
+<p>Support contact: Red Hat Documentation Team</p>
 </li>
 </ul>
 </div>
@@ -514,6 +588,47 @@ This module renders with attribute values from the point where it&#8217;s includ
 </tr>
 </table>
 </div>
+<div class="include-boundary" style="margin-left: -40px;"><span style="color: red;">End</span>: <code>module.adoc</code></div>
+<hr>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_conclusion">Conclusion</h2>
+<div class="sectionbody">
+<div id="conclusion--block-1" class="paragraph">
+<p>Back in the master document with <button type="button" class="attribute-substitution" data-attribute="product-short" data-value="Developer Hub" title="product-short">Developer Hub</button> <button type="button" class="attribute-substitution" data-attribute="version" data-value="1.2.3" title="version">1.2.3</button>.</p>
+</div>
+<div id="conclusion--block-2" class="paragraph">
+<p>To test this feature:</p>
+</div>
+<div id="conclusion--block-3" class="olist arabic">
+<ol class="arabic">
+<li id="conclusion--block-4">
+<p>Render master.adoc normally to see the full document with includes</p>
+</li>
+<li id="conclusion--block-5">
+<p>Render module.adoc with <code>--master-attributes master.adoc</code> to see it inherit the redefined values</p>
+</li>
+<li id="conclusion--block-6">
+<p>Compare with rendering module.adoc standalone (uses default values from module or undefined)</p>
+</li>
+</ol>
+</div>
+<div id="conclusion--block-7" class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div id="conclusion--block-8" class="paragraph">
+<p>The <code>--master-attributes</code> flag extracts attribute values from master.adoc at the point where module.adoc is included, allowing you to render the module standalone with the correct context.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -523,242 +638,350 @@ Last updated 2026-08-23 20:25:21 +0100
 </div>
 </div>
 
-<style>
-.attribute-substitution-menu {
-  position: absolute;
-  z-index: 1000;
-  margin-top: 2px;
-  font-family: inherit;
-  font-size: 0.9em;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  background-color: white;
-  min-width: 150px;
-  max-width: 250px;
-  width: auto;
-}
-</style>
-<script>
-(() => {
-  const attributeOptions = {"test":{"default":"Test attribute","options":["Test attribute","test1","test2","test3"]},"product-short":{"default":"alternative-value","options":["alternative-value"]},"version":{"default":"1.2.3","options":["1.2.3","1.0.0","1.1.0","2.0.0"]}};
-  let menu;
 
-  function closeMenu() {
-    if (menu) menu.remove();
-    menu = null;
-  }
-
-  function setAttributeValue(name, value) {
-    document.querySelectorAll(`.attribute-substitution[data-attribute="${CSS.escape(name)}"]`).forEach((button) => {
-      button.textContent = value;
-      button.dataset.value = value;
-    });
-  }
-
-  function showMenu(button, name) {
-    closeMenu();
-    const config = attributeOptions[name];
-    if (!config) return;
-
-    // Build comprehensive list of all available options
-    const allOptions = [];
-    const currentValue = button.dataset.value;
-    const attributeRef = `{${name}}`;
-
-    // Add current value if it's different from other values
-    if (currentValue && currentValue !== attributeRef && currentValue !== config.default && !config.options.includes(currentValue)) {
-      allOptions.push(currentValue);
-    }
-
-    // Add attribute reference
-    allOptions.push(attributeRef);
-
-    // Add default value if it exists and is different from current value
-    if (config.default && config.default !== currentValue) {
-      allOptions.push(config.default);
-    }
-
-    // Add all configured options
-    for (const option of config.options) {
-      if (!allOptions.includes(option)) {
-        allOptions.push(option);
-      }
-    }
-
-    // Create native select dropdown
-    menu = document.createElement('select');
-    menu.className = 'attribute-substitution-menu';
-    menu.setAttribute('size', Math.min(allOptions.length, 10));
-
-    // Add placeholder option
-    const placeholder = document.createElement('option');
-    placeholder.textContent = `Select value for {${name}}...`;
-    placeholder.disabled = true;
-    placeholder.selected = true;
-    menu.append(placeholder);
-
-    // Add all options
-    for (const option of allOptions) {
-      const optionElement = document.createElement('option');
-      optionElement.value = option;
-      optionElement.textContent = option;
-      menu.append(optionElement);
-    }
-
-    // Handle selection
-    menu.addEventListener('change', () => {
-      setAttributeValue(name, menu.value);
-      closeMenu();
-    });
-
-    // Close on blur
-    menu.addEventListener('blur', () => {
-      closeMenu();
-    });
-
-    button.insertAdjacentElement('afterend', menu);
-    menu.focus();
-  }
-
-  document.addEventListener('click', (event) => {
-    const button = event.target.closest?.('.attribute-substitution');
-    if (!button) {
-      if (!event.target.closest?.('.attribute-substitution-menu')) closeMenu();
-      return;
-    }
-
-    const name = button.dataset.attribute;
-    if (!attributeOptions[name]) return;
-    event.preventDefault();
-    showMenu(button, name);
-  });
-})();
-</script>
-
-<div id="footer-custom" class="footer-enhancements">
-  <div class="footer-tools">
-    <a href="https://github.com/pwright/asciidoc-comments" target="_blank" rel="noopener noreferrer" class="footer-link" title="View this project on GitHub">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+<button type="button" class="copy-link-button" id="copy-link-button" aria-label="Copy Markdown link" title="Copy Markdown link">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
   </svg>
-      <span>View on GitHub</span>
-    </a>
+</button>
+<div class="copy-link-status" id="copy-link-status" role="status" aria-live="polite"></div>
+<footer class="floating-footer" id="floating-footer" aria-label="Document tools">
+  <div class="floating-footer-tools">
+    <div class="floating-footer-left">
+      <label class="copy-placement-control">
+        <select id="copy-placement-select" data-copy-placement="margin" aria-label="Copy icon placement">
+          <option value="margin" selected>Margin</option>
+          <option value="selection">Selection</option>
+          <option value="block">Block</option>
+        </select>
+      </label>
+    </div>
+    <div class="copy-link-url" id="copy-link-url" aria-live="polite"></div>
+    <div class="floating-footer-actions">
     <button type="button" class="footer-toggle-ids" id="toggle-ids-button" title="Toggle element ID visibility" aria-pressed="false">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
     <path d="M0 2a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H2a2 2 0 01-2-2V2zm1 0v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1H2a1 1 0 00-1 1z"/>
   </svg>
       <span>Toggle IDs</span>
     </button>
+    <a href="https://github.com/pwright/asciidoc-comments" target="_blank" rel="noopener noreferrer" class="footer-link" title="View this project on GitHub">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+  </svg>
+      <span>GitHub</span>
+    </a>
+    </div>
   </div>
-</div>
+</footer>
 <style>
-#footer-custom {
-  margin-top: 1rem;
-  padding-top: 0.75rem;
+.floating-footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  box-sizing: border-box;
+  min-height: 54px;
+  padding: 8px 16px;
   border-top: 1px solid #ddd;
+  background: rgba(248, 248, 247, 0.97);
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.08);
 }
-
-.footer-tools {
-  display: flex;
-  gap: 1rem;
+.floating-footer-tools {
+  display: grid;
+  grid-template-columns: minmax(110px, 1fr) minmax(0, 2fr) minmax(220px, 1fr);
+  gap: 0.5rem;
   align-items: center;
-  flex-wrap: wrap;
+  max-width: 1100px;
+  margin: 0 auto;
 }
-
+.floating-footer-left,
+.floating-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.floating-footer-actions {
+  justify-content: flex-end;
+}
+.copy-link-url {
+  min-width: 0;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.72);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+}
 .footer-link,
-.footer-toggle-ids {
+.footer-toggle-ids,
+.copy-placement-control select {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.4rem 0.8rem;
+  min-height: 34px;
+  box-sizing: border-box;
+  padding: 0.35rem 0.65rem;
   font-size: 0.875rem;
   font-family: inherit;
   text-decoration: none;
   border: 1px solid #ddd;
   border-radius: 4px;
-  background: #f8f8f7;
-  color: rgba(0, 0, 0, 0.7);
-  transition: all 0.2s ease;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.75);
 }
-
+.copy-placement-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+}
 .footer-link {
   color: #2156a5;
 }
-
-.footer-link:hover,
-.footer-link:focus {
-  background: #e8e8e8;
-  border-color: #2156a5;
-  color: #1d4b8f;
-  text-decoration: none;
-}
-
 .footer-toggle-ids {
   cursor: pointer;
 }
-
-.footer-toggle-ids:hover,
-.footer-toggle-ids:focus {
-  background: #e8e8e8;
-  border-color: #999;
-}
-
 .footer-toggle-ids.active {
   background: #2156a5;
-  color: white;
+  color: #fff;
   border-color: #1d4b8f;
 }
-
+.footer-link:focus,
 .footer-toggle-ids:focus,
-.footer-link:focus {
+.copy-placement-control select:focus {
   outline: 2px solid #2156a5;
   outline-offset: 2px;
 }
-
 .footer-link svg,
 .footer-toggle-ids svg {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
 }
+body.ids-visible [id]:not(.copy-link-button):not(.copy-link-status):not(.floating-footer) {
+  outline: 2px solid rgba(180, 35, 24, 0.78);
+  outline-offset: 2px;
+}
+.copy-link-button {
+  position: absolute;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #9aa8bb;
+  border-radius: 999px;
+  background: #fff;
+  color: #2156a5;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.22);
+  cursor: pointer;
+}
+.copy-link-button.visible {
+  display: inline-flex;
+}
+.copy-link-button.copied {
+  color: #18794e;
+  border-color: #18794e;
+}
+.copy-link-button.failed {
+  color: #b42318;
+  border-color: #b42318;
+}
+.copy-link-status {
+  position: fixed;
+  right: 16px;
+  bottom: 64px;
+  z-index: 1001;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+  color: #18794e;
+  font-size: 0.875rem;
+}
+@media (max-width: 720px) {
+  .floating-footer-tools {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .copy-link-url {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .floating-footer-left,
+  .floating-footer-actions {
+    grid-row: 2;
+  }
+  .copy-link-button {
+    transform: translate(-50%, -48px) !important;
+  }
+}
 </style>
-
 <script>
 (() => {
-  let idsVisible = false;
-  const button = document.getElementById('toggle-ids-button');
-  const originalTitles = new Map();
-
-  if (!button) return;
-
-  button.addEventListener('click', () => {
-    idsVisible = !idsVisible;
-
-    document.querySelectorAll('[id]').forEach((el) => {
-      if (idsVisible) {
-        el.style.border = 'solid 2px red';
-        // Store original title if it exists
-        if (el.title) {
-          originalTitles.set(el, el.title);
-        }
-        // Set tooltip to show the ID
-        el.title = 'ID: ' + el.id;
-      } else {
-        el.style.border = '';
-        // Restore original title or remove it
-        if (originalTitles.has(el)) {
-          el.title = originalTitles.get(el);
-          originalTitles.delete(el);
-        } else {
-          el.removeAttribute('title');
-        }
-      }
+  const toggleIdsButton = document.getElementById('toggle-ids-button');
+  if (toggleIdsButton) {
+    toggleIdsButton.addEventListener('click', () => {
+      const visible = !document.body.classList.contains('ids-visible');
+      document.body.classList.toggle('ids-visible', visible);
+      toggleIdsButton.classList.toggle('active', visible);
+      toggleIdsButton.setAttribute('aria-pressed', String(visible));
     });
+  }
 
-    button.classList.toggle('active', idsVisible);
-    button.setAttribute('aria-pressed', String(idsVisible));
+  const copyButton = document.getElementById('copy-link-button');
+  const status = document.getElementById('copy-link-status');
+  const urlPreview = document.getElementById('copy-link-url');
+  const placementSelect = document.getElementById('copy-placement-select');
+  let currentTarget = null;
+  let currentText = '';
+
+  function uiChromeContains(element) {
+    return Boolean(element?.closest?.('#copy-link-button, #floating-footer, .' + 'attr' + 'ibute-substitution-menu'));
+  }
+
+  function nearestContentId(node) {
+    let element = node && node.nodeType === Node.ELEMENT_NODE ? node : node?.parentElement;
+    while (element && uiChromeContains(element)) element = element.parentElement;
+    return element?.closest?.('[id]') || null;
+  }
+
+  function selectionInfo() {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0 || selection.toString().trim() === '') return null;
+    const range = selection.getRangeAt(0);
+    const target = nearestContentId(range.startContainer);
+    if (!target) return null;
+    return {
+      target,
+      text: selection.toString().trim(),
+      rect: range.getBoundingClientRect(),
+      targetRect: target.getBoundingClientRect(),
+    };
+  }
+
+  function escapeTitle(value) {
+    return String(value).replace(/\\/g, '\\\\').replace(/\[/g, '\\[').replace(/\]/g, '\\]');
+  }
+
+  function markdownFor(target, selectedText) {
+    const url = new URL(window.location.href);
+    url.hash = target.id;
+    const title = escapeTitle((document.title || url.href).replace(/\s+/g, ' ').trim());
+    const quote = selectedText
+      ? '\n\n' + selectedText.split(/\r?\n/).map((line) => '> ' + line).join('\n')
+      : '';
+    return '[' + title + '](' + url.href + ')' + quote;
+  }
+
+  function urlFor(target) {
+    const url = new URL(window.location.href);
+    url.hash = target.id;
+    return url.href;
+  }
+
+  function compactUrlPreview(href) {
+    const url = new URL(href);
+    const host = url.host.split('.').filter(Boolean).map((part) => part[0]).join('.');
+    const path = url.pathname.split('/').filter(Boolean).map((part) => part[0]).join('/');
+    return host + (path ? '/' + path : '') + url.search + url.hash;
+  }
+
+  function place(info) {
+    currentTarget = info.target;
+    currentText = info.text;
+    const placement = placementSelect?.value || 'margin';
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    let left;
+    let top;
+    copyButton.style.transform = '';
+
+    if (placement === 'block') {
+      left = info.targetRect.right + scrollX;
+      top = info.targetRect.top + scrollY;
+      copyButton.style.transform = 'translate(10px, 10px)';
+    } else if (placement === 'selection') {
+      left = info.rect.left + (info.rect.width / 2) + scrollX;
+      top = info.rect.top + scrollY;
+      copyButton.style.transform = 'translate(-50%, -48px)';
+    } else {
+      left = info.targetRect.left + scrollX;
+      top = info.targetRect.top + scrollY;
+      copyButton.style.transform = 'translate(-48px, -2px)';
+    }
+
+    copyButton.style.left = left + 'px';
+    copyButton.style.top = top + 'px';
+    copyButton.classList.add('visible');
+    if (urlPreview) {
+      const href = urlFor(info.target);
+      urlPreview.textContent = compactUrlPreview(href);
+      urlPreview.title = href;
+    }
+  }
+
+  function showStatus(message, className) {
+    if (status) status.textContent = message;
+    copyButton.classList.remove('copied', 'failed');
+    if (className) copyButton.classList.add(className);
+    window.setTimeout(() => copyButton.classList.remove('copied', 'failed'), 1400);
+  }
+
+  function updateFromSelection() {
+    const info = selectionInfo();
+    if (!info) {
+      if (document.activeElement !== copyButton) copyButton.classList.remove('visible', 'copied', 'failed');
+      currentTarget = null;
+      currentText = '';
+      if (urlPreview) {
+        urlPreview.textContent = '';
+        urlPreview.removeAttribute('title');
+      }
+      return;
+    }
+    place(info);
+  }
+
+  copyButton?.addEventListener('click', async () => {
+    if (!currentTarget) {
+      const activeTarget = nearestContentId(document.activeElement);
+      const hashTarget = window.location.hash ? document.getElementById(decodeURIComponent(window.location.hash.slice(1))) : null;
+      currentTarget = activeTarget || hashTarget;
+      currentText = '';
+      if (currentTarget && urlPreview) {
+        const href = urlFor(currentTarget);
+        urlPreview.textContent = compactUrlPreview(href);
+        urlPreview.title = href;
+      }
+    }
+    if (!currentTarget) {
+      showStatus('No block ID found', 'failed');
+      return;
+    }
+    const markdown = markdownFor(currentTarget, currentText);
+    try {
+      await navigator.clipboard.writeText(markdown);
+      showStatus('Copied', 'copied');
+    } catch (_error) {
+      window.prompt('Copy Markdown link', markdown);
+      showStatus('Copy fallback opened', 'failed');
+    }
   });
+
+  document.addEventListener('selectionchange', () => window.setTimeout(updateFromSelection, 0));
+  document.addEventListener('mouseup', updateFromSelection);
+  document.addEventListener('keyup', (event) => {
+    if (event.key === 'Escape') {
+      copyButton?.classList.remove('visible', 'copied', 'failed');
+      return;
+    }
+    updateFromSelection();
+  });
+  placementSelect?.addEventListener('change', updateFromSelection);
 })();
 </script>
 </body>

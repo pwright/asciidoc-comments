@@ -79,29 +79,33 @@ convert-all: convert-all-assemblies convert-all-modules
 convert-all-demo OUTPUT_DIR="docs":
     #!/usr/bin/env bash
     set -euo pipefail
-    mkdir -p "{{OUTPUT_DIR}}"
+    dest_dir="{{OUTPUT_DIR}}/all-demo"
+    mkdir -p "$dest_dir"
 
     echo "📁 Converting demo files in docs/ ..."
     count=0
     for file in docs/*.adoc; do
         if [ -f "$file" ]; then
             basename=$(basename "$file" .adoc)
+            if [ "$basename" = "index" ]; then
+                continue
+            fi
             echo "  Converting: $basename.adoc"
-            node index.js "$file" > "{{OUTPUT_DIR}}/${basename}.html" 2>&1 || echo "  ⚠️  Failed: $file"
+            node index.js "$file" > "${dest_dir}/${basename}.html" 2>&1 || echo "  ⚠️  Failed: $file"
             count=$((count + 1))
         fi
     done
 
     echo ""
     echo "✅ Converted $count demo files"
-    echo "   Output directory: {{OUTPUT_DIR}}"
+    echo "   Output directory: $dest_dir"
     echo ""
     echo "Demo files:"
-    echo "  • docs/demo-table-rows.html - Table row anchors for below-the-fold navigation"
-    echo "  • docs/test.html - Include boundaries and semantic IDs"
-    echo "  • docs/index.html - Feature overview"
+    echo "  • ${dest_dir}/demo-table-rows.html - Table row anchors for below-the-fold navigation"
+    echo "  • ${dest_dir}/test.html - Include boundaries and semantic IDs"
+    echo "  • docs/index.html - Demo index"
     echo ""
-    echo "Open docs/demo-table-rows.html to test bookmarklet with table rows"
+    echo "Open docs/index.html in a browser to view the demo index"
 
 # Convert assemblies with attribute options
 convert-assemblies-with-options CATEGORY OPTIONS OUTPUT_DIR="build/assemblies":
@@ -532,46 +536,54 @@ titles-stats:
 convert-docs OUTPUT_DIR="docs":
     #!/usr/bin/env bash
     set -euo pipefail
-    mkdir -p "{{OUTPUT_DIR}}"
+    dest_dir="{{OUTPUT_DIR}}/default"
+    mkdir -p "$dest_dir"
 
     count=0
     for file in docs/*.adoc; do
         if [ -f "$file" ]; then
             basename=$(basename "$file" .adoc)
+            if [ "$basename" = "index" ]; then
+                continue
+            fi
             echo "Converting: $basename.adoc"
-            node index.js "$file" > "{{OUTPUT_DIR}}/${basename}.html" 2>&1 || echo "  ⚠️  Failed: $file"
+            node index.js "$file" > "${dest_dir}/${basename}.html" 2>&1 || echo "  ⚠️  Failed: $file"
             count=$((count + 1))
         fi
     done
 
     echo ""
     echo "✅ Converted $count docs files"
-    echo "   Output directory: {{OUTPUT_DIR}}"
+    echo "   Output directory: $dest_dir"
     echo ""
+    block_ids=$(awk '/id=".*--block-/{count++} END{print count + 0}' "$dest_dir"/*.html)
+    include_markers=$(awk '/include-boundary/{count++} END{print count + 0}' "$dest_dir"/*.html)
     echo "Features demonstrated:"
-    echo "  • Semantic IDs: $(grep -c 'id=".*--block-' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') block IDs"
-    echo "  • Include boundaries: $(grep -c 'include-boundary' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') markers"
+    echo "  • Semantic IDs: $block_ids block IDs"
+    echo "  • Include boundaries: $include_markers markers"
     echo ""
-    echo "Open {{OUTPUT_DIR}}/test.html to see include boundaries and semantic IDs"
+    echo "Open docs/index.html in a browser to view the demo index"
 
 # Convert docs/*.adoc with attribute buttons
 convert-docs-demo OUTPUT_DIR="docs":
     #!/usr/bin/env bash
     set -euo pipefail
-    mkdir -p "{{OUTPUT_DIR}}"
+    dest_dir="{{OUTPUT_DIR}}/demo"
+    mkdir -p "$dest_dir"
 
     count=0
     for file in docs/*.adoc; do
         if [ -f "$file" ]; then
             basename=$(basename "$file" .adoc)
 
-            # Skip module.adoc - we'll handle it specially
-            if [ "$basename" = "module" ]; then
+            # Skip index.adoc so docs/index.html remains the hand-written landing page.
+            # Skip module.adoc - we'll handle it specially.
+            if [ "$basename" = "index" ] || [ "$basename" = "module" ]; then
                 continue
             fi
 
             echo "Converting: $basename.adoc"
-            node index.js "$file" > "{{OUTPUT_DIR}}/${basename}.html" || echo "  ⚠️  Failed: $file"
+            node index.js "$file" > "${dest_dir}/${basename}.html" || echo "  ⚠️  Failed: $file"
             count=$((count + 1))
         fi
     done
@@ -583,32 +595,35 @@ convert-docs-demo OUTPUT_DIR="docs":
 
     # 1. Module with master attributes (this is the main module.html)
     echo "  1. module.adoc with --master-attributes master.adoc"
-    node index.js --master-attributes docs/master.adoc docs/module.adoc > "{{OUTPUT_DIR}}/module.html" || echo "     ⚠️  Failed"
+    node index.js --master-attributes docs/master.adoc docs/module.adoc > "${dest_dir}/module.html" || echo "     ⚠️  Failed"
 
     # 2. Standalone module (no master attributes)
     echo "  2. module.adoc standalone (no attributes)"
-    node index.js docs/module.adoc > "{{OUTPUT_DIR}}/module-standalone.html" || echo "     ⚠️  Failed"
+    node index.js docs/module.adoc > "${dest_dir}/module-standalone.html" || echo "     ⚠️  Failed"
 
     # 3. Module with master attributes AND alternatives
     echo "  3. module.adoc with --master-attributes + --attribute-add"
-    node index.js --master-attributes docs/master.adoc --attribute-add alt.adoc docs/module.adoc > "{{OUTPUT_DIR}}/module-combined.html" || echo "     ⚠️  Failed"
+    node index.js --master-attributes docs/master.adoc --attribute-add alt.adoc docs/module.adoc > "${dest_dir}/module-combined.html" || echo "     ⚠️  Failed"
 
     count=$((count + 3))
 
     echo ""
     echo "✅ Converted $count docs files with interactive attribute buttons"
-    echo "   Output directory: {{OUTPUT_DIR}}"
+    echo "   Output directory: $dest_dir"
     echo ""
+    block_ids=$(awk '/id=".*--block-/{count++} END{print count + 0}' "$dest_dir"/*.html)
+    include_markers=$(awk '/include-boundary/{count++} END{print count + 0}' "$dest_dir"/*.html)
+    attribute_buttons=$(awk '/attribute-substitution/{count++} END{print count + 0}' "$dest_dir"/*.html)
     echo "Features demonstrated:"
-    echo "  • Semantic IDs: $(grep -c 'id=".*--block-' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') block IDs"
-    echo "  • Include boundaries: $(grep -c 'include-boundary' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') markers"
-    echo "  • Attribute buttons: $(grep -c 'attribute-substitution' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') interactive buttons"
+    echo "  • Semantic IDs: $block_ids block IDs"
+    echo "  • Include boundaries: $include_markers markers"
+    echo "  • Attribute buttons: $attribute_buttons interactive buttons"
     echo ""
     echo "Files to compare:"
-    echo "  master.html              - Full master document with includes"
-    echo "  module.html              - Module with master attributes (Developer Hub, 1.2.3)"
-    echo "  module-standalone.html   - Module without master attributes (undefined)"
-    echo "  module-combined.html     - Module with master + alternatives (interactive)"
+    echo "  ${dest_dir}/master.html              - Full master document with includes"
+    echo "  ${dest_dir}/module.html              - Module with master attributes (Developer Hub, 1.2.3)"
+    echo "  ${dest_dir}/module-standalone.html   - Module without master attributes (undefined)"
+    echo "  ${dest_dir}/module-combined.html     - Module with master + alternatives (interactive)"
     echo ""
     echo "Open docs/index.html in a browser to view the demo"
 
@@ -616,32 +631,39 @@ convert-docs-demo OUTPUT_DIR="docs":
 convert-docs-alt OUTPUT_DIR="docs":
     #!/usr/bin/env bash
     set -euo pipefail
-    mkdir -p "{{OUTPUT_DIR}}"
+    dest_dir="{{OUTPUT_DIR}}/alt"
+    mkdir -p "$dest_dir"
 
     count=0
     for file in docs/*.adoc; do
         if [ -f "$file" ]; then
             basename=$(basename "$file" .adoc)
+            if [ "$basename" = "index" ]; then
+                continue
+            fi
             echo "Converting: $basename.adoc (with AsciiDoc attribute alternatives)"
-            node index.js --attribute-add alt.adoc "$file" > "{{OUTPUT_DIR}}/${basename}.html" 2>&1 || echo "  ⚠️  Failed: $file"
+            node index.js --attribute-add alt.adoc "$file" > "${dest_dir}/${basename}.html" 2>&1 || echo "  ⚠️  Failed: $file"
             count=$((count + 1))
         fi
     done
 
     echo ""
     echo "✅ Converted $count docs files with AsciiDoc-based attribute alternatives"
-    echo "   Output directory: {{OUTPUT_DIR}}"
+    echo "   Output directory: $dest_dir"
     echo ""
+    block_ids=$(awk '/id=".*--block-/{count++} END{print count + 0}' "$dest_dir"/*.html)
+    include_markers=$(awk '/include-boundary/{count++} END{print count + 0}' "$dest_dir"/*.html)
+    attribute_buttons=$(awk '/attribute-substitution/{count++} END{print count + 0}' "$dest_dir"/*.html)
     echo "Features demonstrated:"
-    echo "  • Semantic IDs: $(grep -c 'id=".*--block-' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') block IDs"
-    echo "  • Include boundaries: $(grep -c 'include-boundary' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') markers"
-    echo "  • Attribute buttons: $(grep -c 'attribute-substitution' "{{OUTPUT_DIR}}"/*.html 2>/dev/null || echo '0') interactive buttons"
+    echo "  • Semantic IDs: $block_ids block IDs"
+    echo "  • Include boundaries: $include_markers markers"
+    echo "  • Attribute buttons: $attribute_buttons interactive buttons"
     echo ""
     echo "Alternative values from alt.adoc:"
     echo "  • product-short: Developer Hub | podman | docker | kubernetes"
     echo "  • version: 1.2.3 | 1.0.0 | 1.1.0 | 2.0.0"
     echo ""
-    echo "Open {{OUTPUT_DIR}}/test.html in a browser and click attribute buttons to test"
+    echo "Open docs/index.html in a browser to view the demo index"
 
 # Install dependencies (if needed)
 install:
