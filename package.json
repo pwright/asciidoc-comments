@@ -1,6 +1,6 @@
 {
   "name": "@techwriter/asciidoc-comments",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Asciidoctor.js v4 extension for semantic generated block IDs, include boundaries, and attribute buttons",
   "type": "module",
   "main": "index.js",
